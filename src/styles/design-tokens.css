@@ -1,0 +1,82 @@
+:root {
+  /* =========================================================================
+     BRIGHTLOOP AI — BRAND DESIGN TOKENS (LIGHT THEME)
+     Extracted directly from the official BrightLoop infinity/circuit logo:
+     - Primary Brand: Vivid Electric Cyan / Azure Blue (#00b4d8, #0284c7)
+     - Secondary Brand: Electric Teal / Cyan Circuit (#06b6d4, #0891b2)
+     - Warm Accent: Radiant Amber / Golden Sun (#f59e0b, #d97706, #fbbf24)
+     ========================================================================= */
+
+  /* Primary Brand - Electric Cyan / Deep Azure */
+  --brand-primary: #0284c7;
+  --brand-primary-hover: #0369a1;
+  --brand-primary-active: #075985;
+  --brand-primary-light: #e0f2fe;
+  --brand-primary-muted: rgba(2, 132, 199, 0.08);
+
+  /* Secondary Brand - Electric Cyan/Teal Circuit */
+  --brand-secondary: #0891b2;
+  --brand-secondary-hover: #0e7490;
+  --brand-secondary-light: #ecfeff;
+  --brand-secondary-muted: rgba(8, 145, 178, 0.08);
+
+  /* Warm Accent - Radiant Gold / Amber Loop */
+  --brand-accent: #d97706;
+  --brand-accent-hover: #b45309;
+  --brand-accent-light: #fef3c7;
+  --brand-accent-muted: rgba(217, 119, 6, 0.08);
+
+  /* Base Backgrounds (Refined Pure Light Theme) */
+  --bg-app: #f8fafc;        /* Slate-50: Crisp modern SaaS page background */
+  --bg-surface: #ffffff;    /* Pure White: Cards, Panels, Drawers, Modals */
+  --bg-surface-subtle: #f1f5f9; /* Slate-100: Table headers, inputs, inner wells */
+  --bg-surface-elevated: #ffffff; /* Floating dropdowns, popovers */
+
+  /* Neutral Borders */
+  --border-subtle: #f1f5f9;  /* Slate-100 */
+  --border-default: #e2e8f0; /* Slate-200: Crisp hairline SaaS borders */
+  --border-emphasis: #cbd5e1;/* Slate-300: Focus/hover borders */
+  --border-brand: rgba(2, 132, 199, 0.35);
+
+  /* Professional Typography Hierarchy */
+  --text-primary: #0f172a;   /* Slate-900: High-contrast executive headings & data */
+  --text-secondary: #475569; /* Slate-600: Body text, labels, descriptors */
+  --text-tertiary: #64748b;  /* Slate-500: Metadata, timestamps, captions */
+  --text-muted: #94a3b8;     /* Slate-400: Placeholders, disabled states */
+  --text-on-brand: #ffffff;  /* White on primary brand buttons */
+
+  /* Functional Status Colors */
+  --status-success: #10b981;
+  --status-success-light: #ecfdf5;
+  --status-success-border: #a7f3d0;
+  --status-success-text: #065f46;
+
+  --status-warning: #f59e0b;
+  --status-warning-light: #fffbeb;
+  --status-warning-border: #fde68a;
+  --status-warning-text: #92400e;
+
+  --status-danger: #ef4444;
+  --status-danger-light: #fef2f2;
+  --status-danger-border: #fecaca;
+  --status-danger-text: #991b1b;
+
+  --status-info: #0284c7;
+  --status-info-light: #f0f9ff;
+  --status-info-border: #bae6fd;
+  --status-info-text: #075985;
+
+  /* Shadows (Restrained, Soft SaaS elevation) */
+  --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.07), 0 4px 6px -4px rgba(15, 23, 42, 0.03);
+  --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+}

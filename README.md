@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BrightLoop AI – Client Acquisition Platform
+> Enterprise AI-Powered Client Acquisition & Outbound Intelligence Engine for **BrightLoop Technology**.
 
-## Getting Started
+Phase 1 establishes the production-grade workspace foundation, multi-agent activity center, lead discovery engine, CRM lead drawers, website audit reports, email studio with variable previews, campaign approvals, categorized unified inbox, comprehensive analytics, and compliance & configuration center.
 
-First, run the development server:
+## 🚀 Key Modules
 
+- **Workspace Overview**: KPI metrics cards, Recharts acquisition velocity, campaign performance, AI agent status monitors, pending approvals, and system audit logs.
+- **AI Activity Center**: Real-time management interface for 5 discrete agents (Lead Discovery, Website Analysis, Lead Scoring, Email Generation, Campaign Execution) with manual pause/resume controls and task feedback.
+- **Lead Discovery**: Multi-faceted filter system (Country, Industry, Business Type, Website Status, Target Service, Lead Score) with functional live filtering and opportunity scoring.
+- **Leads & CRM**: Rich tabular CRM with status badges, opportunity sorting, paginated records, and an interactive slide-over lead detail drawer with notes, audit histories, and contact info.
+- **Website Audits**: On-demand URL evaluation interface with Core Web Vitals, performance bottlenecks, SEO diagnostics, mobile responsiveness checks, and AI service recommendations.
+- **Email Studio**: Template editor with real-time variable interpolation (`{{Company}}`, `{{ContactName}}`, etc.), service offering selector, and instant live preview.
+- **Campaign Management**: Outbound campaign scheduler with audience sizing, approval gates, and pause/resume lifecycle controls.
+- **Inbox & Replies**: CRM-style multi-turn conversation thread viewer with sentiment classification badges (Interested, Follow-up, Question, Not Interested).
+- **Analytics & Reports**: Visualized lead conversion funnels, response rate timelines, audit health distributions, and campaign benchmark comparisons.
+- **Settings & Compliance**: Configurable sections for Company Profile, AI Model settings, Supabase integration, search providers, and GDPR / CAN-SPAM compliance guardrails.
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript (strict type checking)
+- **Styling**: Tailwind CSS v4, dark navy SaaS theme with Electric Blue & Violet accents
+- **Visuals & Charts**: Recharts & Lucide React
+- **Architecture**: Modular separation of concerns (`/src/types`, `/src/lib`, `/src/components`, `/src/app`)
+
+## 💻 Getting Started
+
+### 1. Prerequisites
+- Node.js 18+ (tested on Node v20+)
+- npm or yarn
+
+### 2. Environment Variables
+Copy `.env.example` to `.env.local`:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Installation
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 4. Running the Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 5. Build for Production
+```bash
+npm run build
+npm run start
+```
