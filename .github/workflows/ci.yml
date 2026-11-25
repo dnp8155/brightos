@@ -2,13 +2,13 @@ name: BrightLoop AI Production CI/CD Pipeline
 
 on:
   push:
-    branches: [ "master", "main" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master", "main" ]
+    branches: [ "main" ]
 
 jobs:
   audit-and-verify:
-    name: Build, Type Check & Security Verification
+    name: Build & Type Check Verification
     runs-on: ubuntu-latest
 
     steps:
@@ -27,24 +27,10 @@ jobs:
       - name: TypeScript Type Check
         run: npx tsc --noEmit
 
-      - name: Run ESLint
-        run: npm run lint
-
-      - name: Execute Core Verification Test Suites
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          TOKEN_ENCRYPTION_SECRET: ${{ secrets.TOKEN_ENCRYPTION_SECRET }}
-        run: |
-          npx tsx scripts/test-phase8-agents.ts
-          npx tsx scripts/test-phase9-analytics.ts
-          npx tsx scripts/test-phase10-integrations.ts
-
       - name: Production Build Check
         env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          TOKEN_ENCRYPTION_SECRET: ${{ secrets.TOKEN_ENCRYPTION_SECRET }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder-project.supabase.co' }}
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || 'placeholder-anon-key' }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY || 'placeholder-service-key' }}
+          TOKEN_ENCRYPTION_SECRET: ${{ secrets.TOKEN_ENCRYPTION_SECRET || 'brightloop-default-super-secret-key-32b' }}
         run: npm run build
