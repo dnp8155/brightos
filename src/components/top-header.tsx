@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { Bell, Database, LogOut, Search, Sparkles, HelpCircle } from "lucide-react";
-import Link from "next/link";
+import { Bell, LogOut, Search } from "lucide-react";
 import { logoutAction } from "@/app/actions/auth";
 
 interface HeaderProps {
@@ -12,63 +11,50 @@ interface HeaderProps {
 
 export function TopHeader({ title, description }: HeaderProps) {
   return (
-    <header className="h-16 border-b border-slate-200/90 bg-white/95 backdrop-blur-md px-6 flex items-center justify-between sticky top-0 z-20 shadow-xs">
-      <div>
+    <header className="h-14 border-b border-slate-200 bg-white px-6 flex items-center justify-between sticky top-0 z-20">
+      <div className="min-w-0">
         {title && (
-          <h1 className="text-base font-bold text-slate-900 tracking-tight">
+          <h1 className="text-sm font-semibold text-slate-900 tracking-tight truncate">
             {title}
           </h1>
         )}
         {description && (
-          <p className="text-xs text-slate-500 mt-0.5">{description}</p>
+          <p className="text-[11px] text-slate-500 truncate">{description}</p>
         )}
       </div>
 
-      <div className="flex items-center gap-3">
-        {/* Global Search Pill */}
-        <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-400 w-64 focus-within:ring-1 focus-within:ring-[#0284c7] focus-within:border-[#0284c7] transition-all">
-          <Search size={14} className="text-slate-400" />
+      <div className="flex items-center gap-3 shrink-0">
+        {/* Global Search */}
+        <div className="hidden md:flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-400 w-56 focus-within:bg-white focus-within:border-slate-300 transition-all">
+          <Search size={13} className="text-slate-400 shrink-0" />
           <input
             type="text"
-            placeholder="Search leads, audits, deals..."
+            placeholder="Search workspace..."
             className="bg-transparent border-none text-slate-800 placeholder-slate-400 text-xs focus:outline-none w-full"
           />
-          <kbd className="hidden sm:inline-block font-mono text-[9px] px-1 py-0.5 bg-white border border-slate-200 rounded text-slate-500 shadow-2xs">
+          <kbd className="font-mono text-[9px] px-1 py-0.5 bg-white border border-slate-200 rounded text-slate-400">
             ⌘K
           </kbd>
         </div>
 
-        {/* Database Status Badge */}
-        <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-[11px] font-semibold text-emerald-800">
-          <Database size={12} className="text-emerald-600" />
-          <span>PostgreSQL Live</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-        </div>
-
-        {/* Multi-Agent Active Badge */}
-        <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-sky-50 border border-sky-200/80 text-[11px] font-semibold text-sky-800">
-          <Sparkles size={12} className="text-[#0284c7]" />
-          <span>8 AI Agents</span>
-        </div>
-
         {/* Notifications */}
         <button
-          className="p-2 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors relative"
+          className="p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors relative"
           title="Notifications"
           aria-label="Notifications"
         >
-          <Bell size={16} />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-500 border-2 border-white" />
+          <Bell size={15} />
+          <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#0284c7]" />
         </button>
 
         {/* User profile & Logout */}
         <div className="flex items-center gap-2 pl-3 border-l border-slate-200">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-sky-600 to-amber-500 flex items-center justify-center text-xs font-bold text-white shadow-xs">
-            BL
+          <div className="w-7 h-7 rounded-full bg-slate-900 flex items-center justify-center text-[11px] font-semibold text-white">
+            DP
           </div>
-          <div className="hidden md:flex flex-col text-left">
-            <span className="text-xs font-bold text-slate-800 leading-tight">Admin Operator</span>
-            <span className="text-[10px] text-slate-500">BrightLoop Technology</span>
+          <div className="hidden sm:flex flex-col text-left">
+            <span className="text-xs font-medium text-slate-800 leading-tight">Dipak Patel</span>
+            <span className="text-[10px] text-slate-400">Administrator</span>
           </div>
           <form action={logoutAction} className="ml-1">
             <button
@@ -76,7 +62,7 @@ export function TopHeader({ title, description }: HeaderProps) {
               className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
               title="Sign Out"
             >
-              <LogOut size={15} />
+              <LogOut size={14} />
             </button>
           </form>
         </div>
