@@ -11,9 +11,10 @@ import {
   Send,
   Users,
   Bot,
-  ShieldCheck,
   CheckCircle2,
-  Lock
+  Lock,
+  BarChart3,
+  ShieldCheck
 } from "lucide-react";
 
 export default function PublicLandingPage() {
@@ -50,14 +51,35 @@ export default function PublicLandingPage() {
     }
   ];
 
+  const workflowSteps = [
+    { step: "01", title: "Discover & Normalize", desc: "Identify target businesses globally, normalize company profiles, and deduplicate domains automatically." },
+    { step: "02", title: "Audit & Score", desc: "Run SSRF-safe Lighthouse, SEO, and mobile checks to score modernization opportunity with evidence." },
+    { step: "03", title: "Approve & Outreach", desc: "Generate tailored pitches citing verified findings. Campaigns pause for mandatory admin approval." },
+    { step: "04", title: "Convert & Measure ROI", desc: "Track replies with AI sentiment analysis, close deals in Kanban, and export attributable ROI." }
+  ];
+
+  const faqs = [
+    {
+      q: "How does BRIGHT AI ensure email compliance?",
+      a: "Every outbound dispatch passes a pre-flight compliance validator that checks suppression lists, enforces RFC 8058 unsubscribe headers, and requires explicit administrator approval before sending."
+    },
+    {
+      q: "Does BRIGHT AI invent website problems in emails?",
+      a: "Never. Our AI Email Studio only cites verified technical findings measured by our SSRF-safe website crawler and Lighthouse engine."
+    },
+    {
+      q: "Can we pause or stop automated agents immediately?",
+      a: "Yes. The AI Agent Control Center includes a server-enforced Global Pause and Emergency Stop that immediately halts workflows and cancels queued dispatches."
+    }
+  ];
+
   return (
     <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-900">
       <MarketingNavbar />
 
       <main className="flex-1">
-        {/* Hero Section */}
+        {/* 1. Hero Section */}
         <section className="relative bg-white border-b border-slate-200/80 overflow-hidden">
-          {/* Subtle architectural dot grid */}
           <div
             className="absolute inset-0 opacity-[0.35] pointer-events-none"
             style={{
@@ -68,8 +90,8 @@ export default function PublicLandingPage() {
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 lg:pt-24 lg:pb-28 text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-[11px] font-semibold text-slate-700 mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0284c7]" />
-              BrightLoop Technology • Client Acquisition Platform
+              <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#0891b2] to-[#d97706]" />
+              BrightLoop Technology • BRIGHT AI Platform
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 max-w-4xl mx-auto leading-[1.1]">
@@ -95,24 +117,23 @@ export default function PublicLandingPage() {
               </Link>
             </div>
 
-            {/* Interactive Product Showcase */}
             <LandingShowcase />
           </div>
         </section>
 
-        {/* Core Capabilities */}
-        <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl mb-12">
+        {/* 2. Core Capabilities */}
+        <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mb-14">
             <span className="text-xs font-bold uppercase tracking-wider text-[#0284c7]">Architecture</span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-2">
               Built for Precision, Not Volume Spam.
             </h2>
             <p className="mt-3 text-sm text-slate-600 leading-relaxed">
-              Every stage of BrightLoop AI is engineered with strict data provenance, server-side compliance checks, and human-in-the-loop governance.
+              Every stage of BRIGHT AI is engineered with strict data provenance, server-side compliance checks, and human-in-the-loop governance.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {pillars.map((p) => {
               const Icon = p.icon;
               return (
@@ -131,52 +152,94 @@ export default function PublicLandingPage() {
           </div>
         </section>
 
-        {/* Security & Governance Strip */}
-        <section className="py-16 bg-white border-y border-slate-200/80">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-            <div className="space-y-2 max-w-xl">
-              <div className="flex items-center gap-2 text-xs font-bold text-emerald-700">
-                <Lock size={14} /> Enterprise Security & Compliance
-              </div>
-              <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-                Admin-Only Access. Server-Enforced Safety.
+        {/* 3. How It Works */}
+        <section className="py-24 bg-white border-y border-slate-200/80">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-2xl mx-auto mb-14">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#0891b2]">Workflow</span>
+              <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight mt-2">
+                From Discovery to Closed Revenue
               </h2>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Protected by Supabase Row Level Security, AES-256-GCM encrypted OAuth tokens, SSRF crawler sandboxing, and an instant global Emergency Stop.
+              <p className="mt-3 text-sm text-slate-600">
+                A deterministic 4-stage pipeline with human approval checkpoints.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 text-xs shrink-0">
-              {[
-                "Supabase RLS Active",
-                "AES-256-GCM Tokens",
-                "Mandatory Approval",
-                "RFC 8058 Unsubscribe"
-              ].map((item) => (
-                <div key={item} className="px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 font-semibold text-slate-700 flex items-center gap-2">
-                  <CheckCircle2 size={14} className="text-emerald-600 shrink-0" />
-                  <span>{item}</span>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {workflowSteps.map((w) => (
+                <div key={w.step} className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
+                  <span className="text-xs font-mono font-bold text-[#0284c7]">STEP {w.step}</span>
+                  <h3 className="text-base font-bold text-slate-900">{w.title}</h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">{w.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Final CTA */}
-        <section className="py-20 max-w-4xl mx-auto px-4 text-center space-y-6">
-          <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-            Ready to Access BrightLoop AI?
-          </h2>
-          <p className="text-sm text-slate-600 max-w-lg mx-auto">
-            Sign in with your authorized BrightLoop Technology administrator credentials to launch your workspace.
-          </p>
-          <div className="flex justify-center">
-            <Link
-              href="/login"
-              className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#0284c7] to-[#0891b2] text-white font-bold text-sm shadow-sm hover:opacity-95 transition-all inline-flex items-center gap-2"
-            >
-              Sign In to Admin Portal <ArrowRight size={15} />
-            </Link>
+        {/* 4. Security & Governance Strip */}
+        <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          <div className="space-y-2 max-w-xl">
+            <div className="flex items-center gap-2 text-xs font-bold text-emerald-700">
+              <Lock size={14} /> Enterprise Security & Compliance
+            </div>
+            <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+              Admin-Only Access. Server-Enforced Safety.
+            </h2>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Protected by Supabase Row Level Security, AES-256-GCM encrypted OAuth tokens, SSRF crawler sandboxing, and an instant global Emergency Stop.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 text-xs shrink-0">
+            {[
+              "Supabase RLS Active",
+              "AES-256-GCM Tokens",
+              "Mandatory Approval",
+              "RFC 8058 Unsubscribe"
+            ].map((item) => (
+              <div key={item} className="px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 font-semibold text-slate-700 flex items-center gap-2 shadow-2xs">
+                <CheckCircle2 size={14} className="text-emerald-600 shrink-0" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 5. FAQ */}
+        <section className="py-20 bg-white border-t border-slate-200/80">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-extrabold text-slate-900 text-center mb-10">
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              {faqs.map((faq) => (
+                <div key={faq.q} className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80">
+                  <h3 className="text-sm font-bold text-slate-900">{faq.q}</h3>
+                  <p className="mt-2 text-xs text-slate-600 leading-relaxed">{faq.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 6. Final CTA */}
+        <section className="py-20 bg-gradient-to-r from-[#0891b2] via-[#0284c7] to-[#d97706] text-white">
+          <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
+            <h2 className="text-3xl font-extrabold tracking-tight">
+              Ready to Access BRIGHT AI?
+            </h2>
+            <p className="text-sm text-white/90 max-w-lg mx-auto">
+              Sign in with your authorized BrightLoop Technology administrator credentials to launch your workspace.
+            </p>
+            <div className="flex justify-center">
+              <Link
+                href="/login"
+                className="px-7 py-3.5 rounded-xl bg-white text-slate-900 font-bold text-sm shadow-sm hover:bg-slate-50 transition-all inline-flex items-center gap-2"
+              >
+                Sign In to Admin Portal <ArrowRight size={15} />
+              </Link>
+            </div>
           </div>
         </section>
       </main>

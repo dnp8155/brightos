@@ -48,7 +48,7 @@ export function BrandLogo({
             <span className="font-extrabold tracking-tight text-slate-900 text-sm">
               BRIGHT
             </span>
-            <span className="text-[11px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-gradient-to-r from-sky-50 to-amber-50 text-sky-700 border border-sky-200/80 tracking-wider">
+            <span className="text-[11px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-gradient-to-r from-[#0891b2] via-[#0284c7] to-[#d97706] text-white shadow-2xs tracking-wider">
               AI
             </span>
           </div>
