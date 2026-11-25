@@ -193,7 +193,7 @@ export default function AgentsPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-[#0b0f19] text-slate-100 min-h-screen">
+    <div className="flex-1 flex flex-col bg-[#f8fafc] text-slate-900 min-h-screen">
       <TopHeader
         title="AI Agent Control Center & Automation Intelligence"
         description="Centralized multi-agent registry, state transitions, durable workflow engine, and BullMQ queue supervision"
@@ -201,7 +201,7 @@ export default function AgentsPage() {
 
       <main className="p-6 space-y-6 max-w-7xl mx-auto w-full">
         {/* Safety Header Controls */}
-        <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="p-4 rounded-xl bg-white border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className={cn(
               "p-2.5 rounded-lg border",
@@ -221,7 +221,7 @@ export default function AgentsPage() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-sm font-semibold text-white">Automation Safety Governance</h2>
+                <h2 className="text-sm font-semibold text-slate-900">Automation Safety Governance</h2>
                 <span className={cn(
                   "px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider",
                   controls.emergencyStop
@@ -251,7 +251,7 @@ export default function AgentsPage() {
                 "px-3.5 py-2 rounded-lg text-xs font-semibold flex items-center gap-2 border transition-all",
                 controls.globalPause
                   ? "bg-amber-500/10 border-amber-500/30 text-amber-300 hover:bg-amber-500/20"
-                  : "bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700"
+                  : "bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200"
               )}
             >
               {controls.globalPause ? <Play size={14} /> : <Pause size={14} />}
@@ -264,7 +264,7 @@ export default function AgentsPage() {
               className={cn(
                 "px-3.5 py-2 rounded-lg text-xs font-bold flex items-center gap-2 border transition-all",
                 controls.emergencyStop
-                  ? "bg-red-600 text-white border-red-500 hover:bg-red-700 shadow-lg shadow-red-900/30"
+                  ? "bg-red-600 text-slate-900 border-red-500 hover:bg-red-700 shadow-lg shadow-red-900/30"
                   : "bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20"
               )}
             >
@@ -274,7 +274,7 @@ export default function AgentsPage() {
 
             <button
               onClick={fetchData}
-              className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors"
+              className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors"
               title="Refresh Registry"
             >
               <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
@@ -283,7 +283,7 @@ export default function AgentsPage() {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex items-center gap-2 border-b border-slate-800 pb-3 overflow-x-auto">
+        <div className="flex items-center gap-2 border-b border-slate-200 pb-3 overflow-x-auto">
           {[
             { id: "agents", label: "Agent Registry (8)", icon: Bot },
             { id: "workflows", label: "10-Step Workflow Engine", icon: Layers },
@@ -300,7 +300,7 @@ export default function AgentsPage() {
                   "px-3.5 py-2 rounded-lg text-xs font-medium flex items-center gap-2 transition-all whitespace-nowrap",
                   activeTab === tab.id
                     ? "bg-sky-500/10 text-sky-400 border border-sky-500/20 shadow-sm"
-                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-900"
+                    : "text-slate-400 hover:text-slate-800 hover:bg-slate-50"
                 )}
               >
                 <Icon size={14} />
@@ -318,7 +318,7 @@ export default function AgentsPage() {
                 return (
                   <div
                     key={agent.id}
-                    className="p-4 rounded-xl bg-[#111827] border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-all space-y-4 shadow-sm"
+                    className="p-4 rounded-xl bg-white shadow-2xs border border-slate-200 flex flex-col justify-between hover:border-slate-200 transition-all space-y-4 shadow-sm"
                   >
                     <div>
                       <div className="flex items-center justify-between">
@@ -332,7 +332,7 @@ export default function AgentsPage() {
                               ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
                               : agent.executionStatus === "disabled"
                               ? "bg-red-500/10 text-red-400 border border-red-500/20"
-                              : "bg-slate-800 text-slate-400 border border-slate-700"
+                              : "bg-slate-100 text-slate-400 border border-slate-200"
                           )}
                         >
                           {agent.executionStatus}
@@ -343,7 +343,7 @@ export default function AgentsPage() {
                         <div className="p-2 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/20">
                           <Bot size={16} />
                         </div>
-                        <h3 className="text-sm font-semibold text-slate-100">{agent.name}</h3>
+                        <h3 className="text-sm font-semibold text-slate-900">{agent.name}</h3>
                       </div>
 
                       <p className="text-xs text-slate-400 mt-2.5 leading-relaxed line-clamp-3">
@@ -351,10 +351,10 @@ export default function AgentsPage() {
                       </p>
 
                       {/* Worker Heartbeat Telemetry */}
-                      <div className="mt-3 p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 space-y-1.5 text-[11px]">
+                      <div className="mt-3 p-2.5 rounded-lg bg-slate-50 border border-slate-200 space-y-1.5 text-[11px]">
                         <div className="flex justify-between items-center">
                           <span className="text-slate-400">Worker Node:</span>
-                          <span className="font-mono text-slate-300">
+                          <span className="font-mono text-slate-700">
                             {agent.heartbeat ? agent.heartbeat.workerNodeId : "worker-eu-01"}
                           </span>
                         </div>
@@ -367,14 +367,14 @@ export default function AgentsPage() {
                         </div>
                         <div className="flex justify-between items-center">
                           <span className="text-slate-400">Last Exec:</span>
-                          <span className="text-slate-300">
+                          <span className="text-slate-700">
                             {agent.lastExecution ? new Date(agent.lastExecution).toLocaleTimeString() : "Pending"}
                           </span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between gap-2">
+                    <div className="pt-2 border-t border-slate-200 flex items-center justify-between gap-2">
                       <button
                         onClick={() =>
                           handleAgentAction(
@@ -387,7 +387,7 @@ export default function AgentsPage() {
                           "flex-1 py-1.5 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 border transition-colors",
                           agent.executionStatus === "paused"
                             ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20"
-                            : "bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700"
+                            : "bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200"
                         )}
                       >
                         {agent.executionStatus === "paused" ? (
@@ -429,11 +429,11 @@ export default function AgentsPage() {
         {/* TAB 2: 10-STEP WORKFLOW ENGINE */}
         {activeTab === "workflows" && (
           <div className="space-y-6">
-            <div className="p-5 rounded-xl bg-[#111827] border border-slate-800 space-y-4">
+            <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-base font-semibold text-white">Autonomous Client Acquisition Pipeline</h3>
+                    <h3 className="text-base font-semibold text-slate-900">Autonomous Client Acquisition Pipeline</h3>
                     <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-sky-500/10 text-sky-400 border border-sky-500/20">
                       10-Step Deterministic Flow
                     </span>
@@ -444,12 +444,12 @@ export default function AgentsPage() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <label className="flex items-center gap-2 text-xs text-slate-300 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800 cursor-pointer">
+                  <label className="flex items-center gap-2 text-xs text-slate-700 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={approvalGranted}
                       onChange={(e) => setApprovalGranted(e.target.checked)}
-                      className="rounded border-slate-700 text-sky-500 focus:ring-0 bg-slate-800"
+                      className="rounded border-slate-200 text-sky-500 focus:ring-0 bg-slate-100"
                     />
                     <span>Grant Human Approval Checkpoint</span>
                   </label>
@@ -484,7 +484,7 @@ export default function AgentsPage() {
                       "p-3 rounded-lg border text-xs flex flex-col justify-between space-y-2",
                       s.check
                         ? "bg-violet-950/20 border-violet-500/30 text-violet-300"
-                        : "bg-slate-900/60 border-slate-800 text-slate-300"
+                        : "bg-slate-50 border-slate-200 text-slate-700"
                     )}
                   >
                     <div className="flex items-center justify-between">
@@ -496,7 +496,7 @@ export default function AgentsPage() {
                       )}
                     </div>
                     <div>
-                      <div className="font-semibold text-slate-100">{s.name}</div>
+                      <div className="font-semibold text-slate-900">{s.name}</div>
                       <div className="text-[11px] text-slate-400 mt-0.5">{s.agent}</div>
                     </div>
                   </div>
@@ -505,9 +505,9 @@ export default function AgentsPage() {
 
               {/* Execution Result Log */}
               {executionResult && (
-                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 mt-4 space-y-3">
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 mt-4 space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold text-slate-200">Execution Result: {executionResult.id}</span>
+                    <span className="text-xs font-semibold text-slate-800">Execution Result: {executionResult.id}</span>
                     <span className={cn(
                       "px-2 py-0.5 rounded text-[10px] font-bold uppercase",
                       executionResult.status === "completed"
@@ -523,7 +523,7 @@ export default function AgentsPage() {
                   <div className="space-y-1.5 text-xs font-mono">
                     {executionResult.stepExecutions?.map((se) => (
                       <div key={se.id} className="flex items-center justify-between py-1 border-b border-slate-900">
-                        <span className="text-slate-300">Step {se.stepOrder}: {se.name}</span>
+                        <span className="text-slate-700">Step {se.stepOrder}: {se.name}</span>
                         <span className={cn(
                           se.status === "completed" ? "text-emerald-400" : se.status === "awaiting_approval" ? "text-amber-400" : "text-slate-400"
                         )}>
@@ -543,32 +543,32 @@ export default function AgentsPage() {
           <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {queueMetrics.map((q) => (
-                <div key={q.name} className="p-5 rounded-xl bg-[#111827] border border-slate-800 space-y-4">
+                <div key={q.name} className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className="p-2 rounded-lg bg-sky-500/10 text-sky-400">
                         <Server size={16} />
                       </div>
-                      <span className="text-xs font-semibold text-slate-200 font-mono">{q.name}</span>
+                      <span className="text-xs font-semibold text-slate-800 font-mono">{q.name}</span>
                     </div>
                   </div>
 
                   <div className="grid grid-cols-3 gap-2 text-center">
-                    <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800">
+                    <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
                       <div className="text-[10px] text-slate-400">Waiting</div>
-                      <div className="text-base font-bold text-slate-200">{q.waiting}</div>
+                      <div className="text-base font-bold text-slate-800">{q.waiting}</div>
                     </div>
-                    <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800">
+                    <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
                       <div className="text-[10px] text-slate-400">Active</div>
                       <div className="text-base font-bold text-sky-400">{q.active}</div>
                     </div>
-                    <div className="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800">
+                    <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
                       <div className="text-[10px] text-slate-400">Completed</div>
                       <div className="text-base font-bold text-emerald-400">{q.completed}</div>
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+                  <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-400">
                     <span>Workers: {q.workerCount} online</span>
                     <span className="text-emerald-400 flex items-center gap-1">
                       <CheckCircle2 size={12} /> Heartbeat OK
@@ -582,15 +582,15 @@ export default function AgentsPage() {
 
         {/* TAB 4: DURABLE EVENT BUS */}
         {activeTab === "events" && (
-          <div className="p-5 rounded-xl bg-[#111827] border border-slate-800 space-y-4">
+          <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-semibold text-white">Durable Application Event Stream</h3>
+                <h3 className="text-sm font-semibold text-slate-900">Durable Application Event Stream</h3>
                 <p className="text-xs text-slate-400">Real-time audit log of internal events with idempotency keys</p>
               </div>
               <button
                 onClick={fetchData}
-                className="px-3 py-1.5 rounded-lg bg-slate-800 text-xs text-slate-300 font-medium hover:bg-slate-700"
+                className="px-3 py-1.5 rounded-lg bg-slate-100 text-xs text-slate-700 font-medium hover:bg-slate-200"
               >
                 Refresh Stream
               </button>
@@ -631,8 +631,8 @@ export default function AgentsPage() {
         {/* TAB 5: GLOBAL POLICIES */}
         {activeTab === "settings" && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="p-5 rounded-xl bg-[#111827] border border-slate-800 space-y-4">
-              <h3 className="text-sm font-semibold text-white">Lead Scoring Weights</h3>
+            <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4">
+              <h3 className="text-sm font-semibold text-slate-900">Lead Scoring Weights</h3>
               <p className="text-xs text-slate-400">Mathematical weighting applied during autonomous qualification.</p>
 
               <div className="space-y-3 text-xs">
@@ -643,33 +643,33 @@ export default function AgentsPage() {
                   { label: "Company Size & Headcount Fit", weight: "15%" },
                   { label: "Market Presence & Brand Capital", weight: "15%" }
                 ].map((w, idx) => (
-                  <div key={idx} className="flex justify-between items-center py-1.5 border-b border-slate-800/80">
-                    <span className="text-slate-300">{w.label}</span>
+                  <div key={idx} className="flex justify-between items-center py-1.5 border-b border-slate-200">
+                    <span className="text-slate-700">{w.label}</span>
                     <span className="font-mono font-semibold text-sky-400">{w.weight}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="p-5 rounded-xl bg-[#111827] border border-slate-800 space-y-4">
-              <h3 className="text-sm font-semibold text-white">AI Model & Safety Parameters</h3>
+            <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4">
+              <h3 className="text-sm font-semibold text-slate-900">AI Model & Safety Parameters</h3>
               <p className="text-xs text-slate-400">Strict temperature and token limits enforced across prompts.</p>
 
               <div className="space-y-3 text-xs">
-                <div className="flex justify-between items-center py-1.5 border-b border-slate-800/80">
-                  <span className="text-slate-300">Default Model</span>
+                <div className="flex justify-between items-center py-1.5 border-b border-slate-200">
+                  <span className="text-slate-700">Default Model</span>
                   <span className="font-mono font-semibold text-sky-400">gpt-4o-mini</span>
                 </div>
-                <div className="flex justify-between items-center py-1.5 border-b border-slate-800/80">
-                  <span className="text-slate-300">Sampling Temperature</span>
+                <div className="flex justify-between items-center py-1.5 border-b border-slate-200">
+                  <span className="text-slate-700">Sampling Temperature</span>
                   <span className="font-mono font-semibold text-sky-400">0.40 (Deterministic)</span>
                 </div>
-                <div className="flex justify-between items-center py-1.5 border-b border-slate-800/80">
-                  <span className="text-slate-300">Outbound Rate Limit</span>
+                <div className="flex justify-between items-center py-1.5 border-b border-slate-200">
+                  <span className="text-slate-700">Outbound Rate Limit</span>
                   <span className="font-mono font-semibold text-sky-400">60 emails / hour / domain</span>
                 </div>
-                <div className="flex justify-between items-center py-1.5 border-b border-slate-800/80">
-                  <span className="text-slate-300">Max Discovery Concurrency</span>
+                <div className="flex justify-between items-center py-1.5 border-b border-slate-200">
+                  <span className="text-slate-700">Max Discovery Concurrency</span>
                   <span className="font-mono font-semibold text-sky-400">5 parallel workers</span>
                 </div>
               </div>

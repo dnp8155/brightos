@@ -95,7 +95,7 @@ export default function CampaignsPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-[#0b0f19] text-slate-100 min-h-screen">
+    <div className="flex-1 flex flex-col bg-[#f8fafc] text-slate-900 min-h-screen">
       <TopHeader
         title="Campaign Management & Automated Outreach Engine"
         description="Immutable campaign snapshots, cryptographic admin approval, idempotency queue, and delivery tracking"
@@ -108,17 +108,17 @@ export default function CampaignsPage() {
               <CheckCircle2 size={15} />
               <span>{notification}</span>
             </div>
-            <button onClick={() => setNotification(null)} className="text-slate-400 hover:text-white">✕</button>
+            <button onClick={() => setNotification(null)} className="text-slate-400 hover:text-slate-900">✕</button>
           </div>
         )}
 
         <div className="flex items-center justify-between">
           <div className="text-xs text-slate-400">
-            Total active & pending campaigns: <span className="text-white font-semibold">{campaigns.length}</span>
+            Total active & pending campaigns: <span className="text-slate-900 font-semibold">{campaigns.length}</span>
           </div>
           <button
             onClick={() => setShowCreateModal(true)}
-            className="px-3.5 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm"
+            className="px-3.5 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-slate-900 text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm"
           >
             <Plus size={14} /> New Campaign
           </button>
@@ -129,12 +129,12 @@ export default function CampaignsPage() {
           {campaigns.map((camp) => (
             <div
               key={camp.id}
-              className="p-5 rounded-xl bg-[#111827] border border-slate-800 space-y-4 hover:border-slate-700 transition-colors"
+              className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4 hover:border-slate-200 transition-colors"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
                 <div>
                   <div className="flex items-center gap-2.5">
-                    <h3 className="text-sm font-semibold text-slate-100">
+                    <h3 className="text-sm font-semibold text-slate-900">
                       {camp.name}
                     </h3>
                     <span
@@ -144,7 +144,7 @@ export default function CampaignsPage() {
                           ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
                           : camp.status === "Pending Approval"
                           ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                          : "bg-slate-800 text-slate-400 border border-slate-700"
+                          : "bg-slate-100 text-slate-400 border border-slate-200"
                       )}
                     >
                       {camp.status}
@@ -177,7 +177,7 @@ export default function CampaignsPage() {
                         className={cn(
                           "px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 border transition-colors",
                           camp.status === "Active"
-                            ? "bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700"
+                            ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200"
                             : "bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 border-sky-500/30"
                         )}
                       >
@@ -198,19 +198,19 @@ export default function CampaignsPage() {
 
               {/* Metrics Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="p-3 rounded-lg bg-slate-900 border border-slate-800">
+                <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
                   <div className="text-[11px] text-slate-400">Total Sent</div>
-                  <div className="text-base font-bold text-white mt-0.5">{camp.sentCount}</div>
+                  <div className="text-base font-bold text-slate-900 mt-0.5">{camp.sentCount}</div>
                 </div>
-                <div className="p-3 rounded-lg bg-slate-900 border border-slate-800">
+                <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
                   <div className="text-[11px] text-slate-400">Open Rate</div>
                   <div className="text-base font-bold text-sky-400 mt-0.5">{camp.openRate}%</div>
                 </div>
-                <div className="p-3 rounded-lg bg-slate-900 border border-slate-800">
+                <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
                   <div className="text-[11px] text-slate-400">Reply Rate</div>
                   <div className="text-base font-bold text-indigo-400 mt-0.5">{camp.replyRate}%</div>
                 </div>
-                <div className="p-3 rounded-lg bg-slate-900 border border-slate-800">
+                <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
                   <div className="text-[11px] text-slate-400">Interested Replies</div>
                   <div className="text-base font-bold text-emerald-400 mt-0.5">{camp.interestedCount}</div>
                 </div>
@@ -222,20 +222,20 @@ export default function CampaignsPage() {
         {/* Modal 1: Formal Admin Campaign Approval */}
         {showApprovalModal && (
           <div className="fixed inset-0 bg-black/75 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-            <div className="bg-[#111827] border border-slate-800 rounded-xl p-6 w-full max-w-lg space-y-4 shadow-2xl">
-              <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+            <div className="bg-white shadow-2xs border border-slate-200 rounded-xl p-6 w-full max-w-lg space-y-4 shadow-2xl">
+              <div className="flex items-center justify-between pb-2 border-b border-slate-200">
                 <div className="flex items-center gap-2">
                   <ShieldCheck size={18} className="text-emerald-400" />
-                  <h3 className="text-sm font-semibold text-white">Immutable Campaign Approval Binding</h3>
+                  <h3 className="text-sm font-semibold text-slate-900">Immutable Campaign Approval Binding</h3>
                 </div>
-                <button onClick={() => setShowApprovalModal(null)} className="text-slate-400 hover:text-white">✕</button>
+                <button onClick={() => setShowApprovalModal(null)} className="text-slate-400 hover:text-slate-900">✕</button>
               </div>
 
-              <div className="space-y-3 text-xs text-slate-300">
+              <div className="space-y-3 text-xs text-slate-700">
                 <p>
                   As an authorized administrator, you are approving outbound message generation and queue dispatching for:
                 </p>
-                <div className="p-3 rounded-lg bg-slate-900 border border-slate-800 space-y-1.5 font-mono text-[11px]">
+                <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1.5 font-mono text-[11px]">
                   <div><strong>Campaign:</strong> {showApprovalModal.name}</div>
                   <div><strong>Target Sector:</strong> {showApprovalModal.targetIndustry}</div>
                   <div><strong>Recipient Count:</strong> {showApprovalModal.targetAudienceCount} leads</div>
@@ -247,18 +247,18 @@ export default function CampaignsPage() {
                 </div>
               </div>
 
-              <div className="pt-3 flex justify-end gap-2 border-t border-slate-800">
+              <div className="pt-3 flex justify-end gap-2 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setShowApprovalModal(null)}
-                  className="px-3 py-1.5 rounded-lg bg-slate-800 text-xs text-slate-300 hover:bg-slate-700"
+                  className="px-3 py-1.5 rounded-lg bg-slate-100 text-xs text-slate-700 hover:bg-slate-200"
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
                   onClick={() => handleExecuteApproval(showApprovalModal)}
-                  className="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm"
+                  className="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-slate-900 text-xs font-semibold flex items-center gap-1.5 shadow-sm"
                 >
                   <CheckCircle2 size={13} /> Sign & Approve Campaign
                 </button>
@@ -270,10 +270,10 @@ export default function CampaignsPage() {
         {/* Modal 2: Create Campaign */}
         {showCreateModal && (
           <div className="fixed inset-0 bg-black/75 backdrop-blur-xs flex items-center justify-center p-4 z-50">
-            <div className="bg-[#111827] border border-slate-800 rounded-xl p-6 w-full max-w-md space-y-4 shadow-2xl">
-              <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-                <h3 className="text-sm font-semibold text-white">Create New Outreach Campaign</h3>
-                <button onClick={() => setShowCreateModal(false)} className="text-slate-400 hover:text-white">✕</button>
+            <div className="bg-white shadow-2xs border border-slate-200 rounded-xl p-6 w-full max-w-md space-y-4 shadow-2xl">
+              <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+                <h3 className="text-sm font-semibold text-slate-900">Create New Outreach Campaign</h3>
+                <button onClick={() => setShowCreateModal(false)} className="text-slate-400 hover:text-slate-900">✕</button>
               </div>
 
               <form onSubmit={handleCreate} className="space-y-3">
@@ -285,7 +285,7 @@ export default function CampaignsPage() {
                     placeholder="e.g. Modernization Q4 Outreach"
                     value={newCampaignName}
                     onChange={(e) => setNewCampaignName(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-sky-500"
+                    className="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-sky-500"
                   />
                 </div>
 
@@ -294,7 +294,7 @@ export default function CampaignsPage() {
                   <select
                     value={newTargetIndustry}
                     onChange={(e) => setNewTargetIndustry(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-sky-500"
+                    className="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-sky-500"
                   >
                     <option value="Supply Chain & Logistics">Supply Chain & Logistics</option>
                     <option value="Healthcare & Biotech">Healthcare & Biotech</option>
@@ -311,21 +311,21 @@ export default function CampaignsPage() {
                     max="500"
                     value={newAudienceSize}
                     onChange={(e) => setNewAudienceSize(Number(e.target.value))}
-                    className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-sky-500"
+                    className="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-sky-500"
                   />
                 </div>
 
-                <div className="pt-3 flex justify-end gap-2 border-t border-slate-800">
+                <div className="pt-3 flex justify-end gap-2 border-t border-slate-200">
                   <button
                     type="button"
                     onClick={() => setShowCreateModal(false)}
-                    className="px-3 py-1.5 rounded-lg bg-slate-800 text-xs text-slate-300 hover:bg-slate-700"
+                    className="px-3 py-1.5 rounded-lg bg-slate-100 text-xs text-slate-700 hover:bg-slate-200"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-1.5 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-xs font-semibold"
+                    className="px-4 py-1.5 rounded-lg bg-sky-500 hover:bg-sky-600 text-slate-900 text-xs font-semibold"
                   >
                     Create Campaign
                   </button>

@@ -76,7 +76,7 @@ export default function AuditsPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-[#0b0f19] text-slate-100 min-h-screen">
+    <div className="flex-1 flex flex-col bg-[#f8fafc] text-slate-900 min-h-screen">
       <TopHeader
         title="AI Website Intelligence & Technical Audit Engine"
         description="SSRF-protected multi-page crawler, SEO, Core Web Vitals, mobile UX, technology stack detection, and AI recommendations"
@@ -84,11 +84,11 @@ export default function AuditsPage() {
 
       <main className="p-6 space-y-6 max-w-7xl mx-auto w-full">
         {/* URL Input Form */}
-        <div className="p-5 rounded-xl bg-[#111827] border border-slate-800 space-y-3">
+        <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Globe size={18} className="text-sky-400" />
-              <h3 className="text-sm font-semibold text-slate-100">
+              <h3 className="text-sm font-semibold text-slate-900">
                 Trigger Real-Time Website Audit
               </h3>
             </div>
@@ -106,13 +106,13 @@ export default function AuditsPage() {
                 placeholder="Enter public domain (e.g. https://stripe.com or example.com)"
                 value={inputUrl}
                 onChange={(e) => setInputUrl(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500"
+                className="w-full px-4 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-500 focus:outline-none focus:border-sky-500"
               />
             </div>
             <button
               type="submit"
               disabled={loading}
-              className="px-5 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 disabled:opacity-50 text-white text-xs font-semibold flex items-center justify-center gap-2 transition-colors shadow-sm"
+              className="px-5 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 disabled:opacity-50 text-slate-900 text-xs font-semibold flex items-center justify-center gap-2 transition-colors shadow-sm"
             >
               {loading ? (
                 <>
@@ -139,7 +139,7 @@ export default function AuditsPage() {
         {/* Audit Inspector Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Audited Domains List */}
-          <div className="p-5 rounded-xl bg-[#111827] border border-slate-800 space-y-3">
+          <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-3">
             <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
               Audited Websites ({audits.length})
             </h4>
@@ -157,11 +157,11 @@ export default function AuditsPage() {
                       "p-3 rounded-lg border cursor-pointer transition-colors space-y-1",
                       isSelected
                         ? "bg-sky-500/10 border-sky-500/40"
-                        : "bg-slate-900/60 border-slate-800 hover:border-slate-700"
+                        : "bg-slate-50 border-slate-200 hover:border-slate-200"
                     )}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold text-slate-200 truncate pr-2">
+                      <span className="text-xs font-semibold text-slate-800 truncate pr-2">
                         {name}
                       </span>
                       <span className="text-[10px] text-slate-500 shrink-0">{date}</span>
@@ -176,11 +176,11 @@ export default function AuditsPage() {
           </div>
 
           {/* Detailed Audit Report Panel (2 Columns) */}
-          <div className="lg:col-span-2 p-5 rounded-xl bg-[#111827] border border-slate-800 space-y-6">
+          <div className="lg:col-span-2 p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-6">
             {/* Header info & export */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-800">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-200">
               <div>
-                <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
+                <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
                   <span>{selectedAudit.finalDomain || selectedAudit.businessName}</span>
                   {selectedAudit.status && (
                     <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase">
@@ -199,7 +199,7 @@ export default function AuditsPage() {
               </div>
               <button
                 onClick={handleExportReport}
-                className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-200 flex items-center gap-1.5 transition-colors self-start sm:self-auto border border-slate-700"
+                className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-medium text-slate-800 flex items-center gap-1.5 transition-colors self-start sm:self-auto border border-slate-200"
               >
                 <Download size={13} /> Export Audit JSON
               </button>
@@ -207,49 +207,49 @@ export default function AuditsPage() {
 
             {/* Score Grid (Performance, SEO, Mobile, Design) */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-3.5 rounded-lg bg-slate-900 border border-slate-800 text-center">
+              <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 text-center">
                 <div className="text-xs text-slate-400 flex items-center justify-center gap-1">
                   <Zap size={12} className="text-amber-400" /> Performance
                 </div>
-                <div className="text-xl font-bold text-slate-100 mt-1">
+                <div className="text-xl font-bold text-slate-900 mt-1">
                   {selectedAudit.scores?.performance ?? selectedAudit.scores?.performance}%
                 </div>
               </div>
-              <div className="p-3.5 rounded-lg bg-slate-900 border border-slate-800 text-center">
+              <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 text-center">
                 <div className="text-xs text-slate-400 flex items-center justify-center gap-1">
                   <ShieldCheck size={12} className="text-emerald-400" /> Technical SEO
                 </div>
-                <div className="text-xl font-bold text-slate-100 mt-1">
+                <div className="text-xl font-bold text-slate-900 mt-1">
                   {selectedAudit.scores?.seo}%
                 </div>
               </div>
-              <div className="p-3.5 rounded-lg bg-slate-900 border border-slate-800 text-center">
+              <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 text-center">
                 <div className="text-xs text-slate-400 flex items-center justify-center gap-1">
                   <Smartphone size={12} className="text-sky-400" /> Mobile UX
                 </div>
-                <div className="text-xl font-bold text-slate-100 mt-1">
+                <div className="text-xl font-bold text-slate-900 mt-1">
                   {selectedAudit.scores?.mobile}%
                 </div>
               </div>
-              <div className="p-3.5 rounded-lg bg-slate-900 border border-slate-800 text-center">
+              <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 text-center">
                 <div className="text-xs text-slate-400 flex items-center justify-center gap-1">
                   <Sparkles size={12} className="text-violet-400" /> Visual Design
                 </div>
-                <div className="text-xl font-bold text-slate-100 mt-1">
+                <div className="text-xl font-bold text-slate-900 mt-1">
                   {selectedAudit.scores?.design}%
                 </div>
               </div>
             </div>
 
             {/* Tabs Selector */}
-            <div className="flex border-b border-slate-800 text-xs">
+            <div className="flex border-b border-slate-200 text-xs">
               <button
                 onClick={() => setActiveTab("findings")}
                 className={cn(
                   "px-4 py-2 font-medium border-b-2 transition-colors",
                   activeTab === "findings"
                     ? "border-sky-400 text-sky-400"
-                    : "border-transparent text-slate-400 hover:text-slate-200"
+                    : "border-transparent text-slate-400 hover:text-slate-800"
                 )}
               >
                 Verified Findings ({selectedAudit.issues?.length || 4})
@@ -260,7 +260,7 @@ export default function AuditsPage() {
                   "px-4 py-2 font-medium border-b-2 transition-colors",
                   activeTab === "technologies"
                     ? "border-sky-400 text-sky-400"
-                    : "border-transparent text-slate-400 hover:text-slate-200"
+                    : "border-transparent text-slate-400 hover:text-slate-800"
                 )}
               >
                 Tech Stack ({selectedAudit.technologies?.length || 0})
@@ -271,7 +271,7 @@ export default function AuditsPage() {
                   "px-4 py-2 font-medium border-b-2 transition-colors",
                   activeTab === "pages"
                     ? "border-sky-400 text-sky-400"
-                    : "border-transparent text-slate-400 hover:text-slate-200"
+                    : "border-transparent text-slate-400 hover:text-slate-800"
                 )}
               >
                 Crawled Pages ({selectedAudit.pagesAudited?.length || 1})
@@ -282,7 +282,7 @@ export default function AuditsPage() {
                   "px-4 py-2 font-medium border-b-2 transition-colors",
                   activeTab === "ai_summary"
                     ? "border-sky-400 text-sky-400"
-                    : "border-transparent text-slate-400 hover:text-slate-200"
+                    : "border-transparent text-slate-400 hover:text-slate-800"
                 )}
               >
                 AI Roadmap
@@ -296,10 +296,10 @@ export default function AuditsPage() {
                   selectedAudit.issues.map((issue: any, i: number) => (
                     <div
                       key={issue.id || i}
-                      className="p-3.5 rounded-lg bg-slate-900/80 border border-slate-800 space-y-1.5"
+                      className="p-3.5 rounded-lg bg-slate-50/80 border border-slate-200 space-y-1.5"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
+                        <span className="text-xs font-semibold text-slate-800 flex items-center gap-1.5">
                           <AlertTriangle
                             size={13}
                             className={cn(
@@ -319,35 +319,35 @@ export default function AuditsPage() {
                               ? "bg-rose-500/10 text-rose-400 border border-rose-500/20"
                               : issue.severity === "high"
                               ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                              : "bg-slate-800 text-slate-400"
+                              : "bg-slate-100 text-slate-400"
                           )}
                         >
                           {issue.severity}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-300">{issue.description}</p>
-                      <div className="text-[11px] text-slate-400 bg-slate-950/60 p-2 rounded border border-slate-800/80 font-mono">
+                      <p className="text-xs text-slate-700">{issue.description}</p>
+                      <div className="text-[11px] text-slate-400 bg-slate-50/60 p-2 rounded border border-slate-200 font-mono">
                         <span className="text-slate-500">Evidence:</span> {issue.evidence}
                       </div>
                       <div className="text-[11px] text-emerald-400">
-                        <span className="font-semibold text-slate-300">Suggested Fix:</span> {issue.suggestedImprovement}
+                        <span className="font-semibold text-slate-700">Suggested Fix:</span> {issue.suggestedImprovement}
                       </div>
                     </div>
                   ))
                 ) : (
                   // Fallback for Phase 1 demo reports
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 rounded-lg bg-slate-900 border border-slate-800 space-y-2">
+                    <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-2">
                       <span className="text-xs font-semibold text-amber-400">Performance</span>
-                      <ul className="text-xs text-slate-300 space-y-1">
+                      <ul className="text-xs text-slate-700 space-y-1">
                         {selectedAudit.findings?.performance?.map((f: string, i: number) => (
                           <li key={i}>• {f}</li>
                         ))}
                       </ul>
                     </div>
-                    <div className="p-4 rounded-lg bg-slate-900 border border-slate-800 space-y-2">
+                    <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-2">
                       <span className="text-xs font-semibold text-emerald-400">SEO</span>
-                      <ul className="text-xs text-slate-300 space-y-1">
+                      <ul className="text-xs text-slate-700 space-y-1">
                         {selectedAudit.findings?.seo?.map((f: string, i: number) => (
                           <li key={i}>• {f}</li>
                         ))}
@@ -364,9 +364,9 @@ export default function AuditsPage() {
                 {selectedAudit.technologies && selectedAudit.technologies.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {selectedAudit.technologies.map((tech: any, i: number) => (
-                      <div key={i} className="p-3 rounded-lg bg-slate-900 border border-slate-800 space-y-1">
+                      <div key={i} className="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-semibold text-white">{tech.name}</span>
+                          <span className="text-xs font-semibold text-slate-900">{tech.name}</span>
                           <span className="text-[10px] px-1.5 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/20">
                             {tech.category}
                           </span>
@@ -388,9 +388,9 @@ export default function AuditsPage() {
               <div className="space-y-2">
                 {selectedAudit.pagesAudited && selectedAudit.pagesAudited.length > 0 ? (
                   selectedAudit.pagesAudited.map((p: any, i: number) => (
-                    <div key={i} className="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between">
+                    <div key={i} className="p-3 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
                       <div>
-                        <div className="text-xs font-semibold text-slate-200 capitalize">{p.pageType} Page</div>
+                        <div className="text-xs font-semibold text-slate-800 capitalize">{p.pageType} Page</div>
                         <div className="text-[11px] font-mono text-slate-400 truncate max-w-md">{p.url}</div>
                       </div>
                       <div className="text-right text-[11px]">
@@ -412,18 +412,18 @@ export default function AuditsPage() {
             {/* Tab 4: AI Summary & Roadmap */}
             {activeTab === "ai_summary" && (
               <div className="space-y-4">
-                <div className="p-4 rounded-lg bg-slate-900 border border-slate-800 space-y-2">
+                <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-2">
                   <h5 className="text-xs font-semibold text-sky-400 flex items-center gap-1.5">
                     <Sparkles size={14} /> Executive AI Summary
                   </h5>
-                  <p className="text-xs text-slate-300 leading-relaxed">
+                  <p className="text-xs text-slate-700 leading-relaxed">
                     {selectedAudit.aiSummary?.executiveSummary || "Audit results indicate high potential for frontend modernization and Core Web Vitals optimization."}
                   </p>
                 </div>
 
-                <div className="p-4 rounded-lg bg-slate-900 border border-slate-800 space-y-2">
-                  <h5 className="text-xs font-semibold text-slate-200">Recommended BrightLoop Modernization Roadmap</h5>
-                  <ol className="list-decimal list-inside space-y-1.5 text-xs text-slate-300">
+                <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-2">
+                  <h5 className="text-xs font-semibold text-slate-800">Recommended BrightLoop Modernization Roadmap</h5>
+                  <ol className="list-decimal list-inside space-y-1.5 text-xs text-slate-700">
                     {(selectedAudit.aiSummary?.suggestedRoadmap || [
                       "Migrate legacy pages to Next.js App Router",
                       "Implement mobile responsive viewport guidelines",
@@ -444,9 +444,9 @@ export default function AuditsPage() {
               <div className="space-y-2">
                 {(selectedAudit.serviceRecommendations || []).length > 0 ? (
                   selectedAudit.serviceRecommendations.map((svc: any, i: number) => (
-                    <div key={i} className="p-2.5 rounded bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+                    <div key={i} className="p-2.5 rounded bg-slate-50/80 border border-slate-200 flex items-center justify-between">
                       <div>
-                        <div className="text-xs font-semibold text-white">{svc.serviceName}</div>
+                        <div className="text-xs font-semibold text-slate-900">{svc.serviceName}</div>
                         <div className="text-[11px] text-slate-400">{svc.reason}</div>
                       </div>
                       <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-sky-500/10 text-sky-400 border border-sky-500/20">

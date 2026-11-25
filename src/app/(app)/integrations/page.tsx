@@ -121,7 +121,7 @@ export default function IntegrationsPage() {
   });
 
   return (
-    <div className="flex-1 flex flex-col bg-[#0b0f19] text-slate-100 min-h-screen">
+    <div className="flex-1 flex flex-col bg-[#f8fafc] text-slate-900 min-h-screen">
       <TopHeader
         title="Integrations Hub & API Management"
         description="Centralized catalog, credential encryption at rest, health check probes, and verified webhook gateways"
@@ -129,14 +129,14 @@ export default function IntegrationsPage() {
 
       <main className="p-6 space-y-6 max-w-7xl mx-auto w-full">
         {/* Security & Health Banner */}
-        <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="p-4 rounded-xl bg-white border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-400">
               <ShieldCheck size={22} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-sm font-semibold text-white">Central Security & Credential Governance</h2>
+                <h2 className="text-sm font-semibold text-slate-900">Central Security & Credential Governance</h2>
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
                   AES-256-GCM Encrypted
                 </span>
@@ -149,7 +149,7 @@ export default function IntegrationsPage() {
 
           <button
             onClick={fetchIntegrations}
-            className="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 font-medium flex items-center gap-2 border border-slate-700 transition-colors"
+            className="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs text-slate-700 font-medium flex items-center gap-2 border border-slate-200 transition-colors"
           >
             <RefreshCw size={13} className={loading ? "animate-spin" : ""} /> Refresh Catalog
           </button>
@@ -169,14 +169,14 @@ export default function IntegrationsPage() {
                 <strong>[{testResult.providerId}]</strong> {testResult.message} ({testResult.latencyMs}ms)
               </span>
             </div>
-            <button onClick={() => setTestResult(null)} className="text-slate-400 hover:text-white">
+            <button onClick={() => setTestResult(null)} className="text-slate-400 hover:text-slate-900">
               <X size={14} />
             </button>
           </div>
         )}
 
         {/* Category Filters */}
-        <div className="flex items-center gap-2 border-b border-slate-800 pb-3 overflow-x-auto">
+        <div className="flex items-center gap-2 border-b border-slate-200 pb-3 overflow-x-auto">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -185,7 +185,7 @@ export default function IntegrationsPage() {
                 "px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-all whitespace-nowrap",
                 selectedCategory === cat
                   ? "bg-sky-500/10 text-sky-400 border border-sky-500/20"
-                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-900"
+                  : "text-slate-400 hover:text-slate-800 hover:bg-slate-50"
               )}
             >
               {cat === "All" ? "All Providers (11)" : cat}
@@ -200,7 +200,7 @@ export default function IntegrationsPage() {
             return (
               <div
                 key={item.providerId}
-                className="p-5 rounded-xl bg-[#111827] border border-slate-800 flex flex-col justify-between hover:border-slate-700 transition-all space-y-4 shadow-sm"
+                className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 flex flex-col justify-between hover:border-slate-200 transition-all space-y-4 shadow-sm"
               >
                 <div>
                   <div className="flex items-center justify-between">
@@ -214,7 +214,7 @@ export default function IntegrationsPage() {
                           ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
                           : item.status === "error"
                           ? "bg-red-500/10 text-red-400 border border-red-500/20"
-                          : "bg-slate-800 text-slate-400 border border-slate-700"
+                          : "bg-slate-100 text-slate-400 border border-slate-200"
                       )}
                     >
                       {item.status}
@@ -235,7 +235,7 @@ export default function IntegrationsPage() {
                         <Server size={16} />
                       )}
                     </div>
-                    <h3 className="text-sm font-semibold text-slate-100">{item.name}</h3>
+                    <h3 className="text-sm font-semibold text-slate-900">{item.name}</h3>
                   </div>
 
                   <p className="text-xs text-slate-400 mt-2 leading-relaxed line-clamp-2">
@@ -243,10 +243,10 @@ export default function IntegrationsPage() {
                   </p>
 
                   {/* Masked Secret Telemetry */}
-                  <div className="mt-3.5 p-2.5 rounded-lg bg-slate-900/60 border border-slate-800/80 space-y-1.5 text-[11px] font-mono">
+                  <div className="mt-3.5 p-2.5 rounded-lg bg-slate-50 border border-slate-200 space-y-1.5 text-[11px] font-mono">
                     <div className="flex justify-between items-center text-slate-400">
                       <span>Auth Type:</span>
-                      <span className="text-slate-300 capitalize">{prov?.authType || "API Key"}</span>
+                      <span className="text-slate-700 capitalize">{prov?.authType || "API Key"}</span>
                     </div>
                     <div className="flex justify-between items-center text-slate-400">
                       <span>Stored Key:</span>
@@ -259,11 +259,11 @@ export default function IntegrationsPage() {
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between gap-2">
+                <div className="pt-2 border-t border-slate-200 flex items-center justify-between gap-2">
                   <button
                     onClick={() => handleTestConnection(item.providerId)}
                     disabled={testingProvider === item.providerId}
-                    className="flex-1 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50"
+                    className="flex-1 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50"
                   >
                     <Play size={12} className={testingProvider === item.providerId ? "animate-spin" : ""} />
                     {testingProvider === item.providerId ? "Testing..." : "Test Connection"}
@@ -288,15 +288,15 @@ export default function IntegrationsPage() {
         {/* Modal: Configure Encrypted Credential */}
         {selectedProvider && (
           <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="w-full max-w-md bg-[#111827] border border-slate-800 rounded-xl p-5 space-y-4 shadow-2xl">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+            <div className="w-full max-w-md bg-white shadow-2xs border border-slate-200 rounded-xl p-5 space-y-4 shadow-2xl">
+              <div className="flex items-center justify-between border-b border-slate-200 pb-3">
                 <div className="flex items-center gap-2">
                   <Lock size={16} className="text-sky-400" />
-                  <h3 className="text-sm font-semibold text-white">Configure {selectedProvider.name}</h3>
+                  <h3 className="text-sm font-semibold text-slate-900">Configure {selectedProvider.name}</h3>
                 </div>
                 <button
                   onClick={() => setSelectedProvider(null)}
-                  className="text-slate-400 hover:text-white"
+                  className="text-slate-400 hover:text-slate-900"
                 >
                   <X size={16} />
                 </button>
@@ -308,21 +308,21 @@ export default function IntegrationsPage() {
                 </p>
 
                 <div className="space-y-1">
-                  <label className="text-[11px] font-semibold text-slate-300">New Secret / API Token</label>
+                  <label className="text-[11px] font-semibold text-slate-700">New Secret / API Token</label>
                   <input
                     type="password"
                     placeholder="Enter secret (e.g. sk-proj-...)"
                     value={credentialInput}
                     onChange={(e) => setCredentialInput(e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-100 placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-sky-500"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-sky-500"
                   />
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-200">
                 <button
                   onClick={() => setSelectedProvider(null)}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200"
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-800"
                 >
                   Cancel
                 </button>

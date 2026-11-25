@@ -54,7 +54,7 @@ export default function ReportsPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-[#0b0f19] text-slate-100 min-h-screen">
+    <div className="flex-1 flex flex-col bg-[#f8fafc] text-slate-900 min-h-screen">
       <TopHeader
         title="Reports & Executive Exports"
         description="Download ready-to-present digests of client acquisition pipelines, site audits, and campaigns"
@@ -69,7 +69,7 @@ export default function ReportsPage() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-sm font-semibold text-white">Printable Executive Performance Digest (PDF Ready)</h3>
+                <h3 className="text-sm font-semibold text-slate-900">Printable Executive Performance Digest (PDF Ready)</h3>
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-sky-500/20 text-sky-300 border border-sky-500/30">
                   HTML / PDF
                 </span>
@@ -91,8 +91,8 @@ export default function ReportsPage() {
         </div>
 
         {/* Generated Reports List */}
-        <div className="p-5 rounded-xl bg-[#111827] border border-slate-800 space-y-4">
-          <h3 className="text-sm font-semibold text-slate-100 flex items-center gap-2">
+        <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4">
+          <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
             <FileText size={16} className="text-sky-400" /> Exportable Data Digests & Audit Sheets
           </h3>
 
@@ -100,14 +100,14 @@ export default function ReportsPage() {
             {reports.map((r) => (
               <div
                 key={r.id}
-                className="p-4 rounded-lg bg-slate-900 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-slate-700 transition-colors"
+                className="p-4 rounded-lg bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-slate-200 transition-colors"
               >
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">{r.category}</span>
-                    <span className="text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 border border-slate-700">{r.format}</span>
+                    <span className="text-[10px] px-1.5 py-0.2 rounded bg-slate-100 text-slate-700 border border-slate-200">{r.format}</span>
                   </div>
-                  <h4 className="text-xs font-semibold text-white mt-1">{r.title}</h4>
+                  <h4 className="text-xs font-semibold text-slate-900 mt-1">{r.title}</h4>
                   <p className="text-xs text-slate-400 mt-0.5">{r.summary}</p>
                   <div className="text-[10px] text-slate-500 mt-1 flex items-center gap-2">
                     <span>{r.date}</span>

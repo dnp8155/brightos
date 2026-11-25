@@ -137,7 +137,7 @@ export default function EmailStudioPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-[#0b0f19] text-slate-100 min-h-screen">
+    <div className="flex-1 flex flex-col bg-[#f8fafc] text-slate-900 min-h-screen">
       <TopHeader
         title="AI Email Studio & Pitch Generator"
         description="Craft hyper-personalized, evidence-backed sales outreach using verified website audit findings and tone controls"
@@ -150,19 +150,19 @@ export default function EmailStudioPage() {
               <CheckCircle2 size={15} />
               <span>{notification}</span>
             </div>
-            <button onClick={() => setNotification(null)} className="text-slate-400 hover:text-white">✕</button>
+            <button onClick={() => setNotification(null)} className="text-slate-400 hover:text-slate-900">✕</button>
           </div>
         )}
 
         {/* Configuration Bar */}
-        <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 grid grid-cols-1 sm:grid-cols-4 gap-4 items-center">
+        <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 grid grid-cols-1 sm:grid-cols-4 gap-4 items-center">
           {/* Target Business Selection */}
           <div className="space-y-1">
             <label className="text-[11px] font-medium text-slate-400">Target Prospect</label>
             <select
               value={selectedLead.id || selectedLead.businessName}
               onChange={(e) => handleLeadChange(e.target.value)}
-              className="w-full px-3 py-1.5 rounded bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-sky-500"
+              className="w-full px-3 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-sky-500"
             >
               {leads.map((l: any, i: number) => (
                 <option key={l.id || i} value={l.id || l.businessName}>
@@ -178,7 +178,7 @@ export default function EmailStudioPage() {
             <select
               value={selectedService}
               onChange={(e) => setSelectedService(e.target.value as any)}
-              className="w-full px-3 py-1.5 rounded bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-sky-500"
+              className="w-full px-3 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-sky-500"
             >
               <option value="website-redesign">Modern Website Redesign</option>
               <option value="website-development">Next.js Frontend Modernization</option>
@@ -194,7 +194,7 @@ export default function EmailStudioPage() {
             <select
               value={selectedTone}
               onChange={(e) => setSelectedTone(e.target.value as any)}
-              className="w-full px-3 py-1.5 rounded bg-slate-950 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-sky-500 capitalize"
+              className="w-full px-3 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-sky-500 capitalize"
             >
               <option value="professional">Professional</option>
               <option value="consultative">Consultative</option>
@@ -209,7 +209,7 @@ export default function EmailStudioPage() {
             <button
               onClick={handleGenerate}
               disabled={isGenerating}
-              className="w-full py-2 rounded-lg bg-sky-500 hover:bg-sky-600 disabled:opacity-50 text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-sm"
+              className="w-full py-2 rounded-lg bg-sky-500 hover:bg-sky-600 disabled:opacity-50 text-slate-900 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-sm"
             >
               {isGenerating ? (
                 <>
@@ -229,17 +229,17 @@ export default function EmailStudioPage() {
         {/* 2-Column Editor & Envelope Preview */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Editor Form */}
-          <div className="p-5 rounded-xl bg-[#111827] border border-slate-800 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+          <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200">
               <div className="flex items-center gap-2">
                 <Mail size={16} className="text-sky-400" />
-                <h3 className="text-sm font-semibold text-slate-100">Email Draft Editor</h3>
+                <h3 className="text-sm font-semibold text-slate-900">Email Draft Editor</h3>
               </div>
               <div className="flex items-center gap-2">
                 {versions.length > 0 && (
                   <button
                     onClick={() => setShowVersions(!showVersions)}
-                    className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[11px] text-slate-300 flex items-center gap-1"
+                    className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-[11px] text-slate-700 flex items-center gap-1"
                   >
                     <History size={12} />
                     <span>Versions ({versions.length})</span>
@@ -247,7 +247,7 @@ export default function EmailStudioPage() {
                 )}
                 <button
                   onClick={() => handleSaveDraft(false)}
-                  className="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-200 flex items-center gap-1.5"
+                  className="px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-medium text-slate-800 flex items-center gap-1.5"
                 >
                   <Save size={13} /> Save Draft
                 </button>
@@ -262,17 +262,17 @@ export default function EmailStudioPage() {
 
             {/* Version History Drawer (if opened) */}
             {showVersions && versions.length > 0 && (
-              <div className="p-3 rounded-lg bg-slate-900 border border-slate-800 space-y-2">
+              <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-2">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Version History</span>
                 <div className="space-y-1.5 max-h-32 overflow-y-auto">
                   {versions.map((v) => (
                     <div
                       key={v.versionNumber}
                       onClick={() => restoreVersion(v)}
-                      className="p-2 rounded bg-slate-950 border border-slate-800/80 flex items-center justify-between text-xs cursor-pointer hover:border-sky-500 transition-colors"
+                      className="p-2 rounded bg-slate-50 border border-slate-200 flex items-center justify-between text-xs cursor-pointer hover:border-sky-500 transition-colors"
                     >
                       <div className="truncate pr-2">
-                        <span className="font-semibold text-slate-200">v{v.versionNumber}:</span> {v.subject}
+                        <span className="font-semibold text-slate-800">v{v.versionNumber}:</span> {v.subject}
                       </div>
                       <span className="text-[10px] text-slate-500 shrink-0">Restore</span>
                     </div>
@@ -288,7 +288,7 @@ export default function EmailStudioPage() {
                 type="text"
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                className="w-full px-3 py-2 rounded bg-slate-900 border border-slate-800 text-xs text-slate-100 focus:outline-none focus:border-sky-500"
+                className="w-full px-3 py-2 rounded bg-slate-50 border border-slate-200 text-xs text-slate-900 focus:outline-none focus:border-sky-500"
               />
             </div>
 
@@ -302,21 +302,21 @@ export default function EmailStudioPage() {
                 rows={14}
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
-                className="w-full px-3 py-2.5 rounded bg-slate-900 border border-slate-800 text-xs font-mono text-slate-200 focus:outline-none focus:border-sky-500 leading-relaxed"
+                className="w-full px-3 py-2.5 rounded bg-slate-50 border border-slate-200 text-xs font-mono text-slate-800 focus:outline-none focus:border-sky-500 leading-relaxed"
               />
             </div>
 
-            <div className="p-2.5 rounded bg-slate-900/60 border border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
+            <div className="p-2.5 rounded bg-slate-50 border border-slate-200 text-[11px] text-slate-400 flex items-center justify-between">
               <span>Status: <strong className={approvalStatus === "approved" ? "text-emerald-400" : "text-amber-400"}>{approvalStatus.toUpperCase()}</strong></span>
               <span className="text-slate-500">Live sending deactivated in Phase 5</span>
             </div>
           </div>
 
           {/* Interactive Live Email Envelope Preview */}
-          <div className="p-5 rounded-xl bg-[#111827] border border-slate-800 space-y-4 flex flex-col justify-between">
+          <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4 flex flex-col justify-between">
             <div className="space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-                <h3 className="text-sm font-semibold text-slate-100 flex items-center gap-2">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+                <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
                   <Eye size={16} className="text-emerald-400" /> Recipient Inbox Preview
                 </h3>
                 <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
@@ -325,31 +325,31 @@ export default function EmailStudioPage() {
               </div>
 
               {/* Envelope Container */}
-              <div className="rounded-xl bg-slate-900 border border-slate-800 p-5 space-y-4 shadow-inner">
-                <div className="space-y-1 text-xs border-b border-slate-800/80 pb-3">
+              <div className="rounded-xl bg-slate-50 border border-slate-200 p-5 space-y-4 shadow-inner">
+                <div className="space-y-1 text-xs border-b border-slate-200 pb-3">
                   <div className="flex gap-2 text-slate-400">
                     <span className="w-16 text-slate-500">To:</span>
-                    <span className="text-slate-200 font-mono">
+                    <span className="text-slate-800 font-mono">
                       {selectedLead.contact?.email || selectedLead.contacts?.[0]?.email || "contact@target-domain.com"}
                     </span>
                   </div>
                   <div className="flex gap-2 text-slate-400">
                     <span className="w-16 text-slate-500">From:</span>
-                    <span className="text-slate-200">BrightLoop Technology &lt;outreach@brightloop.ai&gt;</span>
+                    <span className="text-slate-800">BrightLoop Technology &lt;outreach@brightloop.ai&gt;</span>
                   </div>
                   <div className="flex gap-2 text-slate-400 pt-1">
                     <span className="w-16 text-slate-500">Subject:</span>
-                    <span className="text-white font-semibold">{subject}</span>
+                    <span className="text-slate-900 font-semibold">{subject}</span>
                   </div>
                 </div>
 
-                <div className="pt-1 text-xs text-slate-200 whitespace-pre-line leading-relaxed font-sans max-h-96 overflow-y-auto">
+                <div className="pt-1 text-xs text-slate-800 whitespace-pre-line leading-relaxed font-sans max-h-96 overflow-y-auto">
                   {body}
                 </div>
               </div>
             </div>
 
-            <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-800 text-[11px] text-slate-400 space-y-1">
+            <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-[11px] text-slate-400 space-y-1">
               <div className="flex items-center gap-1.5 text-emerald-400 font-medium">
                 <CheckCircle2 size={13} />
                 <span>CAN-SPAM Opt-Out & Address Included</span>

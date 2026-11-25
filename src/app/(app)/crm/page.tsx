@@ -148,7 +148,7 @@ export default function CRMPage() {
   const totalPipelineValue = deals.reduce((acc, d) => acc + d.dealValue, 0);
 
   return (
-    <div className="flex-1 flex flex-col bg-[#0b0f19] text-slate-100 min-h-screen">
+    <div className="flex-1 flex flex-col bg-[#f8fafc] text-slate-900 min-h-screen">
       <TopHeader
         title="CRM Intelligence & Sales Pipeline Management"
         description="Comprehensive client conversion management with drag-and-drop Kanban, meeting tracker, proposal ledger, and revenue forecasting"
@@ -161,21 +161,21 @@ export default function CRMPage() {
               <CheckCircle2 size={15} />
               <span>{notification}</span>
             </div>
-            <button onClick={() => setNotification(null)} className="text-slate-400 hover:text-white">✕</button>
+            <button onClick={() => setNotification(null)} className="text-slate-400 hover:text-slate-900">✕</button>
           </div>
         )}
 
         {/* Pipeline Analytics Strip */}
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-          <div className="p-4 rounded-xl bg-[#111827] border border-slate-800">
+          <div className="p-4 rounded-xl bg-white shadow-2xs border border-slate-200">
             <span className="text-xs text-slate-400">Total Pipeline Value</span>
-            <div className="text-2xl font-bold text-white mt-1">
+            <div className="text-2xl font-bold text-slate-900 mt-1">
               ${totalPipelineValue.toLocaleString()}
             </div>
             <span className="text-[11px] text-sky-400 mt-1 inline-block">Across all 10 stages</span>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#111827] border border-slate-800">
+          <div className="p-4 rounded-xl bg-white shadow-2xs border border-slate-200">
             <span className="text-xs text-slate-400">Active Opportunities</span>
             <div className="text-2xl font-bold text-sky-400 mt-1">
               {deals.filter((d) => d.stage !== "Won" && d.stage !== "Lost").length}
@@ -183,7 +183,7 @@ export default function CRMPage() {
             <span className="text-[11px] text-slate-400 mt-1 inline-block">Prospects in motion</span>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#111827] border border-slate-800">
+          <div className="p-4 rounded-xl bg-white shadow-2xs border border-slate-200">
             <span className="text-xs text-slate-400">Proposals in Review</span>
             <div className="text-2xl font-bold text-indigo-400 mt-1">
               {deals.filter((d) => d.stage === "Proposal Sent" || d.stage === "Negotiation").length}
@@ -191,7 +191,7 @@ export default function CRMPage() {
             <span className="text-[11px] text-emerald-400 mt-1 inline-block">High probability</span>
           </div>
 
-          <div className="p-4 rounded-xl bg-[#111827] border border-slate-800">
+          <div className="p-4 rounded-xl bg-white shadow-2xs border border-slate-200">
             <span className="text-xs text-slate-400">Won Conversion Revenue</span>
             <div className="text-2xl font-bold text-emerald-400 mt-1">
               ${deals.filter((d) => d.stage === "Won").reduce((acc, d) => acc + d.dealValue, 0).toLocaleString()}
@@ -201,7 +201,7 @@ export default function CRMPage() {
         </div>
 
         {/* Toolbar: Search, Filters & View Toggle */}
-        <div className="p-4 rounded-xl bg-[#111827] border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="p-4 rounded-xl bg-white shadow-2xs border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="relative w-full sm:w-80">
             <Search size={14} className="absolute left-3 top-2.5 text-slate-500" />
             <input
@@ -209,7 +209,7 @@ export default function CRMPage() {
               placeholder="Search companies, contacts, domains..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-8 pr-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500"
+              className="w-full pl-8 pr-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-800 placeholder-slate-500 focus:outline-none focus:border-sky-500"
             />
           </div>
 
@@ -219,7 +219,7 @@ export default function CRMPage() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:outline-none"
+                className="px-2.5 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none"
               >
                 <option value="All">All Stages</option>
                 {PIPELINE_STAGES.map((s) => (
@@ -229,12 +229,12 @@ export default function CRMPage() {
             </div>
 
             {/* View Switcher */}
-            <div className="flex items-center rounded-lg bg-slate-900 border border-slate-800 p-0.5">
+            <div className="flex items-center rounded-lg bg-slate-50 border border-slate-200 p-0.5">
               <button
                 onClick={() => setViewMode("kanban")}
                 className={cn(
                   "px-2.5 py-1 rounded text-xs font-medium flex items-center gap-1 transition-colors",
-                  viewMode === "kanban" ? "bg-sky-500 text-white" : "text-slate-400 hover:text-white"
+                  viewMode === "kanban" ? "bg-sky-500 text-slate-900" : "text-slate-400 hover:text-slate-900"
                 )}
               >
                 <Kanban size={13} /> Kanban
@@ -243,7 +243,7 @@ export default function CRMPage() {
                 onClick={() => setViewMode("table")}
                 className={cn(
                   "px-2.5 py-1 rounded text-xs font-medium flex items-center gap-1 transition-colors",
-                  viewMode === "table" ? "bg-sky-500 text-white" : "text-slate-400 hover:text-white"
+                  viewMode === "table" ? "bg-sky-500 text-slate-900" : "text-slate-400 hover:text-slate-900"
                 )}
               >
                 <Table size={13} /> Table
@@ -267,15 +267,15 @@ export default function CRMPage() {
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                         className={cn(
-                          "w-72 shrink-0 rounded-xl bg-[#111827] border p-3 flex flex-col min-h-[500px] transition-colors",
-                          snapshot.isDraggingOver ? "border-sky-500/60 bg-sky-500/5" : "border-slate-800"
+                          "w-72 shrink-0 rounded-xl bg-white shadow-2xs border p-3 flex flex-col min-h-[500px] transition-colors",
+                          snapshot.isDraggingOver ? "border-sky-500/60 bg-sky-500/5" : "border-slate-200"
                         )}
                       >
                         {/* Stage Column Header */}
-                        <div className="flex items-center justify-between pb-2 border-b border-slate-800 mb-3">
+                        <div className="flex items-center justify-between pb-2 border-b border-slate-200 mb-3">
                           <div className="flex items-center gap-1.5">
-                            <span className="text-xs font-bold text-slate-200">{stage}</span>
-                            <span className="px-1.5 py-0.2 rounded bg-slate-800 text-[10px] text-slate-400 font-medium">
+                            <span className="text-xs font-bold text-slate-800">{stage}</span>
+                            <span className="px-1.5 py-0.2 rounded bg-slate-100 text-[10px] text-slate-400 font-medium">
                               {stageDeals.length}
                             </span>
                           </div>
@@ -295,13 +295,13 @@ export default function CRMPage() {
                                   {...dragProvided.dragHandleProps}
                                   onClick={() => setSelectedDeal(deal)}
                                   className={cn(
-                                    "p-3 rounded-lg bg-slate-900 border cursor-pointer transition-all space-y-2 shadow-sm",
-                                    dragSnapshot.isDragging ? "shadow-2xl border-sky-400 ring-2 ring-sky-500/20" : "border-slate-800 hover:border-slate-700",
+                                    "p-3 rounded-lg bg-slate-50 border cursor-pointer transition-all space-y-2 shadow-sm",
+                                    dragSnapshot.isDragging ? "shadow-2xl border-sky-400 ring-2 ring-sky-500/20" : "border-slate-200 hover:border-slate-200",
                                     selectedDeal?.id === deal.id && "border-sky-500/50 bg-sky-500/5"
                                   )}
                                 >
                                   <div className="flex items-start justify-between gap-1">
-                                    <div className="text-xs font-semibold text-white leading-tight">
+                                    <div className="text-xs font-semibold text-slate-900 leading-tight">
                                       {deal.businessName}
                                     </div>
                                     <span className="text-[10px] font-bold text-sky-400 shrink-0">
@@ -313,7 +313,7 @@ export default function CRMPage() {
                                     {deal.primaryContact.name} &bull; {deal.primaryContact.role}
                                   </div>
 
-                                  <div className="flex items-center justify-between pt-1 border-t border-slate-800/80 text-[10px]">
+                                  <div className="flex items-center justify-between pt-1 border-t border-slate-200 text-[10px]">
                                     <span className="text-emerald-400 font-semibold">
                                       ${deal.dealValue.toLocaleString()}
                                     </span>
@@ -336,10 +336,10 @@ export default function CRMPage() {
           </DragDropContext>
         ) : (
           /* View 2: Traditional Tabular CRM */
-          <div className="p-5 rounded-xl bg-[#111827] border border-slate-800 overflow-x-auto">
+          <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 font-semibold">
+                <tr className="border-b border-slate-200 text-slate-400 font-semibold">
                   <th className="pb-3 px-3">Company</th>
                   <th className="pb-3 px-3">Primary Contact</th>
                   <th className="pb-3 px-3">Stage</th>
@@ -354,27 +354,27 @@ export default function CRMPage() {
                     key={deal.id}
                     onClick={() => setSelectedDeal(deal)}
                     className={cn(
-                      "hover:bg-slate-800/30 cursor-pointer transition-colors",
+                      "hover:bg-slate-100/30 cursor-pointer transition-colors",
                       selectedDeal?.id === deal.id && "bg-sky-500/10"
                     )}
                   >
                     <td className="py-3 px-3">
-                      <div className="font-semibold text-slate-100">{deal.businessName}</div>
+                      <div className="font-semibold text-slate-900">{deal.businessName}</div>
                       <div className="text-[10px] text-slate-400">{deal.domain} &bull; {deal.country}</div>
                     </td>
                     <td className="py-3 px-3">
-                      <div className="text-slate-200">{deal.primaryContact.name}</div>
+                      <div className="text-slate-800">{deal.primaryContact.name}</div>
                       <div className="text-[10px] text-slate-400">{deal.primaryContact.email}</div>
                     </td>
                     <td className="py-3 px-3">
-                      <span className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300 text-[11px]">
+                      <span className="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 text-[11px]">
                         {deal.stage}
                       </span>
                     </td>
                     <td className="py-3 px-3 font-semibold text-emerald-400">
                       ${deal.dealValue.toLocaleString()}
                     </td>
-                    <td className="py-3 px-3 text-slate-300 max-w-xs truncate">
+                    <td className="py-3 px-3 text-slate-700 max-w-xs truncate">
                       {deal.targetService}
                     </td>
                     <td className="py-3 px-3 text-right">
@@ -397,13 +397,13 @@ export default function CRMPage() {
 
         {/* Comprehensive Business Profile Drawer */}
         {selectedDeal && (
-          <div className="fixed inset-y-0 right-0 w-full max-w-lg bg-[#0f172a] border-l border-slate-800 shadow-2xl p-6 z-50 flex flex-col justify-between overflow-y-auto">
+          <div className="fixed inset-y-0 right-0 w-full max-w-lg bg-[#0f172a] border-l border-slate-200 shadow-2xl p-6 z-50 flex flex-col justify-between overflow-y-auto">
             <div className="space-y-6">
               {/* Drawer Header */}
-              <div className="flex items-start justify-between pb-4 border-b border-slate-800">
+              <div className="flex items-start justify-between pb-4 border-b border-slate-200">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h2 className="text-base font-bold text-white">
+                    <h2 className="text-base font-bold text-slate-900">
                       {selectedDeal.businessName}
                     </h2>
                     <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-500/10 text-sky-400 border border-sky-500/20">
@@ -421,14 +421,14 @@ export default function CRMPage() {
                 </div>
                 <button
                   onClick={() => setSelectedDeal(null)}
-                  className="p-1 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                  className="p-1 rounded-md text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors"
                 >
                   <X size={18} />
                 </button>
               </div>
 
               {/* Deal Value Strip */}
-              <div className="p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-between">
+              <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
                 <div>
                   <div className="text-[11px] text-slate-400">Estimated Deal Value</div>
                   <div className="text-lg font-bold text-emerald-400 mt-0.5">
@@ -444,9 +444,9 @@ export default function CRMPage() {
               </div>
 
               {/* Contact Information */}
-              <div className="p-3.5 rounded-lg bg-slate-900/80 border border-slate-800 space-y-2">
-                <span className="text-xs font-semibold text-slate-200">Decision Maker Profile</span>
-                <div className="text-xs text-slate-100 font-medium">
+              <div className="p-3.5 rounded-lg bg-slate-50/80 border border-slate-200 space-y-2">
+                <span className="text-xs font-semibold text-slate-800">Decision Maker Profile</span>
+                <div className="text-xs text-slate-900 font-medium">
                   {selectedDeal.primaryContact.name} &bull; {selectedDeal.primaryContact.role}
                 </div>
                 <div className="space-y-1 text-xs text-slate-400">
@@ -464,15 +464,15 @@ export default function CRMPage() {
               </div>
 
               {/* Proposal Management Section */}
-              <div className="p-4 rounded-lg bg-slate-900/80 border border-slate-800 space-y-3">
+              <div className="p-4 rounded-lg bg-slate-50/80 border border-slate-200 space-y-3">
                 <span className="text-xs font-semibold text-sky-400 flex items-center gap-1.5">
                   <Briefcase size={14} /> Commercial Proposal Tracking
                 </span>
 
                 {selectedDeal.proposal ? (
-                  <div className="p-3 rounded bg-slate-950 border border-slate-800 space-y-1 text-xs">
+                  <div className="p-3 rounded bg-slate-50 border border-slate-200 space-y-1 text-xs">
                     <div className="flex items-center justify-between">
-                      <span className="font-semibold text-white">{selectedDeal.proposal.service}</span>
+                      <span className="font-semibold text-slate-900">{selectedDeal.proposal.service}</span>
                       <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                         {selectedDeal.proposal.status}
                       </span>
@@ -491,7 +491,7 @@ export default function CRMPage() {
                           type="number"
                           value={proposalAmount}
                           onChange={(e) => setProposalAmount(Number(e.target.value))}
-                          className="w-full px-2.5 py-1.5 rounded bg-slate-950 border border-slate-800 text-xs text-white"
+                          className="w-full px-2.5 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-900"
                         />
                       </div>
                       <div className="space-y-1">
@@ -499,7 +499,7 @@ export default function CRMPage() {
                         <select
                           value={proposalCurrency}
                           onChange={(e) => setProposalCurrency(e.target.value)}
-                          className="w-full px-2.5 py-1.5 rounded bg-slate-950 border border-slate-800 text-xs text-white"
+                          className="w-full px-2.5 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-900"
                         >
                           <option value="USD">USD ($)</option>
                           <option value="EUR">EUR (€)</option>
@@ -510,7 +510,7 @@ export default function CRMPage() {
                     </div>
                     <button
                       onClick={handleCreateProposal}
-                      className="w-full py-1.5 rounded bg-sky-500 hover:bg-sky-600 text-white text-xs font-semibold"
+                      className="w-full py-1.5 rounded bg-sky-500 hover:bg-sky-600 text-slate-900 text-xs font-semibold"
                     >
                       Record Formal Proposal
                     </button>
@@ -523,7 +523,7 @@ export default function CRMPage() {
                 <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
                   Deal Notes & Activity Timeline
                 </span>
-                <div className="p-3 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300 whitespace-pre-line max-h-36 overflow-y-auto">
+                <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 whitespace-pre-line max-h-36 overflow-y-auto">
                   {selectedDeal.notes || "No notes logged for this deal."}
                 </div>
 
@@ -533,11 +533,11 @@ export default function CRMPage() {
                     placeholder="Add meeting notes or call log..."
                     value={noteDraft}
                     onChange={(e) => setNoteDraft(e.target.value)}
-                    className="flex-1 px-3 py-1.5 rounded bg-slate-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500"
+                    className="flex-1 px-3 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-800 placeholder-slate-500 focus:outline-none focus:border-sky-500"
                   />
                   <button
                     onClick={handleAddNote}
-                    className="px-3 py-1.5 rounded bg-sky-500 hover:bg-sky-600 text-white text-xs font-medium flex items-center gap-1"
+                    className="px-3 py-1.5 rounded bg-sky-500 hover:bg-sky-600 text-slate-900 text-xs font-medium flex items-center gap-1"
                   >
                     <Save size={13} /> Save
                   </button>
@@ -545,13 +545,13 @@ export default function CRMPage() {
               </div>
             </div>
 
-            <div className="pt-6 border-t border-slate-800 flex justify-between items-center">
+            <div className="pt-6 border-t border-slate-200 flex justify-between items-center">
               <span className="text-[10px] text-slate-500">
                 Last Activity: {selectedDeal.lastActivityAt.split("T")[0]}
               </span>
               <button
                 onClick={() => setSelectedDeal(null)}
-                className="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 transition-colors"
+                className="px-4 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs text-slate-800 transition-colors"
               >
                 Close Profile
               </button>

@@ -45,12 +45,12 @@ export default function InboxPage() {
       case "Question":
         return "bg-violet-500/10 text-violet-400 border-violet-500/20";
       default:
-        return "bg-slate-800 text-slate-400 border-slate-700";
+        return "bg-slate-100 text-slate-400 border-slate-200";
     }
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-[#0b0f19] text-slate-100 min-h-screen">
+    <div className="flex-1 flex flex-col bg-[#f8fafc] text-slate-900 min-h-screen">
       <TopHeader
         title="Inbox & Replies"
         description="Unified thread management with automated sentiment classification (Interested, Follow-up, Question)"
@@ -59,9 +59,9 @@ export default function InboxPage() {
       <main className="p-6 max-w-7xl mx-auto w-full flex-1 flex flex-col">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 flex-1 min-h-[600px]">
           {/* Thread List */}
-          <div className="p-4 rounded-xl bg-[#111827] border border-slate-800 space-y-3 flex flex-col">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-              <span className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
+          <div className="p-4 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-3 flex flex-col">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+              <span className="text-xs font-semibold text-slate-700 uppercase tracking-wider">
                 Conversations ({threads.length})
               </span>
               <span className="text-[10px] text-sky-400">All Channels</span>
@@ -76,11 +76,11 @@ export default function InboxPage() {
                     "p-3 rounded-lg border cursor-pointer transition-all space-y-1.5",
                     selectedThread.id === thread.id
                       ? "bg-sky-500/10 border-sky-500/40"
-                      : "bg-slate-900/60 border-slate-800 hover:border-slate-700"
+                      : "bg-slate-50 border-slate-200 hover:border-slate-200"
                   )}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold text-slate-200">
+                    <span className="text-xs font-semibold text-slate-800">
                       {thread.contactName}
                     </span>
                     <span className="text-[10px] text-slate-500">
@@ -111,11 +111,11 @@ export default function InboxPage() {
           </div>
 
           {/* Conversation Panel */}
-          <div className="md:col-span-2 p-5 rounded-xl bg-[#111827] border border-slate-800 flex flex-col justify-between space-y-4">
+          <div className="md:col-span-2 p-5 rounded-xl bg-white shadow-2xs border border-slate-200 flex flex-col justify-between space-y-4">
             {/* Thread Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200">
               <div>
-                <h3 className="text-sm font-semibold text-slate-100">
+                <h3 className="text-sm font-semibold text-slate-900">
                   {selectedThread.contactName} – {selectedThread.company}
                 </h3>
                 <span className="text-xs text-slate-400">
@@ -152,8 +152,8 @@ export default function InboxPage() {
                     className={cn(
                       "p-3 rounded-lg text-xs leading-relaxed",
                       msg.sender === "agent"
-                        ? "bg-sky-600 text-white rounded-br-none"
-                        : "bg-slate-900 border border-slate-800 text-slate-200 rounded-bl-none"
+                        ? "bg-sky-600 text-slate-900 rounded-br-none"
+                        : "bg-slate-50 border border-slate-200 text-slate-800 rounded-bl-none"
                     )}
                   >
                     {msg.content}
@@ -163,17 +163,17 @@ export default function InboxPage() {
             </div>
 
             {/* Quick Reply Form */}
-            <form onSubmit={handleSendReply} className="pt-3 border-t border-slate-800 flex gap-2">
+            <form onSubmit={handleSendReply} className="pt-3 border-t border-slate-200 flex gap-2">
               <input
                 type="text"
                 placeholder={`Reply to ${selectedThread.contactName}...`}
                 value={replyText}
                 onChange={(e) => setReplyText(e.target.value)}
-                className="flex-1 px-3 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500"
+                className="flex-1 px-3 py-2 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-800 placeholder-slate-500 focus:outline-none focus:border-sky-500"
               />
               <button
                 type="submit"
-                className="px-4 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                className="px-4 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-slate-900 text-xs font-semibold flex items-center gap-1.5 transition-colors"
               >
                 <Send size={13} /> Send
               </button>

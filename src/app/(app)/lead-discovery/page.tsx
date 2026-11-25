@@ -230,7 +230,7 @@ export default function LeadDiscoveryPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-[#0b0f19] text-slate-100 min-h-screen">
+    <div className="flex-1 flex flex-col bg-[#f8fafc] text-slate-900 min-h-screen">
       <TopHeader
         title="Worldwide Lead Discovery Engine"
         description="Multi-provider discovery across search engines, business directories, and Google Places with automated deduplication"
@@ -243,18 +243,18 @@ export default function LeadDiscoveryPage() {
               <CheckCircle2 size={15} />
               <span>{notification}</span>
             </div>
-            <button onClick={() => setNotification(null)} className="text-slate-400 hover:text-white">✕</button>
+            <button onClick={() => setNotification(null)} className="text-slate-400 hover:text-slate-900">✕</button>
           </div>
         )}
 
         {/* Top Actions Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-slate-900/90 border border-slate-800">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-white border border-slate-200">
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-lg bg-sky-500/10 text-sky-400">
               <Globe size={18} />
             </div>
             <div>
-              <h2 className="text-sm font-semibold text-white">Worldwide Business Prospecting</h2>
+              <h2 className="text-sm font-semibold text-slate-900">Worldwide Business Prospecting</h2>
               <p className="text-xs text-slate-400">
                 Runs background provider jobs with normalized domain deduplication. No CAPTCHA or restricted scraping.
               </p>
@@ -271,7 +271,7 @@ export default function LeadDiscoveryPage() {
             />
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 font-medium flex items-center gap-1.5 transition-colors border border-slate-700"
+              className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs text-slate-800 font-medium flex items-center gap-1.5 transition-colors border border-slate-200"
             >
               <Upload size={13} /> Import CSV
             </button>
@@ -287,8 +287,8 @@ export default function LeadDiscoveryPage() {
         {/* Search Configuration Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Form: Search Criteria (2 Cols on lg) */}
-          <div className="lg:col-span-2 p-5 rounded-xl bg-[#111827] border border-slate-800 space-y-4">
-            <h3 className="text-sm font-semibold text-slate-100 flex items-center gap-2">
+          <div className="lg:col-span-2 p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4">
+            <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
               <Filter size={16} className="text-sky-400" /> Search & Targeting Parameters
             </h3>
 
@@ -299,7 +299,7 @@ export default function LeadDiscoveryPage() {
                   <select
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
-                    className="w-full px-3 py-1.5 rounded bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-sky-500"
+                    className="w-full px-3 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-sky-500"
                   >
                     {countries.map((c) => (
                       <option key={c} value={c}>{c}</option>
@@ -314,7 +314,7 @@ export default function LeadDiscoveryPage() {
                     placeholder="e.g. California / Bavaria"
                     value={stateRegion}
                     onChange={(e) => setStateRegion(e.target.value)}
-                    className="w-full px-3 py-1.5 rounded bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-sky-500"
+                    className="w-full px-3 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-sky-500"
                   />
                 </div>
 
@@ -325,7 +325,7 @@ export default function LeadDiscoveryPage() {
                     placeholder="e.g. San Francisco / London"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    className="w-full px-3 py-1.5 rounded bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-sky-500"
+                    className="w-full px-3 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-sky-500"
                   />
                 </div>
               </div>
@@ -336,7 +336,7 @@ export default function LeadDiscoveryPage() {
                   <select
                     value={industry}
                     onChange={(e) => setIndustry(e.target.value)}
-                    className="w-full px-3 py-1.5 rounded bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-sky-500"
+                    className="w-full px-3 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-sky-500"
                   >
                     {industries.map((ind) => (
                       <option key={ind} value={ind}>{ind}</option>
@@ -350,7 +350,7 @@ export default function LeadDiscoveryPage() {
                     type="text"
                     value={targetService}
                     onChange={(e) => setTargetService(e.target.value)}
-                    className="w-full px-3 py-1.5 rounded bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:outline-none focus:border-sky-500"
+                    className="w-full px-3 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-sky-500"
                   />
                 </div>
               </div>
@@ -374,7 +374,7 @@ export default function LeadDiscoveryPage() {
                           "px-2.5 py-1 rounded text-xs font-medium border flex items-center gap-1.5 transition-colors",
                           isSelected
                             ? "bg-sky-500/10 text-sky-300 border-sky-500/30"
-                            : "bg-slate-900 text-slate-500 border-slate-800 hover:text-slate-300"
+                            : "bg-slate-50 text-slate-500 border-slate-200 hover:text-slate-700"
                         )}
                       >
                         {isSelected && <Check size={12} className="text-sky-400" />}
@@ -386,7 +386,7 @@ export default function LeadDiscoveryPage() {
               </div>
 
               {/* Additional Toggles */}
-              <div className="flex flex-wrap items-center gap-4 pt-1 text-xs text-slate-300">
+              <div className="flex flex-wrap items-center gap-4 pt-1 text-xs text-slate-700">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"
@@ -402,7 +402,7 @@ export default function LeadDiscoveryPage() {
                   <select
                     value={websiteAvailability}
                     onChange={(e) => setWebsiteAvailability(e.target.value as any)}
-                    className="px-2 py-1 rounded bg-slate-900 border border-slate-800 text-xs text-slate-200 focus:outline-none"
+                    className="px-2 py-1 rounded bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none"
                   >
                     <option value="has_website">Live Website Required</option>
                     <option value="missing_website">Missing Website Only</option>
@@ -415,7 +415,7 @@ export default function LeadDiscoveryPage() {
                 <button
                   type="submit"
                   disabled={isStarting}
-                  className="px-5 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 disabled:opacity-50 text-white text-xs font-semibold flex items-center gap-2 transition-colors shadow-sm"
+                  className="px-5 py-2.5 rounded-lg bg-sky-500 hover:bg-sky-600 disabled:opacity-50 text-slate-900 text-xs font-semibold flex items-center gap-2 transition-colors shadow-sm"
                 >
                   <Search size={14} />
                   <span>{isStarting ? "Dispatching..." : "Launch Discovery Job"}</span>
@@ -425,10 +425,10 @@ export default function LeadDiscoveryPage() {
           </div>
 
           {/* Right Panel: Job Status & Live Execution Worker */}
-          <div className="p-5 rounded-xl bg-[#111827] border border-slate-800 space-y-4 flex flex-col justify-between">
+          <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4 flex flex-col justify-between">
             <div className="space-y-3">
-              <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-                <h3 className="text-sm font-semibold text-slate-100 flex items-center gap-2">
+              <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+                <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
                   <Layers size={16} className="text-emerald-400" /> Background Worker Status
                 </h3>
                 {activeJob && (
@@ -439,7 +439,7 @@ export default function LeadDiscoveryPage() {
                         ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 animate-pulse"
                         : activeJob.status === "paused"
                         ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                        : "bg-slate-800 text-slate-300 border border-slate-700"
+                        : "bg-slate-100 text-slate-700 border border-slate-200"
                     )}
                   >
                     {activeJob.status}
@@ -455,7 +455,7 @@ export default function LeadDiscoveryPage() {
                       <span>Worker Pipeline Progress</span>
                       <span className="font-bold text-sky-400">{activeJob.progressPercent}%</span>
                     </div>
-                    <div className="w-full h-2 rounded-full bg-slate-900 overflow-hidden border border-slate-800">
+                    <div className="w-full h-2 rounded-full bg-slate-50 overflow-hidden border border-slate-200">
                       <div
                         className="h-full bg-gradient-to-r from-sky-500 to-indigo-500 transition-all duration-300"
                         style={{ width: `${activeJob.progressPercent}%` }}
@@ -465,15 +465,15 @@ export default function LeadDiscoveryPage() {
 
                   {/* Counters */}
                   <div className="grid grid-cols-3 gap-2 text-center pt-1">
-                    <div className="p-2 rounded bg-slate-900 border border-slate-800">
+                    <div className="p-2 rounded bg-slate-50 border border-slate-200">
                       <div className="text-[10px] text-slate-500">Total Scanned</div>
-                      <div className="text-sm font-bold text-white">{activeJob.totalFound}</div>
+                      <div className="text-sm font-bold text-slate-900">{activeJob.totalFound}</div>
                     </div>
-                    <div className="p-2 rounded bg-slate-900 border border-slate-800">
+                    <div className="p-2 rounded bg-slate-50 border border-slate-200">
                       <div className="text-[10px] text-amber-500">Duplicates Skipped</div>
                       <div className="text-sm font-bold text-amber-400">{activeJob.duplicatesSkipped}</div>
                     </div>
-                    <div className="p-2 rounded bg-slate-900 border border-slate-800">
+                    <div className="p-2 rounded bg-slate-50 border border-slate-200">
                       <div className="text-[10px] text-emerald-500">Qualified Leads</div>
                       <div className="text-sm font-bold text-emerald-400">{activeJob.persistedCount || activeJob.results?.length || 0}</div>
                     </div>
@@ -482,7 +482,7 @@ export default function LeadDiscoveryPage() {
                   {/* Worker Logs */}
                   <div className="space-y-1">
                     <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Live Job Log Feed</span>
-                    <div className="p-2.5 rounded bg-slate-900 border border-slate-800 text-[11px] text-slate-400 space-y-1 max-h-32 overflow-y-auto font-mono">
+                    <div className="p-2.5 rounded bg-slate-50 border border-slate-200 text-[11px] text-slate-400 space-y-1 max-h-32 overflow-y-auto font-mono">
                       {activeJob.logs?.map((l, i) => (
                         <div key={i} className="truncate">
                           <span className="text-slate-600">[{l.stage}]</span> {l.message}
@@ -496,7 +496,7 @@ export default function LeadDiscoveryPage() {
                     {activeJob.status === "running" ? (
                       <button
                         onClick={() => handleJobAction("pause")}
-                        className="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium flex items-center gap-1"
+                        className="px-3 py-1.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium flex items-center gap-1"
                       >
                         <Pause size={12} /> Pause Job
                       </button>
@@ -510,7 +510,7 @@ export default function LeadDiscoveryPage() {
                     )}
                     <button
                       onClick={() => handleJobAction("retry")}
-                      className="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium flex items-center gap-1"
+                      className="px-3 py-1.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium flex items-center gap-1"
                     >
                       <RotateCcw size={12} /> Retry
                     </button>
@@ -529,16 +529,16 @@ export default function LeadDiscoveryPage() {
               )}
             </div>
 
-            <div className="p-2.5 rounded bg-slate-900/60 border border-slate-800 text-[10px] text-slate-500">
+            <div className="p-2.5 rounded bg-slate-50 border border-slate-200 text-[10px] text-slate-500">
               ⚡ <strong>BullMQ Queue Ready:</strong> Background tasks run decoupled from the browser session.
             </div>
           </div>
         </div>
 
         {/* Discovered Leads Results Table */}
-        <div className="p-5 rounded-xl bg-[#111827] border border-slate-800 space-y-4">
+        <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-100 flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
               <Sparkles size={16} className="text-sky-400" /> Discovered Leads
               <span className="text-xs text-slate-400 font-normal">
                 ({discoveredLeads.length > 0 ? discoveredLeads.length : DEMO_LEADS.length} records available)
@@ -549,7 +549,7 @@ export default function LeadDiscoveryPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 font-semibold">
+                <tr className="border-b border-slate-200 text-slate-400 font-semibold">
                   <th className="pb-3 px-3">Company</th>
                   <th className="pb-3 px-3">Website & Domain</th>
                   <th className="pb-3 px-3">Location</th>
@@ -568,9 +568,9 @@ export default function LeadDiscoveryPage() {
                   const provider = lead.providerName || "Apollo Enrichment";
 
                   return (
-                    <tr key={lead.id || idx} className="hover:bg-slate-800/30 transition-colors">
+                    <tr key={lead.id || idx} className="hover:bg-slate-100/30 transition-colors">
                       <td className="py-3 px-3">
-                        <div className="font-semibold text-slate-100">{companyName}</div>
+                        <div className="font-semibold text-slate-900">{companyName}</div>
                         <div className="text-[10px] text-slate-400">{lead.industry}</div>
                       </td>
                       <td className="py-3 px-3">
@@ -588,18 +588,18 @@ export default function LeadDiscoveryPage() {
                           <span className="text-slate-500 italic">No domain</span>
                         )}
                       </td>
-                      <td className="py-3 px-3 text-slate-300">
+                      <td className="py-3 px-3 text-slate-700">
                         {lead.city ? `${lead.city}, ` : ""}{lead.country}
                       </td>
                       <td className="py-3 px-3">
                         {email ? (
-                          <span className="text-slate-200 font-mono text-[11px]">{email}</span>
+                          <span className="text-slate-800 font-mono text-[11px]">{email}</span>
                         ) : (
                           <span className="text-slate-500">N/A</span>
                         )}
                       </td>
                       <td className="py-3 px-3">
-                        <span className="text-[10px] px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300">
+                        <span className="text-[10px] px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700">
                           {provider}
                         </span>
                       </td>
