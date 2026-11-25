@@ -397,7 +397,7 @@ export default function CRMPage() {
 
         {/* Comprehensive Business Profile Drawer */}
         {selectedDeal && (
-          <div className="fixed inset-y-0 right-0 w-full max-w-lg bg-[#0f172a] border-l border-slate-200 shadow-2xl p-6 z-50 flex flex-col justify-between overflow-y-auto">
+          <div className="fixed inset-y-0 right-0 w-full max-w-lg bg-white border-l border-slate-200 shadow-2xl p-6 z-50 flex flex-col justify-between overflow-y-auto">
             <div className="space-y-6">
               {/* Drawer Header */}
               <div className="flex items-start justify-between pb-4 border-b border-slate-200">

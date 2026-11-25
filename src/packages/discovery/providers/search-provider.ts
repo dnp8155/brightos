@@ -4,10 +4,16 @@ export class SearchProvider implements DiscoveryProvider {
   public name = "Search API (SerpAPI / Bing)";
 
   public isConfigured(): boolean {
-    return !!(process.env.SERPAPI_API_KEY || process.env.BING_SEARCH_API_KEY);
+    return !!(
+      process.env.SERPER_API_KEY ||
+      process.env.SEARCH_API_KEY ||
+      process.env.SERPAPI_API_KEY ||
+      process.env.BING_SEARCH_API_KEY
+    );
   }
 
   public async search(criteria: DiscoverySearchCriteria): Promise<RawDiscoveredLead[]> {
+    const serperKey = process.env.SERPER_API_KEY || process.env.SEARCH_API_KEY;
     const apiKey = process.env.SERPAPI_API_KEY;
     const query = [
       criteria.industry,
@@ -20,6 +26,40 @@ export class SearchProvider implements DiscoveryProvider {
     ]
       .filter(Boolean)
       .join(" ");
+
+    // If Serper.dev API key is present, execute live Serper search
+    if (serperKey) {
+      try {
+        const res = await fetch("https://google.serper.dev/search", {
+          method: "POST",
+          headers: {
+            "X-API-KEY": serperKey,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ q: query, num: 10 })
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const organic = data.organic || [];
+          return organic.map((item: any) => ({
+            companyName: item.title?.split(" - ")[0]?.split(" | ")[0]?.trim() || "Discovered Business",
+            websiteUrl: item.link,
+            description: item.snippet,
+            industry: criteria.industry || "General B2B",
+            country: criteria.country || "Global",
+            city: criteria.city || null,
+            publicEmail: null,
+            publicPhone: null,
+            publicContactPage: item.link,
+            sourceUrl: item.link,
+            providerName: "Serper.dev Search API",
+            discoveredAt: new Date().toISOString()
+          }));
+        }
+      } catch (err) {
+        console.warn("[SearchProvider] Serper API error:", err);
+      }
+    }
 
     // If API key is present, execute live provider request
     if (apiKey) {
