@@ -45,8 +45,8 @@ export function BrandLogo({
       {variant !== "icon" && (
         <div className="flex flex-col select-none">
           <div className="flex items-center gap-1.5">
-            <span className="font-bold tracking-tight text-slate-900 text-sm">
-              Bright<span className="text-[#0284c7]">Loop</span>
+            <span className="font-extrabold tracking-tight text-slate-900 text-sm">
+              BRIGHT
             </span>
             <span className="text-[11px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-gradient-to-r from-sky-50 to-amber-50 text-sky-700 border border-sky-200/80 tracking-wider">
               AI
