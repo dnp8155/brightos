@@ -549,12 +549,20 @@ export default function CRMPage() {
               <span className="text-[10px] text-slate-500">
                 Last Activity: {selectedDeal.lastActivityAt.split("T")[0]}
               </span>
-              <button
-                onClick={() => setSelectedDeal(null)}
-                className="px-4 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs text-slate-800 transition-colors"
-              >
-                Close Profile
-              </button>
+              <div className="flex items-center gap-2">
+                <a
+                  href="/email-studio"
+                  className="px-4 py-1.5 rounded-lg bg-[#0284c7] hover:bg-[#0369a1] text-xs font-semibold text-white transition-colors"
+                >
+                  Draft AI Pitch
+                </a>
+                <button
+                  onClick={() => setSelectedDeal(null)}
+                  className="px-4 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs text-slate-800 transition-colors"
+                >
+                  Close Profile
+                </button>
+              </div>
             </div>
           </div>
         )}
