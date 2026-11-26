@@ -137,7 +137,7 @@ export default function IntegrationsPage() {
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-sm font-semibold text-slate-900">Central Security & Credential Governance</h2>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">
                   AES-256-GCM Encrypted
                 </span>
               </div>
@@ -160,8 +160,8 @@ export default function IntegrationsPage() {
           <div className={cn(
             "p-3.5 rounded-xl border flex items-center justify-between text-xs transition-all",
             testResult.status === "connected"
-              ? "bg-emerald-950/20 border-emerald-500/30 text-emerald-300"
-              : "bg-red-950/20 border-red-500/30 text-red-300"
+              ? "bg-emerald-50 border-emerald-200 text-emerald-800"
+              : "bg-rose-50 border-rose-200 text-rose-800"
           )}>
             <div className="flex items-center gap-2.5">
               {testResult.status === "connected" ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
@@ -250,7 +250,7 @@ export default function IntegrationsPage() {
                     </div>
                     <div className="flex justify-between items-center text-slate-400">
                       <span>Stored Key:</span>
-                      <span className="text-sky-300">{item.maskedKey || "Not Configured"}</span>
+                      <span className="text-[#0284c7] font-semibold">{item.maskedKey || "Not Configured"}</span>
                     </div>
                     <div className="flex justify-between items-center text-slate-400">
                       <span>Latency:</span>
