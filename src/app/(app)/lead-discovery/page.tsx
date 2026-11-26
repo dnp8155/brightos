@@ -693,12 +693,23 @@ export default function LeadDiscoveryPage() {
                             <span className="text-slate-400 text-[11px]">—</span>
                           )}
                           {lead.publicPhone && (
-                            <a
-                              href={`tel:${lead.publicPhone}`}
-                              className="text-[#0284c7] hover:underline font-mono text-[10px] whitespace-nowrap"
-                            >
-                              {lead.publicPhone}
-                            </a>
+                            <div className="flex items-center gap-2">
+                              <a
+                                href={`tel:${lead.publicPhone}`}
+                                className="text-[#0284c7] hover:underline font-mono text-[10px] whitespace-nowrap"
+                              >
+                                {lead.publicPhone}
+                              </a>
+                              <a
+                                href={`https://wa.me/${lead.publicPhone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(`Hi ${companyName} team, we noticed your business in ${lead.city || lead.country} and wanted to share a quick digital growth idea from BrightLoop Technology.`)}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="px-1.5 py-0.5 rounded bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-[9px] font-bold whitespace-nowrap"
+                                title="Message on WhatsApp"
+                              >
+                                WhatsApp
+                              </a>
+                            </div>
                           )}
                         </div>
                       </td>
