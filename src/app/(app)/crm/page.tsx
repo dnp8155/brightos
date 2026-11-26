@@ -50,7 +50,7 @@ export default function CRMPage() {
 
   // Proposal Creation in Drawer State
   const [proposalAmount, setProposalAmount] = useState<number>(25000);
-  const [proposalCurrency, setProposalCurrency] = useState("USD");
+  const [proposalCurrency, setProposalCurrency] = useState("INR");
   const [proposalService, setProposalService] = useState("Next.js Decoupled Modernization");
   const [noteDraft, setNoteDraft] = useState("");
 
@@ -180,7 +180,7 @@ export default function CRMPage() {
           <div className="p-4 rounded-xl bg-white shadow-2xs border border-slate-200">
             <span className="text-xs text-slate-400">Total Pipeline Value</span>
             <div className="text-2xl font-bold text-slate-900 mt-1">
-              ${totalPipelineValue.toLocaleString()}
+              ₹{totalPipelineValue.toLocaleString("en-IN")}
             </div>
             <span className="text-[11px] text-sky-400 mt-1 inline-block">Across all 10 stages</span>
           </div>
@@ -204,7 +204,7 @@ export default function CRMPage() {
           <div className="p-4 rounded-xl bg-white shadow-2xs border border-slate-200">
             <span className="text-xs text-slate-400">Won Conversion Revenue</span>
             <div className="text-2xl font-bold text-emerald-400 mt-1">
-              ${deals.filter((d) => d.stage === "Won").reduce((acc, d) => acc + d.dealValue, 0).toLocaleString()}
+              ₹{deals.filter((d) => d.stage === "Won").reduce((acc, d) => acc + d.dealValue, 0).toLocaleString("en-IN")}
             </div>
             <span className="text-[11px] text-emerald-400 mt-1 inline-block">Client conversions confirmed</span>
           </div>

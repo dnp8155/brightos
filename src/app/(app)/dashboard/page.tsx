@@ -74,7 +74,7 @@ export default function OverviewPage() {
     { title: "Qualified", value: stats?.qualifiedLeads !== undefined ? String(stats.qualifiedLeads) : "0", delta: "Scored", icon: Award },
     { title: "Dispatched", value: stats?.emailsSent !== undefined ? String(stats.emailsSent) : "0", delta: "Verified", icon: Send },
     { title: "Replies", value: stats?.repliesReceived !== undefined ? String(stats.repliesReceived) : "0", delta: "Inbound", icon: MessageSquare },
-    { title: "Won Revenue", value: stats?.wonRevenue !== undefined ? `$${Number(stats.wonRevenue).toLocaleString()}` : "$0", delta: "Closed won", icon: DollarSign }
+    { title: "Won Revenue", value: stats?.wonRevenue !== undefined ? `₹${Number(stats.wonRevenue).toLocaleString("en-IN")}` : "₹0", delta: "Closed won", icon: DollarSign }
   ];
 
   return (
