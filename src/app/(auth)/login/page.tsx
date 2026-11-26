@@ -139,7 +139,10 @@ function LoginContent() {
           <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
             <span className="flex items-center gap-1.5 font-medium">
               <ShieldCheck size={14} className="text-emerald-600" />
-              Admin-only portal
+              New here?{" "}
+              <Link href="/signup" className="font-semibold text-[#0284c7] hover:underline">
+                Create account
+              </Link>
             </span>
             <Link href="/" className="font-semibold text-slate-700 hover:text-[#0284c7]">
               &larr; Public site
