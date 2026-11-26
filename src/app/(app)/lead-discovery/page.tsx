@@ -65,6 +65,50 @@ export default function LeadDiscoveryPage() {
   const [notification, setNotification] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const LOCATION_MAP: Record<string, Record<string, string[]>> = {
+    India: {
+      Gujarat: ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Gandhinagar", "Bhavnagar"],
+      Maharashtra: ["Mumbai", "Pune", "Nagpur", "Nashik", "Thane"],
+      Delhi: ["New Delhi", "Dwarka", "Rohini"],
+      Karnataka: ["Bengaluru", "Mysuru", "Hubballi", "Mangaluru"],
+      "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Salem"],
+      Telangana: ["Hyderabad", "Warangal"],
+      Rajasthan: ["Jaipur", "Udaipur", "Jodhpur", "Kota"]
+    },
+    "United States": {
+      California: ["San Francisco", "Los Angeles", "San Diego", "San Jose"],
+      Texas: ["Austin", "Houston", "Dallas", "San Antonio"],
+      "New York": ["New York", "Buffalo", "Rochester"],
+      Florida: ["Miami", "Orlando", "Tampa"]
+    },
+    "United Kingdom": {
+      England: ["London", "Manchester", "Birmingham", "Leeds"],
+      Scotland: ["Edinburgh", "Glasgow"]
+    },
+    "United Arab Emirates": {
+      Dubai: ["Dubai"],
+      "Abu Dhabi": ["Abu Dhabi"],
+      Sharjah: ["Sharjah"]
+    },
+    Canada: {
+      Ontario: ["Toronto", "Ottawa", "Mississauga"],
+      "British Columbia": ["Vancouver", "Victoria"]
+    },
+    Australia: {
+      "New South Wales": ["Sydney", "Newcastle"],
+      Victoria: ["Melbourne", "Geelong"]
+    },
+    Germany: {
+      Bavaria: ["Munich", "Nuremberg"],
+      Berlin: ["Berlin"]
+    }
+  };
+
+  const stateSuggestions = Object.keys(LOCATION_MAP[country] || {});
+  const citySuggestions =
+    (stateRegion && LOCATION_MAP[country]?.[stateRegion]) ||
+    Object.values(LOCATION_MAP[country] || {}).flat();
+
   const countries = [
     "India",
     "United States",
@@ -328,14 +372,9 @@ export default function LeadDiscoveryPage() {
                     className="w-full px-3 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-sky-500"
                   />
                   <datalist id="state-suggestions">
-                    <option value="Gujarat" />
-                    <option value="Maharashtra" />
-                    <option value="Delhi" />
-                    <option value="Karnataka" />
-                    <option value="Tamil Nadu" />
-                    <option value="California" />
-                    <option value="Texas" />
-                    <option value="New York" />
+                    {stateSuggestions.map((s) => (
+                      <option key={s} value={s} />
+                    ))}
                   </datalist>
                 </div>
 
@@ -350,16 +389,9 @@ export default function LeadDiscoveryPage() {
                     className="w-full px-3 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-sky-500"
                   />
                   <datalist id="city-suggestions">
-                    <option value="Ahmedabad" />
-                    <option value="Surat" />
-                    <option value="Mumbai" />
-                    <option value="Pune" />
-                    <option value="Bengaluru" />
-                    <option value="New Delhi" />
-                    <option value="London" />
-                    <option value="New York" />
-                    <option value="San Francisco" />
-                    <option value="Dubai" />
+                    {citySuggestions.map((c) => (
+                      <option key={c} value={c} />
+                    ))}
                   </datalist>
                 </div>
               </div>
