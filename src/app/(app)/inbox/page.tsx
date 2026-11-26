@@ -4,13 +4,40 @@ import React, { useState } from "react";
 import { TopHeader } from "@/components/top-header";
 import { DEMO_INBOX_THREADS } from "@/lib/demoData";
 import { InboxThread } from "@/types";
-import { Inbox, MessageSquare, Send, CheckCircle2, User, Clock, ArrowRight } from "lucide-react";
+import { Inbox, MessageSquare, Send, CheckCircle2, User, Clock, ArrowRight, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function InboxPage() {
   const [threads, setThreads] = useState<InboxThread[]>(DEMO_INBOX_THREADS);
   const [selectedThread, setSelectedThread] = useState<InboxThread>(DEMO_INBOX_THREADS[0]);
   const [replyText, setReplyText] = useState("");
+  const [aiInsight, setAiInsight] = useState<any>(null);
+  const [analyzing, setAnalyzing] = useState(false);
+
+  const handleAnalyzeThread = async () => {
+    setAnalyzing(true);
+    setAiInsight(null);
+    try {
+      const lastMsg = selectedThread.messages[selectedThread.messages.length - 1];
+      const res = await fetch("/api/crm/conversation-intelligence", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contactName: selectedThread.contactName,
+          companyName: selectedThread.businessName,
+          messageContent: lastMsg?.content || selectedThread.lastMessageSnippet
+        })
+      });
+      const data = await res.json();
+      if (data.success && data.analysis) {
+        setAiInsight(data.analysis);
+      }
+    } catch (err) {
+      console.error("Failed to analyze reply:", err);
+    } finally {
+      setAnalyzing(false);
+    }
+  };
 
   const handleSendReply = (e: React.FormEvent) => {
     e.preventDefault();
