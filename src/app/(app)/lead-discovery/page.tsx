@@ -50,26 +50,42 @@ export default function LeadDiscoveryPage() {
   const [websiteAvailability, setWebsiteAvailability] = useState<"any" | "has_website" | "missing_website">("any");
   const [resultLimit, setResultLimit] = useState<number>(10);
   const [discoveredLeads, setDiscoveredLeads] = useState<any[]>([]);
+  const [leadHistory, setLeadHistory] = useState<any[]>([]);
+  const [activeViewTab, setActiveViewTab] = useState<"current" | "history">("current");
+  const [tableSearch, setTableSearch] = useState("");
   const [tableFilter, setTableFilter] = useState<"all" | "has_website" | "no_website">("all");
 
-  // Load persisted leads from localStorage on mount (no fake DEMO_LEADS fallback)
+  // Load persisted leads & history from localStorage on mount
   useEffect(() => {
     try {
       const saved = localStorage.getItem("brightloop_discovered_leads");
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setDiscoveredLeads(parsed);
-        }
+        if (Array.isArray(parsed) && parsed.length > 0) setDiscoveredLeads(parsed);
+      }
+      const hist = localStorage.getItem("brightloop_lead_history");
+      if (hist) {
+        const parsedHist = JSON.parse(hist);
+        if (Array.isArray(parsedHist)) setLeadHistory(parsedHist);
       }
     } catch {}
   }, []);
 
-  // Save discovered leads to localStorage whenever updated
+  // Save current discovered leads & append to persistent history
   useEffect(() => {
     try {
       if (discoveredLeads.length > 0) {
         localStorage.setItem("brightloop_discovered_leads", JSON.stringify(discoveredLeads));
+        setLeadHistory((prev) => {
+          const existingKeys = new Set(prev.map((p) => `${p.companyName || p.businessName}-${p.publicPhone || p.websiteUrl || ""}`));
+          const newItems = discoveredLeads.filter(
+            (l) => !existingKeys.has(`${l.companyName || l.businessName}-${l.publicPhone || l.websiteUrl || ""}`)
+          );
+          if (newItems.length === 0) return prev;
+          const updated = [...newItems, ...prev].slice(0, 500);
+          localStorage.setItem("brightloop_lead_history", JSON.stringify(updated));
+          return updated;
+        });
       }
     } catch {}
   }, [discoveredLeads]);
@@ -650,19 +666,31 @@ export default function LeadDiscoveryPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {discoveredLeads.length === 0 ? (
+                {(activeViewTab === "current" ? discoveredLeads : leadHistory).length === 0 ? (
                   <tr>
                     <td colSpan={7} className="py-12 text-center text-xs text-slate-500">
-                      No leads in current view. Select a Country, Industry, and click <strong>Launch Discovery Job</strong> (or Import CSV).
+                      {activeViewTab === "current"
+                        ? "No leads in current view. Select a Country, Industry, and click Launch Discovery Job."
+                        : "No lead history saved yet. Run a discovery job to build your persistent history."}
                     </td>
                   </tr>
                 ) : (
-                discoveredLeads
+                (activeViewTab === "current" ? discoveredLeads : leadHistory)
                   .filter((lead: any) => {
                     const hasWeb = !!(lead.websiteUrl || lead.website);
                     if (tableFilter === "has_website") return hasWeb;
                     if (tableFilter === "no_website") return !hasWeb;
                     return true;
+                  })
+                  .filter((lead: any) => {
+                    if (!tableSearch.trim()) return true;
+                    const q = tableSearch.toLowerCase();
+                    return (
+                      (lead.companyName || lead.businessName || "").toLowerCase().includes(q) ||
+                      (lead.city || "").toLowerCase().includes(q) ||
+                      (lead.publicPhone || "").toLowerCase().includes(q) ||
+                      (lead.description || "").toLowerCase().includes(q)
+                    );
                   })
                   .map((lead: any, idx: number) => {
                   const companyName = lead.companyName || lead.businessName;
