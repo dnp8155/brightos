@@ -14,6 +14,27 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
+  const [verifying, setVerifying] = useState(false);
+
+  const handleVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!otpCode.trim()) return;
+    setVerifying(true);
+    setErrorMsg(null);
+    const supabase = createClient();
+    const { error } = await supabase.auth.verifyOtp({
+      email,
+      token: otpCode.trim(),
+      type: "signup"
+    });
+    if (error) {
+      setErrorMsg(error.message);
+      setVerifying(false);
+    } else {
+      window.location.href = "/dashboard";
+    }
+  };
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,19 +88,28 @@ export default function SignupPage() {
           )}
 
           {success ? (
-            <div className="p-5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 space-y-2 text-center">
+            <form onSubmit={handleVerifyOtp} className="p-5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 space-y-3 text-center">
               <CheckCircle2 size={24} className="mx-auto text-emerald-600" />
-              <h2 className="text-sm font-bold">Account Created</h2>
+              <h2 className="text-sm font-bold">Verify Your Email</h2>
               <p className="text-xs text-emerald-800 leading-relaxed">
-                Check your inbox at <strong>{email}</strong> to verify your email address, then sign in.
+                Enter the verification code sent to <strong>{email}</strong> (or click the link in your email).
               </p>
-              <Link
-                href="/login"
-                className="inline-block mt-2 px-4 py-2 rounded-lg bg-slate-900 text-white text-xs font-semibold"
+              <input
+                type="text"
+                required
+                value={otpCode}
+                onChange={(e) => setOtpCode(e.target.value)}
+                placeholder="Enter 8-digit code"
+                className="w-full bg-white border border-emerald-300 rounded-xl px-3 py-2 text-center font-mono text-sm tracking-widest text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+              />
+              <button
+                type="submit"
+                disabled={verifying}
+                className="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition-all disabled:opacity-50"
               >
-                Go to Login
-              </Link>
-            </div>
+                {verifying ? "Verifying..." : "Verify Code & Open Dashboard"}
+              </button>
+            </form>
           ) : (
             <form onSubmit={handleSignup} className="space-y-4">
               <div className="space-y-1.5">
