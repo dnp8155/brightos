@@ -47,7 +47,7 @@ export default function LeadDiscoveryPage() {
   const [industry, setIndustry] = useState("Supply Chain & Logistics");
   const [businessCategory, setBusinessCategory] = useState("Enterprise Software");
   const [companySize, setCompanySize] = useState("50-200");
-  const [websiteAvailability, setWebsiteAvailability] = useState<"any" | "has_website" | "missing_website">("has_website");
+  const [websiteAvailability, setWebsiteAvailability] = useState<"any" | "has_website" | "missing_website">("any");
   const [targetService, setTargetService] = useState("Next.js Modernization & Real-Time Tracking Portal");
   const [requirePublicEmail, setRequirePublicEmail] = useState(false);
   const [selectedProviders, setSelectedProviders] = useState<string[]>([
