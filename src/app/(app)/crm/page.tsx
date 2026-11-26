@@ -33,6 +33,16 @@ import { cn } from "@/lib/utils";
 export default function CRMPage() {
   const [deals, setDeals] = useState<CRMDeal[]>([]);
   const [selectedDeal, setSelectedDeal] = useState<CRMDeal | null>(null);
+  const [crmTab, setCrmTab] = useState<"pipeline" | "tasks" | "meetings" | "proposals" | "ai">("pipeline");
+  const [tasks, setTasks] = useState<{ id: string; title: string; due: string; done: boolean }[]>([
+    { id: "t1", title: "Follow up on Next.js Modernization scope", due: "Today", done: false },
+    { id: "t2", title: "Send Lighthouse audit PDF to prospect", due: "Tomorrow", done: false }
+  ]);
+  const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [meetings, setMeetings] = useState<{ id: string; title: string; date: string; type: string }[]>([
+    { id: "m1", title: "Discovery Call — Architecture Review", date: "Tomorrow, 3:00 PM", type: "Video Call" }
+  ]);
+  const [newMeetingTitle, setNewMeetingTitle] = useState("");
   const [viewMode, setViewMode] = useState<"kanban" | "table">("kanban");
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("All");
@@ -199,6 +209,130 @@ export default function CRMPage() {
             <span className="text-[11px] text-emerald-400 mt-1 inline-block">Client conversions confirmed</span>
           </div>
         </div>
+
+        {/* CRM Sub-Navigation Tabs */}
+        <div className="flex items-center gap-2 border-b border-slate-200 pb-3 overflow-x-auto">
+          {[
+            { id: "pipeline", label: "Sales Pipeline" },
+            { id: "tasks", label: `Tasks & Follow-ups (${tasks.filter((t) => !t.done).length})` },
+            { id: "meetings", label: `Meetings (${meetings.length})` },
+            { id: "proposals", label: "Proposals" },
+            { id: "ai", label: "AI Sales Assistant" }
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setCrmTab(tab.id as any)}
+              className={cn(
+                "px-3.5 py-2 rounded-lg text-xs font-semibold transition-all whitespace-nowrap",
+                crmTab === tab.id
+                  ? "bg-slate-900 text-white shadow-xs"
+                  : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
+              )}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {crmTab === "tasks" && (
+          <div className="p-5 rounded-xl bg-white border border-slate-200 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <h3 className="text-sm font-bold text-slate-900">Tasks & Follow-ups</h3>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={newTaskTitle}
+                  onChange={(e) => setNewTaskTitle(e.target.value)}
+                  placeholder="New follow-up task..."
+                  className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-[#0284c7]"
+                />
+                <button
+                  onClick={() => {
+                    if (!newTaskTitle.trim()) return;
+                    setTasks([{ id: `t-${Date.now()}`, title: newTaskTitle.trim(), due: "Today", done: false }, ...tasks]);
+                    setNewTaskTitle("");
+                  }}
+                  className="px-3 py-1.5 rounded-lg bg-[#0284c7] text-white text-xs font-semibold"
+                >
+                  Add Task
+                </button>
+              </div>
+            </div>
+            <div className="divide-y divide-slate-100">
+              {tasks.map((t) => (
+                <div key={t.id} className="py-3 flex items-center justify-between text-xs">
+                  <label className="flex items-center gap-2.5 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={t.done}
+                      onChange={() => setTasks(tasks.map((x) => (x.id === t.id ? { ...x, done: !x.done } : x)))}
+                      className="rounded border-slate-300"
+                    />
+                    <span className={cn("font-medium", t.done ? "line-through text-slate-400" : "text-slate-900")}>
+                      {t.title}
+                    </span>
+                  </label>
+                  <span className="text-[11px] text-slate-400">{t.due}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {crmTab === "meetings" && (
+          <div className="p-5 rounded-xl bg-white border border-slate-200 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <h3 className="text-sm font-bold text-slate-900">Scheduled Meetings</h3>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={newMeetingTitle}
+                  onChange={(e) => setNewMeetingTitle(e.target.value)}
+                  placeholder="Meeting title..."
+                  className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-[#0284c7]"
+                />
+                <button
+                  onClick={() => {
+                    if (!newMeetingTitle.trim()) return;
+                    setMeetings([{ id: `m-${Date.now()}`, title: newMeetingTitle.trim(), date: "Scheduled", type: "Video Call" }, ...meetings]);
+                    setNewMeetingTitle("");
+                  }}
+                  className="px-3 py-1.5 rounded-lg bg-[#0284c7] text-white text-xs font-semibold"
+                >
+                  Schedule
+                </button>
+              </div>
+            </div>
+            <div className="divide-y divide-slate-100">
+              {meetings.map((m) => (
+                <div key={m.id} className="py-3 flex items-center justify-between text-xs">
+                  <span className="font-semibold text-slate-900">{m.title}</span>
+                  <span className="text-[11px] text-slate-500">{m.date} • {m.type}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {crmTab === "proposals" && (
+          <div className="p-5 rounded-xl bg-white border border-slate-200 space-y-3">
+            <h3 className="text-sm font-bold text-slate-900">Proposals & Quotations</h3>
+            <p className="text-xs text-slate-500">Click any deal in the Sales Pipeline tab to record a multi-currency formal proposal.</p>
+          </div>
+        )}
+
+        {crmTab === "ai" && (
+          <div className="p-5 rounded-xl bg-white border border-slate-200 space-y-3">
+            <h3 className="text-sm font-bold text-slate-900">AI Sales Assistant</h3>
+            <p className="text-xs text-slate-600">
+              Active opportunities: <strong>{deals.filter((d) => d.stage !== "Won" && d.stage !== "Lost").length}</strong>.
+              Weighted pipeline is calculated from deal value × stage probability. Use <strong>Inbox & Replies</strong> to run AI sentiment analysis on prospect replies.
+            </p>
+          </div>
+        )}
+
+        {crmTab === "pipeline" && (
+          <>
 
         {/* Toolbar: Search, Filters & View Toggle */}
         <div className="p-4 rounded-xl bg-white shadow-2xs border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -393,6 +527,8 @@ export default function CRMPage() {
               </tbody>
             </table>
           </div>
+        )}
+          </>
         )}
 
         {/* Comprehensive Business Profile Drawer */}
