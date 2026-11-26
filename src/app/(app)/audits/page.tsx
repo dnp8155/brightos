@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TopHeader } from "@/components/top-header";
 import { DEMO_AUDITS } from "@/lib/demoData";
 import {
@@ -30,6 +30,14 @@ export default function AuditsPage() {
   const [activeTab, setActiveTab] = useState<"findings" | "technologies" | "pages" | "ai_summary">("findings");
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const urlParam = params.get("url");
+    if (urlParam) {
+      setInputUrl(urlParam);
+    }
+  }, []);
 
   const handleRunAudit = async (e: React.FormEvent) => {
     e.preventDefault();

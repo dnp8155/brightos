@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TopHeader } from "@/components/top-header";
 import {
   DEMO_ACQUISITION_CHART,
@@ -37,6 +37,16 @@ import { cn } from "@/lib/utils";
 
 export default function OverviewPage() {
   const [agents, setAgents] = useState(DEMO_AGENTS);
+  const [stats, setStats] = useState<any>(null);
+
+  useEffect(() => {
+    fetch("/api/dashboard/stats")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d && !d.error) setStats(d);
+      })
+      .catch(() => {});
+  }, []);
 
   const toggleAgent = (id: string) => {
     setAgents((prev) =>
@@ -59,12 +69,12 @@ export default function OverviewPage() {
   };
 
   const kpis = [
-    { title: "Total Leads", value: "1,248", delta: "+18.4%", icon: Users },
-    { title: "Websites Audited", value: "486", delta: "Lighthouse", icon: Globe },
-    { title: "Qualified", value: "320", delta: "65.8% fit", icon: Award },
-    { title: "Dispatched", value: "346", delta: "97.7% deliv.", icon: Send },
-    { title: "Replies", value: "57", delta: "16.9% rate", icon: MessageSquare },
-    { title: "Won Revenue", value: "$92,500", delta: "4 deals", icon: DollarSign }
+    { title: "Total Leads", value: stats?.totalLeads !== undefined ? String(stats.totalLeads) : "0", delta: "Supabase live", icon: Users },
+    { title: "Websites Audited", value: stats?.websitesAudited !== undefined ? String(stats.websitesAudited) : "0", delta: "Lighthouse", icon: Globe },
+    { title: "Qualified", value: stats?.qualifiedLeads !== undefined ? String(stats.qualifiedLeads) : "0", delta: "Scored", icon: Award },
+    { title: "Dispatched", value: stats?.emailsSent !== undefined ? String(stats.emailsSent) : "0", delta: "Verified", icon: Send },
+    { title: "Replies", value: stats?.repliesReceived !== undefined ? String(stats.repliesReceived) : "0", delta: "Inbound", icon: MessageSquare },
+    { title: "Won Revenue", value: stats?.wonRevenue !== undefined ? `$${Number(stats.wonRevenue).toLocaleString()}` : "$0", delta: "Closed won", icon: DollarSign }
   ];
 
   return (

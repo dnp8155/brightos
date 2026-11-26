@@ -616,12 +616,22 @@ export default function LeadDiscoveryPage() {
                         </span>
                       </td>
                       <td className="py-3 px-3 text-right">
-                        <Link
-                          href={`/crm?leadId=${lead.id || "lead-1"}`}
-                          className="px-2.5 py-1 rounded bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 border border-sky-500/30 text-[11px] font-medium transition-colors"
-                        >
-                          View in CRM
-                        </Link>
+                        <div className="inline-flex items-center gap-1.5">
+                          {(lead.websiteUrl || lead.website) && (
+                            <Link
+                              href={`/audits?url=${encodeURIComponent(lead.websiteUrl || lead.website)}`}
+                              className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-[11px] font-medium transition-colors"
+                            >
+                              Audit
+                            </Link>
+                          )}
+                          <Link
+                            href={`/crm?leadId=${lead.id || "lead-1"}`}
+                            className="px-2.5 py-1 rounded bg-sky-50 hover:bg-sky-100 text-[#0284c7] border border-sky-200 text-[11px] font-medium transition-colors"
+                          >
+                            View in CRM
+                          </Link>
+                        </div>
                       </td>
                     </tr>
                   );

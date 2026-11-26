@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Bell, LogOut, Search } from "lucide-react";
+import { Bell, LogOut, Search, Menu } from "lucide-react";
 import { logoutAction } from "@/app/actions/auth";
 
 interface HeaderProps {
@@ -11,16 +11,25 @@ interface HeaderProps {
 
 export function TopHeader({ title, description }: HeaderProps) {
   return (
-    <header className="h-14 border-b border-slate-200 bg-white px-6 flex items-center justify-between sticky top-0 z-20">
-      <div className="min-w-0">
-        {title && (
-          <h1 className="text-sm font-semibold text-slate-900 tracking-tight truncate">
-            {title}
-          </h1>
-        )}
-        {description && (
-          <p className="text-[11px] text-slate-500 truncate">{description}</p>
-        )}
+    <header className="h-14 border-b border-slate-200 bg-white px-4 sm:px-6 flex items-center justify-between sticky top-0 z-20">
+      <div className="flex items-center gap-3 min-w-0">
+        <button
+          onClick={() => window.dispatchEvent(new Event("toggle-mobile-sidebar"))}
+          className="md:hidden p-1.5 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors"
+          aria-label="Open menu"
+        >
+          <Menu size={18} />
+        </button>
+        <div className="min-w-0">
+          {title && (
+            <h1 className="text-sm font-semibold text-slate-900 tracking-tight truncate">
+              {title}
+            </h1>
+          )}
+          {description && (
+            <p className="text-[11px] text-slate-500 truncate">{description}</p>
+          )}
+        </div>
       </div>
 
       <div className="flex items-center gap-3 shrink-0">

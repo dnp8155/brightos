@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BrandLogo } from "@/components/brand-logo";
@@ -77,15 +77,30 @@ const NAV_SECTIONS: NavSection[] = [
 
 export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
+  useEffect(() => {
+    const handler = () => setMobileOpen((prev) => !prev);
+    window.addEventListener("toggle-mobile-sidebar", handler);
+    return () => window.removeEventListener("toggle-mobile-sidebar", handler);
+  }, []);
+
   return (
-    <aside
-      className={cn(
-        "sticky top-0 h-screen flex flex-col border-r border-slate-200 bg-white transition-all duration-300 z-30 select-none shadow-xs shrink-0",
-        collapsed ? "w-[72px]" : "w-64"
+    <>
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 md:hidden"
+          onClick={() => setMobileOpen(false)}
+        />
       )}
-    >
+      <aside
+        className={cn(
+          "fixed md:sticky top-0 left-0 h-screen flex flex-col border-r border-slate-200 bg-white transition-all duration-300 z-50 md:z-30 select-none shadow-xs shrink-0",
+          collapsed ? "w-[72px]" : "w-64",
+          mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+        )}
+      >
       {/* Floating Collapse / Expand Toggle Button on Border */}
       <button
         onClick={() => setCollapsed(!collapsed)}
@@ -188,5 +203,6 @@ export function Sidebar() {
         </div>
       </div>
     </aside>
+    </>
   );
 }
