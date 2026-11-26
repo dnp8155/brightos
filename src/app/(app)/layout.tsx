@@ -2,6 +2,8 @@ import React, { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { Sidebar } from "@/components/sidebar";
+import { CommandPalette } from "@/components/command-palette";
+import { ToastProvider } from "@/components/toast-provider";
 
 async function AuthenticatedShell({ children }: { children: React.ReactNode }) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -32,12 +34,15 @@ async function AuthenticatedShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen flex bg-[#f8fafc]">
-      <Sidebar />
-      <div className="flex-1 flex flex-col min-w-0 min-h-screen overflow-x-hidden bg-[#f8fafc]">
-        {children}
+    <ToastProvider>
+      <CommandPalette />
+      <div className="min-h-screen flex bg-[#f8fafc]">
+        <Sidebar />
+        <div className="flex-1 flex flex-col min-w-0 min-h-screen overflow-x-hidden bg-[#f8fafc]">
+          {children}
+        </div>
       </div>
-    </div>
+    </ToastProvider>
   );
 }
 

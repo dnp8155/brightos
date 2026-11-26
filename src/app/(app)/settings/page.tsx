@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TopHeader } from "@/components/top-header";
-import { Settings, Save, CheckCircle2, Shield, Database, Cpu, Mail, Globe } from "lucide-react";
+import { useToast } from "@/components/toast-provider";
+import { Settings, Save, CheckCircle2, Shield, Database, Cpu, Mail, Globe, Users } from "lucide-react";
 
 export default function SettingsPage() {
   const [companyName, setCompanyName] = useState("BrightLoop Technology");
@@ -13,10 +14,22 @@ export default function SettingsPage() {
   const [emailProvider, setEmailProvider] = useState("resend");
   const [complianceNotice, setComplianceNotice] = useState(true);
   const [saved, setSaved] = useState(false);
+  const [team, setTeam] = useState<any[]>([]);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    fetch("/api/settings/team")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.success && d.team) setTeam(d.team);
+      })
+      .catch(() => {});
+  }, []);
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     setSaved(true);
+    toast("Workspace configuration saved.", "success");
     setTimeout(() => setSaved(false), 3000);
   };
 
@@ -138,12 +151,42 @@ export default function SettingsPage() {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="px-5 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-slate-900 text-xs font-semibold flex items-center gap-2 transition-colors shadow-sm"
+              className="px-5 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold flex items-center gap-2 transition-colors shadow-sm"
             >
               <Save size={14} /> Save Configuration
             </button>
           </div>
         </form>
+
+        {/* Team & Access Control */}
+        <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
+              <Users size={16} className="text-[#0284c7]" /> Authorized Team & Roles
+            </h3>
+            <span className="text-[11px] font-medium text-slate-500">Admin-only policy active</span>
+          </div>
+
+          {team.length === 0 ? (
+            <div className="py-6 text-center text-xs text-slate-500">
+              No team profiles loaded yet.
+            </div>
+          ) : (
+            <div className="divide-y divide-slate-100">
+              {team.map((member) => (
+                <div key={member.id} className="py-3 flex items-center justify-between text-xs">
+                  <div>
+                    <div className="font-semibold text-slate-900">{member.full_name || "Administrator"}</div>
+                    <div className="text-[11px] text-slate-500">{member.email}</div>
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full bg-sky-50 text-[#0284c7] border border-sky-200 text-[10px] font-bold uppercase">
+                    {member.role}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </main>
     </div>
   );
