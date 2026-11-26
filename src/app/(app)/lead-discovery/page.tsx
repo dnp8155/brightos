@@ -49,7 +49,30 @@ export default function LeadDiscoveryPage() {
   const [companySize, setCompanySize] = useState("50-200");
   const [websiteAvailability, setWebsiteAvailability] = useState<"any" | "has_website" | "missing_website">("any");
   const [resultLimit, setResultLimit] = useState<number>(10);
+  const [discoveredLeads, setDiscoveredLeads] = useState<any[]>([]);
   const [tableFilter, setTableFilter] = useState<"all" | "has_website" | "no_website">("all");
+
+  // Load persisted leads from localStorage on mount (no fake DEMO_LEADS fallback)
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("brightloop_discovered_leads");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setDiscoveredLeads(parsed);
+        }
+      }
+    } catch {}
+  }, []);
+
+  // Save discovered leads to localStorage whenever updated
+  useEffect(() => {
+    try {
+      if (discoveredLeads.length > 0) {
+        localStorage.setItem("brightloop_discovered_leads", JSON.stringify(discoveredLeads));
+      }
+    } catch {}
+  }, [discoveredLeads]);
   const [targetService, setTargetService] = useState("Next.js Modernization & Real-Time Tracking Portal");
   const [requirePublicEmail, setRequirePublicEmail] = useState(false);
   const [selectedProviders, setSelectedProviders] = useState<string[]>([
@@ -627,7 +650,14 @@ export default function LeadDiscoveryPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {(discoveredLeads.length > 0 ? discoveredLeads : DEMO_LEADS)
+                {discoveredLeads.length === 0 ? (
+                  <tr>
+                    <td colSpan={7} className="py-12 text-center text-xs text-slate-500">
+                      No leads in current view. Select a Country, Industry, and click <strong>Launch Discovery Job</strong> (or Import CSV).
+                    </td>
+                  </tr>
+                ) : (
+                discoveredLeads
                   .filter((lead: any) => {
                     const hasWeb = !!(lead.websiteUrl || lead.website);
                     if (tableFilter === "has_website") return hasWeb;
@@ -750,7 +780,7 @@ export default function LeadDiscoveryPage() {
                       </td>
                     </tr>
                   );
-                })}
+                }))}
               </tbody>
             </table>
           </div>
