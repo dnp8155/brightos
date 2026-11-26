@@ -70,6 +70,7 @@ const NAV_SECTIONS: NavSection[] = [
     items: [
       { name: "Integrations Hub", href: "/integrations", icon: Puzzle },
       { name: "Compliance & Safety", href: "/compliance", icon: ShieldCheck },
+      { name: "Users & Roles", href: "/settings", icon: Users },
       { name: "Settings & Keys", href: "/settings", icon: Settings }
     ]
   }

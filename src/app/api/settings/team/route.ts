@@ -8,19 +8,31 @@ export async function GET() {
       return NextResponse.json({ success: true, team: [], totalUsers: 0 });
     }
 
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("id, email, full_name, role, created_at")
-      .order("created_at", { ascending: true });
+    const [{ data: profiles }, { data: authData }] = await Promise.all([
+      supabase.from("profiles").select("id, email, full_name, role, created_at"),
+      supabase.auth.admin.listUsers()
+    ]);
 
-    if (error) {
-      return NextResponse.json({ success: false, error: error.message }, { status: 500 });
-    }
+    const profileMap = new Map<string, any>();
+    (profiles || []).forEach((p: any) => profileMap.set(p.id, p));
+
+    const authUsers = authData?.users || [];
+    const merged = authUsers.map((u: any) => {
+      const prof = profileMap.get(u.id);
+      return {
+        id: u.id,
+        email: u.email,
+        full_name: prof?.full_name || u.user_metadata?.full_name || "Workspace User",
+        role: prof?.role || "user",
+        last_sign_in_at: u.last_sign_in_at,
+        created_at: u.created_at
+      };
+    });
 
     return NextResponse.json({
       success: true,
-      team: data || [],
-      totalUsers: data?.length || 0
+      team: merged,
+      totalUsers: merged.length
     });
   } catch (err: any) {
     return NextResponse.json({ success: false, error: err.message }, { status: 500 });
@@ -43,7 +55,6 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Admin client unavailable" }, { status: 500 });
     }
 
-    // Verify caller is admin or super_admin
     const { data: callerProfile } = await adminClient
       .from("profiles")
       .select("role")
@@ -59,14 +70,18 @@ export async function PATCH(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { userId, role } = body;
+    const { userId, role, email } = body;
     if (!userId || !["admin", "operator", "user"].includes(role)) {
       return NextResponse.json({ success: false, error: "Invalid userId or role" }, { status: 400 });
     }
 
     const { error } = await (adminClient.from("profiles") as any)
-      .update({ role, updated_at: new Date().toISOString() })
-      .eq("id", userId);
+      .upsert({
+        id: userId,
+        email: email || undefined,
+        role,
+        updated_at: new Date().toISOString()
+      });
 
     if (error) {
       return NextResponse.json({ success: false, error: error.message }, { status: 500 });
