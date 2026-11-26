@@ -15,6 +15,8 @@ export default function SettingsPage() {
   const [complianceNotice, setComplianceNotice] = useState(true);
   const [saved, setSaved] = useState(false);
   const [team, setTeam] = useState<any[]>([]);
+  const [profileName, setProfileName] = useState("Dipak Patel");
+  const [avatarUrl, setAvatarUrl] = useState("");
   const { toast } = useToast();
 
   useEffect(() => {
@@ -49,6 +51,47 @@ export default function SettingsPage() {
         )}
 
         <form onSubmit={handleSave} className="space-y-6">
+          {/* My Profile Section */}
+          <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4">
+            <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
+              <Users size={16} className="text-[#0284c7]" /> My Profile & Avatar
+            </h3>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              {avatarUrl ? (
+                <img
+                  src={avatarUrl}
+                  alt="Profile Avatar"
+                  className="w-14 h-14 rounded-full object-cover border border-slate-200 shrink-0"
+                />
+              ) : (
+                <div className="w-14 h-14 rounded-full bg-slate-900 text-white font-bold text-base flex items-center justify-center shrink-0">
+                  {profileName.slice(0, 2).toUpperCase()}
+                </div>
+              )}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1 w-full">
+                <div className="space-y-1">
+                  <label className="text-[11px] font-medium text-slate-500">Full Name</label>
+                  <input
+                    type="text"
+                    value={profileName}
+                    onChange={(e) => setProfileName(e.target.value)}
+                    className="w-full px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-[#0284c7]"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[11px] font-medium text-slate-500">Profile Picture URL</label>
+                  <input
+                    type="url"
+                    placeholder="https://example.com/avatar.jpg"
+                    value={avatarUrl}
+                    onChange={(e) => setAvatarUrl(e.target.value)}
+                    className="w-full px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-[#0284c7]"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* General Company Profile */}
           <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4">
             <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
