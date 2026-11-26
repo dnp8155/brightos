@@ -49,6 +49,7 @@ export default function LeadDiscoveryPage() {
   const [companySize, setCompanySize] = useState("50-200");
   const [websiteAvailability, setWebsiteAvailability] = useState<"any" | "has_website" | "missing_website">("any");
   const [resultLimit, setResultLimit] = useState<number>(10);
+  const [tableFilter, setTableFilter] = useState<"all" | "has_website" | "no_website">("all");
   const [targetService, setTargetService] = useState("Next.js Modernization & Real-Time Tracking Portal");
   const [requirePublicEmail, setRequirePublicEmail] = useState(false);
   const [selectedProviders, setSelectedProviders] = useState<string[]>([
@@ -625,13 +626,23 @@ export default function LeadDiscoveryPage() {
                   <th className="pb-3 px-3 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
-                {(discoveredLeads.length > 0 ? discoveredLeads : DEMO_LEADS).map((lead: any, idx: number) => {
+              <tbody className="divide-y divide-slate-100">
+                {(discoveredLeads.length > 0 ? discoveredLeads : DEMO_LEADS)
+                  .filter((lead: any) => {
+                    const hasWeb = !!(lead.websiteUrl || lead.website);
+                    if (tableFilter === "has_website") return hasWeb;
+                    if (tableFilter === "no_website") return !hasWeb;
+                    return true;
+                  })
+                  .map((lead: any, idx: number) => {
                   const companyName = lead.companyName || lead.businessName;
                   const websiteUrl = lead.websiteUrl || lead.website;
                   const email = lead.publicEmail || lead.contact?.email;
                   const score = lead.initialQualificationScore ?? lead.opportunityScore ?? 80;
-                  const provider = lead.providerName || "Apollo Enrichment";
+                  const provider = (lead.providerName || "Apollo")
+                    .replace("Serper Google Places", "Google Places")
+                    .replace("Search API (SerpAPI / Bing)", "Search API")
+                    .replace("Public Business Directory Adapter", "Directory");
 
                   return (
                     <tr key={lead.id || idx} className="hover:bg-slate-100/30 transition-colors">
@@ -679,10 +690,15 @@ export default function LeadDiscoveryPage() {
                           {email ? (
                             <span className="text-slate-800 font-mono text-[11px]">{email}</span>
                           ) : (
-                            <span className="text-slate-400 text-[11px]">No public email</span>
+                            <span className="text-slate-400 text-[11px]">—</span>
                           )}
                           {lead.publicPhone && (
-                            <span className="text-slate-600 font-mono text-[10px]">{lead.publicPhone}</span>
+                            <a
+                              href={`tel:${lead.publicPhone}`}
+                              className="text-[#0284c7] hover:underline font-mono text-[10px] whitespace-nowrap"
+                            >
+                              {lead.publicPhone}
+                            </a>
                           )}
                         </div>
                       </td>
