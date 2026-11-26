@@ -157,10 +157,30 @@ export default function InboxPage() {
                   </span>
                 </span>
               </div>
-              <div className="text-[11px] text-slate-500">
-                Phase 1 Demo Thread
-              </div>
+              <button
+                onClick={handleAnalyzeThread}
+                disabled={analyzing}
+                className="px-3 py-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-[#0284c7] border border-sky-200 text-xs font-semibold flex items-center gap-1.5 transition-colors disabled:opacity-50"
+              >
+                <Sparkles size={13} />
+                {analyzing ? "Analyzing..." : "Analyze Reply (AI)"}
+              </button>
             </div>
+
+            {aiInsight && (
+              <div className="p-3.5 rounded-xl bg-sky-50/70 border border-sky-200 text-xs space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-slate-900">AI Conversation Intelligence</span>
+                  <span className="px-2 py-0.5 rounded bg-white border border-sky-200 text-[10px] font-bold text-[#0284c7]">
+                    {aiInsight.sentiment} • {aiInsight.classification}
+                  </span>
+                </div>
+                <p className="text-slate-700">{aiInsight.summary}</p>
+                <p className="text-[11px] font-semibold text-emerald-700">
+                  Next Action: {aiInsight.suggestedNextAction}
+                </p>
+              </div>
+            )}
 
             {/* Message Bubble Feed */}
             <div className="flex-1 space-y-3 overflow-y-auto p-2">
