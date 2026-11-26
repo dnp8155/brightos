@@ -128,8 +128,8 @@ export class IntegrationsHubService {
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
     const openaiKey = process.env.OPENAI_API_KEY;
     const googleClientId = process.env.GOOGLE_CLIENT_ID;
-    const googlePlacesKey = process.env.GOOGLE_PLACES_API_KEY;
-    const searchApiKey = process.env.SEARCH_API_KEY;
+    const googlePlacesKey = process.env.GOOGLE_PLACES_API_KEY || process.env.SERPER_API_KEY;
+    const searchApiKey = process.env.SERPER_API_KEY || process.env.SEARCH_API_KEY;
     const redisUrl = process.env.REDIS_URL;
 
     // 1. Supabase
