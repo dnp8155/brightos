@@ -101,7 +101,6 @@ export default function LeadDiscoveryPage() {
   const [activeJob, setActiveJob] = useState<JobState | null>(null);
   const [isStarting, setIsStarting] = useState(false);
   const [recentJobs, setRecentJobs] = useState<JobState[]>([]);
-  const [discoveredLeads, setDiscoveredLeads] = useState<any[]>([]);
   const [notification, setNotification] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 

@@ -24,7 +24,7 @@ export default function InboxPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contactName: selectedThread.contactName,
-          companyName: selectedThread.businessName,
+          companyName: selectedThread.company,
           messageContent: lastMsg?.content || selectedThread.lastMessageSnippet
         })
       });
