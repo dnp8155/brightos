@@ -7,13 +7,21 @@ export class SearchProvider implements DiscoveryProvider {
     return !!(
       process.env.SERPER_API_KEY ||
       process.env.SEARCH_API_KEY ||
+      process.env.SERPER_API ||
+      process.env.SERPER_KEY ||
+      process.env.NEXT_PUBLIC_SERPER_API_KEY ||
       process.env.SERPAPI_API_KEY ||
       process.env.BING_SEARCH_API_KEY
     );
   }
 
   public async search(criteria: DiscoverySearchCriteria): Promise<RawDiscoveredLead[]> {
-    const serperKey = process.env.SERPER_API_KEY || process.env.SEARCH_API_KEY;
+    const serperKey =
+      process.env.SERPER_API_KEY ||
+      process.env.SEARCH_API_KEY ||
+      process.env.SERPER_API ||
+      process.env.SERPER_KEY ||
+      process.env.NEXT_PUBLIC_SERPER_API_KEY;
     const apiKey = process.env.SERPAPI_API_KEY;
     const query = [
       criteria.industry,

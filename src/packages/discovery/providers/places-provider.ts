@@ -7,12 +7,20 @@ export class PlacesProvider implements DiscoveryProvider {
     return !!(
       process.env.GOOGLE_PLACES_API_KEY ||
       process.env.SERPER_API_KEY ||
-      process.env.SEARCH_API_KEY
+      process.env.SEARCH_API_KEY ||
+      process.env.SERPER_API ||
+      process.env.SERPER_KEY ||
+      process.env.NEXT_PUBLIC_SERPER_API_KEY
     );
   }
 
   public async search(criteria: DiscoverySearchCriteria): Promise<RawDiscoveredLead[]> {
-    const serperKey = process.env.SERPER_API_KEY || process.env.SEARCH_API_KEY;
+    const serperKey =
+      process.env.SERPER_API_KEY ||
+      process.env.SEARCH_API_KEY ||
+      process.env.SERPER_API ||
+      process.env.SERPER_KEY ||
+      process.env.NEXT_PUBLIC_SERPER_API_KEY;
     const apiKey = process.env.GOOGLE_PLACES_API_KEY;
 
     // 1. Use Serper.dev Google Maps / Places endpoint if SERPER_API_KEY is configured
