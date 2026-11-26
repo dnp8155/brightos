@@ -42,10 +42,10 @@ function LoginContent() {
         .eq("id", data.user.id)
         .single();
 
-      const userRole = (profile as any)?.role;
-      if (!userRole || (userRole !== "admin" && userRole !== "super_admin" && userRole !== "operator")) {
+      const userRole = (profile as any)?.role || "user";
+      if (!["admin", "super_admin", "operator", "user"].includes(userRole)) {
         await supabase.auth.signOut();
-        setErrorMsg("Access denied. Your account is not authorized as an administrator.");
+        setErrorMsg("Access denied. Your account is not authorized.");
         setLoading(false);
         return;
       }

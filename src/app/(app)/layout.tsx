@@ -27,8 +27,8 @@ async function AuthenticatedShell({ children }: { children: React.ReactNode }) {
       .eq("id", user.id)
       .single();
 
-    const role = (profile as any)?.role;
-    if (!role || (role !== "admin" && role !== "super_admin" && role !== "operator")) {
+    const role = (profile as any)?.role || "user";
+    if (!["admin", "super_admin", "operator", "user"].includes(role)) {
       redirect("/access-denied");
     }
   }

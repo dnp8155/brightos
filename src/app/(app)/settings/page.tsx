@@ -162,9 +162,9 @@ export default function SettingsPage() {
         <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
-              <Users size={16} className="text-[#0284c7]" /> Authorized Team & Roles
+              <Users size={16} className="text-[#0284c7]" /> Team & Role Management ({team.length} Users)
             </h3>
-            <span className="text-[11px] font-medium text-slate-500">Admin-only policy active</span>
+            <span className="text-[11px] font-medium text-slate-500">Admin-controlled RBAC</span>
           </div>
 
           {team.length === 0 ? (
@@ -174,14 +174,36 @@ export default function SettingsPage() {
           ) : (
             <div className="divide-y divide-slate-100">
               {team.map((member) => (
-                <div key={member.id} className="py-3 flex items-center justify-between text-xs">
+                <div key={member.id} className="py-3 flex items-center justify-between gap-4 text-xs">
                   <div>
-                    <div className="font-semibold text-slate-900">{member.full_name || "Administrator"}</div>
+                    <div className="font-semibold text-slate-900">{member.full_name || "Workspace User"}</div>
                     <div className="text-[11px] text-slate-500">{member.email}</div>
                   </div>
-                  <span className="px-2.5 py-0.5 rounded-full bg-sky-50 text-[#0284c7] border border-sky-200 text-[10px] font-bold uppercase">
-                    {member.role}
-                  </span>
+                  <select
+                    value={member.role}
+                    onChange={async (e) => {
+                      const newRole = e.target.value;
+                      const res = await fetch("/api/settings/team", {
+                        method: "PATCH",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ userId: member.id, role: newRole })
+                      });
+                      const data = await res.json();
+                      if (data.success) {
+                        setTeam((prev) =>
+                          prev.map((m) => (m.id === member.id ? { ...m, role: newRole } : m))
+                        );
+                        toast(`Updated ${member.email} role to ${newRole}`, "success");
+                      } else {
+                        toast(data.error || "Only admins can update roles", "error");
+                      }
+                    }}
+                    className="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 focus:outline-none focus:border-[#0284c7]"
+                  >
+                    <option value="admin">admin</option>
+                    <option value="operator">operator</option>
+                    <option value="user">user</option>
+                  </select>
                 </div>
               ))}
             </div>
