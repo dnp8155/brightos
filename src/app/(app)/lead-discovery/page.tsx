@@ -69,6 +69,35 @@ export default function LeadDiscoveryPage() {
         if (Array.isArray(parsedHist)) setLeadHistory(parsedHist);
       }
     } catch {}
+
+    // Also fetch persisted leads from Supabase /api/leads into Lead History
+    fetch("/api/leads")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.leads && Array.isArray(d.leads) && d.leads.length > 0) {
+          setLeadHistory((prev) => {
+            const existingKeys = new Set(prev.map((p) => `${p.companyName || p.businessName}-${p.publicPhone || p.websiteUrl || ""}`));
+            const mapped = d.leads.map((l: any) => ({
+              id: l.id,
+              companyName: l.company_name || l.businessName,
+              websiteUrl: l.website_url || l.website,
+              industry: l.industry,
+              country: l.country,
+              city: l.city,
+              description: l.description,
+              publicEmail: l.public_email,
+              publicPhone: l.public_phone,
+              providerName: l.provider_name || "Supabase",
+              initialQualificationScore: l.initial_qualification_score || 80
+            }));
+            const fresh = mapped.filter(
+              (m: any) => !existingKeys.has(`${m.companyName}-${m.publicPhone || m.websiteUrl || ""}`)
+            );
+            return [...prev, ...fresh];
+          });
+        }
+      })
+      .catch(() => {});
   }, []);
 
   // Save current discovered leads & append to persistent history
@@ -642,13 +671,70 @@ export default function LeadDiscoveryPage() {
 
         {/* Discovered Leads Results Table */}
         <div className="p-5 rounded-xl bg-white shadow-2xs border border-slate-200 space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-900 flex items-center gap-2">
-              <Sparkles size={16} className="text-sky-400" /> Discovered Leads
-              <span className="text-xs text-slate-400 font-normal">
-                ({discoveredLeads.length > 0 ? discoveredLeads.length : DEMO_LEADS.length} records available)
-              </span>
-            </h3>
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+            <div className="flex items-center gap-2 flex-wrap">
+              <button
+                onClick={() => setActiveViewTab("current")}
+                className={cn(
+                  "px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 border transition-colors",
+                  activeViewTab === "current"
+                    ? "bg-[#0284c7] text-white border-[#0284c7]"
+                    : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
+                )}
+              >
+                <Sparkles size={13} /> Current Results ({discoveredLeads.length})
+              </button>
+              <button
+                onClick={() => setActiveViewTab("history")}
+                className={cn(
+                  "px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 border transition-colors",
+                  activeViewTab === "history"
+                    ? "bg-slate-900 text-white border-slate-900"
+                    : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
+                )}
+              >
+                <Clock size={13} /> Lead History ({leadHistory.length})
+              </button>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              <input
+                type="text"
+                value={tableSearch}
+                onChange={(e) => setTableSearch(e.target.value)}
+                placeholder="Search name, city, phone..."
+                className="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0284c7] w-48"
+              />
+              {activeViewTab === "current" && discoveredLeads.length > 0 && (
+                <button
+                  onClick={() => {
+                    setDiscoveredLeads([]);
+                    localStorage.removeItem("brightloop_discovered_leads");
+                  }}
+                  className="px-2.5 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-[11px] font-medium transition-colors"
+                >
+                  Clear View
+                </button>
+              )}
+              {[
+                { id: "all", label: "All" },
+                { id: "has_website", label: "Has Website" },
+                { id: "no_website", label: "No Website" }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setTableFilter(tab.id as any)}
+                  className={cn(
+                    "px-2.5 py-1.5 rounded-lg text-[11px] font-medium border transition-colors",
+                    tableFilter === tab.id
+                      ? "bg-slate-900 text-white border-slate-900"
+                      : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
+                  )}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="overflow-x-auto">
