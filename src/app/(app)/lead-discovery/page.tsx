@@ -321,22 +321,46 @@ export default function LeadDiscoveryPage() {
                   <label className="text-[11px] font-medium text-slate-400">State / Region (Optional)</label>
                   <input
                     type="text"
-                    placeholder="e.g. California / Bavaria"
+                    list="state-suggestions"
+                    placeholder="e.g. Gujarat / California"
                     value={stateRegion}
                     onChange={(e) => setStateRegion(e.target.value)}
                     className="w-full px-3 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-sky-500"
                   />
+                  <datalist id="state-suggestions">
+                    <option value="Gujarat" />
+                    <option value="Maharashtra" />
+                    <option value="Delhi" />
+                    <option value="Karnataka" />
+                    <option value="Tamil Nadu" />
+                    <option value="California" />
+                    <option value="Texas" />
+                    <option value="New York" />
+                  </datalist>
                 </div>
 
                 <div className="space-y-1">
                   <label className="text-[11px] font-medium text-slate-400">City / Metro (Optional)</label>
                   <input
                     type="text"
-                    placeholder="e.g. San Francisco / London"
+                    list="city-suggestions"
+                    placeholder="e.g. Ahmedabad / London"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     className="w-full px-3 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-sky-500"
                   />
+                  <datalist id="city-suggestions">
+                    <option value="Ahmedabad" />
+                    <option value="Surat" />
+                    <option value="Mumbai" />
+                    <option value="Pune" />
+                    <option value="Bengaluru" />
+                    <option value="New Delhi" />
+                    <option value="London" />
+                    <option value="New York" />
+                    <option value="San Francisco" />
+                    <option value="Dubai" />
+                  </datalist>
                 </div>
               </div>
 
