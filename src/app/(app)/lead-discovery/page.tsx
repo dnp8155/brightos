@@ -80,13 +80,20 @@ export default function LeadDiscoveryPage() {
   ];
 
   const industries = [
+    "Beauty Salon & Spa",
+    "Restaurants & Cafes",
+    "Dental & Medical Clinics",
+    "Real Estate & Construction",
+    "Fitness & Gyms",
+    "Hotels & Hospitality",
+    "Auto Repair & Dealerships",
+    "Education & Coaching",
     "Supply Chain & Logistics",
     "Healthcare & Biotech",
     "Financial Services & FinTech",
-    "Renewable Energy & CleanTech",
-    "E-Commerce & Retail Tech",
-    "Cybersecurity & Cloud Infra",
-    "Industrial Manufacturing"
+    "E-Commerce & Retail",
+    "Industrial Manufacturing",
+    "Software & SaaS"
   ];
 
   // Poll active discovery job
