@@ -635,27 +635,44 @@ export default function LeadDiscoveryPage() {
 
                   return (
                     <tr key={lead.id || idx} className="hover:bg-slate-100/30 transition-colors">
-                      <td className="py-3 px-3">
+                      <td className="py-3 px-3 min-w-[180px]">
                         <div className="font-semibold text-slate-900">{companyName}</div>
-                        <div className="text-[10px] text-slate-400">{lead.industry}</div>
+                        <div className="text-[10px] text-slate-500 flex items-center gap-2 mt-0.5">
+                          <span>{lead.industry}</span>
+                          {lead.metadata?.rating && (
+                            <span className="text-amber-600 font-semibold">★ {lead.metadata.rating}</span>
+                          )}
+                        </div>
                       </td>
-                      <td className="py-3 px-3">
+                      <td className="py-3 px-3 max-w-[210px]">
                         {websiteUrl ? (
                           <a
                             href={websiteUrl}
                             target="_blank"
                             rel="noreferrer"
-                            className="text-sky-400 hover:text-sky-300 flex items-center gap-1 font-mono text-[11px]"
+                            className="text-[#0284c7] hover:underline flex items-center gap-1 font-mono text-[11px]"
                           >
-                            {websiteUrl.replace(/https?:\/\//, "")}
-                            <ExternalLink size={11} />
+                            <span className="truncate">{websiteUrl.replace(/https?:\/\//, "")}</span>
+                            <ExternalLink size={11} className="shrink-0" />
                           </a>
                         ) : (
-                          <span className="text-slate-500 italic">No domain</span>
+                          <div className="flex flex-col gap-0.5">
+                            <span className="inline-block w-fit px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-semibold">
+                              No Website
+                            </span>
+                            <span className="text-[10px] text-slate-500">
+                              Suggest: Website + Software
+                            </span>
+                          </div>
                         )}
                       </td>
-                      <td className="py-3 px-3 text-slate-700">
-                        {lead.city ? `${lead.city}, ` : ""}{lead.country}
+                      <td className="py-3 px-3 max-w-[220px]">
+                        <div className="text-slate-700 font-medium">{lead.city ? `${lead.city}, ` : ""}{lead.country}</div>
+                        {lead.description && (
+                          <div className="text-[10px] text-slate-500 truncate mt-0.5" title={lead.description}>
+                            {lead.description}
+                          </div>
+                        )}
                       </td>
                       <td className="py-3 px-3">
                         <div className="flex flex-col gap-0.5">
