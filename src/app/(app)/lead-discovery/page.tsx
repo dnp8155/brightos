@@ -594,42 +594,47 @@ export default function LeadDiscoveryPage() {
                         {lead.city ? `${lead.city}, ` : ""}{lead.country}
                       </td>
                       <td className="py-3 px-3">
-                        {email ? (
-                          <span className="text-slate-800 font-mono text-[11px]">{email}</span>
-                        ) : (
-                          <span className="text-slate-500">N/A</span>
-                        )}
+                        <div className="flex flex-col gap-0.5">
+                          {email ? (
+                            <span className="text-slate-800 font-mono text-[11px]">{email}</span>
+                          ) : (
+                            <span className="text-slate-400 text-[11px]">No public email</span>
+                          )}
+                          {lead.publicPhone && (
+                            <span className="text-slate-600 font-mono text-[10px]">{lead.publicPhone}</span>
+                          )}
+                        </div>
                       </td>
                       <td className="py-3 px-3">
-                        <span className="text-[10px] px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700">
+                        <span className="inline-block whitespace-nowrap text-[10px] px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 font-medium">
                           {provider}
                         </span>
                       </td>
                       <td className="py-3 px-3 text-center">
                         <span
                           className={cn(
-                            "inline-block px-2 py-0.5 rounded font-bold text-xs",
+                            "inline-block whitespace-nowrap px-2 py-0.5 rounded font-bold text-xs",
                             score >= 80
-                              ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                              : "bg-sky-500/10 text-sky-400 border border-sky-500/20"
+                              ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                              : "bg-sky-50 text-[#0284c7] border border-sky-200"
                           )}
                         >
                           {score}/100
                         </span>
                       </td>
                       <td className="py-3 px-3 text-right">
-                        <div className="inline-flex items-center gap-1.5">
+                        <div className="inline-flex items-center gap-1.5 whitespace-nowrap">
                           {(lead.websiteUrl || lead.website) && (
                             <Link
                               href={`/audits?url=${encodeURIComponent(lead.websiteUrl || lead.website)}`}
-                              className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-[11px] font-medium transition-colors"
+                              className="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-[11px] font-medium transition-colors whitespace-nowrap"
                             >
                               Audit
                             </Link>
                           )}
                           <Link
                             href={`/crm?leadId=${lead.id || "lead-1"}`}
-                            className="px-2.5 py-1 rounded bg-sky-50 hover:bg-sky-100 text-[#0284c7] border border-sky-200 text-[11px] font-medium transition-colors"
+                            className="px-2.5 py-1 rounded bg-sky-50 hover:bg-sky-100 text-[#0284c7] border border-sky-200 text-[11px] font-medium transition-colors whitespace-nowrap"
                           >
                             View in CRM
                           </Link>
