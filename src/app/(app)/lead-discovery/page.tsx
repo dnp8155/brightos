@@ -65,12 +65,14 @@ export default function LeadDiscoveryPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const countries = [
+    "India",
     "United States",
     "United Kingdom",
-    "Germany",
-    "Singapore",
+    "United Arab Emirates",
     "Canada",
     "Australia",
+    "Germany",
+    "Singapore",
     "Sweden",
     "Japan",
     "France",
