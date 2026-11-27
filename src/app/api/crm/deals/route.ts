@@ -34,6 +34,48 @@ export async function GET() {
   });
 }
 
+// POST /api/crm/deals - Upsert a lead into the CRM pipeline
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const businessId = String(body.id || body.businessId || `lead_${Date.now()}`);
+    const existing = inMemoryDeals.find((d) => d.businessId === businessId || d.id === `deal_${businessId}`);
+    if (existing) {
+      return NextResponse.json({ deal: existing });
+    }
+
+    const website = String(body.websiteUrl || body.website || "");
+    const domain = website ? website.replace(/https?:\/\//, "").split("/")[0] : "";
+    const newDeal: CRMDeal = {
+      id: `deal_${businessId}`,
+      businessId,
+      businessName: String(body.businessName || body.name || "New Lead"),
+      domain,
+      country: String(body.country || "India"),
+      industry: String(body.industry || body.category || "Business"),
+      stage: "New Lead",
+      dealValue: Number(body.dealValue || 25000),
+      currency: "INR",
+      primaryContact: {
+        name: String(body.contact?.name || body.contactName || "Decision Maker"),
+        email: String(body.contact?.email || body.contactEmail || ""),
+        role: String(body.contact?.role || "Owner"),
+        phone: String(body.contact?.phone || body.phone || "")
+      },
+      targetService: String(body.targetService || "Digital Growth & Automation"),
+      opportunityScore: Number(body.opportunityScore || 80),
+      lastActivityAt: new Date().toISOString(),
+      notes: String(body.notes || "Imported from Lead Discovery"),
+      sentiment: "Neutral"
+    };
+
+    inMemoryDeals.unshift(newDeal);
+    return NextResponse.json({ deal: newDeal }, { status: 201 });
+  } catch (err: any) {
+    return NextResponse.json({ error: "Failed to create CRM deal", details: err?.message }, { status: 500 });
+  }
+}
+
 // PATCH /api/crm/deals - Move deal to new stage (Drag and Drop persistence)
 export async function PATCH(request: NextRequest) {
   try {
