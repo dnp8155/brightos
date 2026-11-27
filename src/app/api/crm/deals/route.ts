@@ -44,12 +44,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ deal: existing });
     }
 
-    const website = String(body.websiteUrl || body.website || "");
+    const website = String(body.websiteUrl || body.website || body.url || "");
     const domain = website ? website.replace(/https?:\/\//, "").split("/")[0] : "";
+    const resolvedName = String(
+      body.businessName || body.companyName || body.title || body.name || body.company || domain || "Lead"
+    );
     const newDeal: CRMDeal = {
       id: `deal_${businessId}`,
       businessId,
-      businessName: String(body.businessName || body.name || "New Lead"),
+      businessName: resolvedName,
       domain,
       country: String(body.country || "India"),
       industry: String(body.industry || body.category || "Business"),
