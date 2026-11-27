@@ -428,12 +428,55 @@ export default function LeadDiscoveryPage() {
             >
               <Upload size={13} /> Import CSV
             </button>
-            <a
-              href="/api/leads/export"
-              className="px-3 py-1.5 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-400 text-xs font-medium flex items-center gap-1.5 transition-colors border border-sky-500/30"
+            <button
+              onClick={() => {
+                const all = [...discoveredLeads, ...leadHistory];
+                if (all.length === 0) return;
+                const esc = (v: any) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+                const headers = [
+                  "Company Name",
+                  "Category",
+                  "Website",
+                  "Country",
+                  "City",
+                  "Address",
+                  "Email",
+                  "Phone",
+                  "Provider",
+                  "Opportunity Score",
+                  "Google Business URL"
+                ];
+                const rows = all.map((l: any) => {
+                  const name = l.companyName || l.businessName || l.business_name || l.name || l.title || "";
+                  const cat = l.category || l.industry || "";
+                  const web = l.websiteUrl || l.website_url || l.website || "";
+                  const country = l.country || "";
+                  const city = l.city || "";
+                  const addr = l.address || l.description || "";
+                  const email = l.publicEmail || l.contact?.email || l.contact_email || l.contacts?.[0]?.email || "";
+                  const phone = l.publicPhone || l.contact?.phone || l.contact_phone || l.contacts?.[0]?.phone || "";
+                  const prov = l.providerName || l.provider || "Google Places";
+                  const score = l.initialQualificationScore ?? l.opportunityScore ?? l.opportunity_score ?? 80;
+                  const gbp =
+                    l.googleMapsUrl ||
+                    (l.cid
+                      ? `https://www.google.com/maps?cid=${l.cid}`
+                      : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${addr || city || country}`.trim())}`);
+                  return [name, cat, web, country, city, addr, email, phone, prov, score, gbp].map(esc).join(",");
+                });
+                const csv = [headers.join(","), ...rows].join("\n");
+                const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `brightloop-qualified-leads-${new Date().toISOString().slice(0, 10)}.csv`;
+                a.click();
+                URL.revokeObjectURL(url);
+              }}
+              className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-medium flex items-center gap-1.5 transition-colors"
             >
               <Download size={13} /> Export Qualified CSV
-            </a>
+            </button>
           </div>
         </div>
 
