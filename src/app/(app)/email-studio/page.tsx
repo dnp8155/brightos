@@ -45,6 +45,7 @@ export default function EmailStudioPage() {
       .then((data) => {
         if (data.leads && data.leads.length > 0) {
           setLeads(data.leads);
+          setSelectedLead(data.leads[0]);
         }
       })
       .catch(() => {});

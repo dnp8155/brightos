@@ -24,8 +24,8 @@ import {
 import { cn } from "@/lib/utils";
 
 export default function AuditsPage() {
-  const [audits, setAudits] = useState<any[]>(DEMO_AUDITS);
-  const [selectedAudit, setSelectedAudit] = useState<any>(DEMO_AUDITS[0]);
+  const [audits, setAudits] = useState<any[]>([]);
+  const [selectedAudit, setSelectedAudit] = useState<any>(null);
   const [inputUrl, setInputUrl] = useState("");
   const [activeTab, setActiveTab] = useState<"findings" | "technologies" | "pages" | "ai_summary">("findings");
   const [loading, setLoading] = useState(false);

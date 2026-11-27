@@ -2,19 +2,19 @@
 
 import React, { useState } from "react";
 import { TopHeader } from "@/components/top-header";
-import { DEMO_INBOX_THREADS } from "@/lib/demoData";
 import { InboxThread } from "@/types";
 import { Inbox, MessageSquare, Send, CheckCircle2, User, Clock, ArrowRight, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function InboxPage() {
-  const [threads, setThreads] = useState<InboxThread[]>(DEMO_INBOX_THREADS);
-  const [selectedThread, setSelectedThread] = useState<InboxThread>(DEMO_INBOX_THREADS[0]);
+  const [threads, setThreads] = useState<InboxThread[]>([]);
+  const [selectedThread, setSelectedThread] = useState<InboxThread | null>(null);
   const [replyText, setReplyText] = useState("");
   const [aiInsight, setAiInsight] = useState<any>(null);
   const [analyzing, setAnalyzing] = useState(false);
 
   const handleAnalyzeThread = async () => {
+    if (!selectedThread) return;
     setAnalyzing(true);
     setAiInsight(null);
     try {
@@ -42,6 +42,8 @@ export default function InboxPage() {
   const handleSendReply = (e: React.FormEvent) => {
     e.preventDefault();
     if (!replyText.trim()) return;
+
+    if (!selectedThread) return;
 
     const newMsg = {
       id: `m-${Date.now()}`,
@@ -101,7 +103,7 @@ export default function InboxPage() {
                   onClick={() => setSelectedThread(thread)}
                   className={cn(
                     "p-3 rounded-lg border cursor-pointer transition-all space-y-1.5",
-                    selectedThread.id === thread.id
+                    selectedThread?.id === thread.id
                       ? "bg-sky-500/10 border-sky-500/40"
                       : "bg-slate-50 border-slate-200 hover:border-slate-200"
                   )}
@@ -139,6 +141,12 @@ export default function InboxPage() {
 
           {/* Conversation Panel */}
           <div className="md:col-span-2 p-5 rounded-xl bg-white shadow-2xs border border-slate-200 flex flex-col justify-between space-y-4">
+            {!selectedThread ? (
+              <div className="flex-1 flex items-center justify-center text-xs text-zinc-500 py-16">
+                No inbox threads yet. Incoming replies will appear here automatically.
+              </div>
+            ) : (
+            <>
             {/* Thread Header */}
             <div className="flex items-center justify-between pb-3 border-b border-slate-200">
               <div>
@@ -225,6 +233,8 @@ export default function InboxPage() {
                 <Send size={13} /> Send
               </button>
             </form>
+            </>
+            )}
           </div>
         </div>
       </main>
