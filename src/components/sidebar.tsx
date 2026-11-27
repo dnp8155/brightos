@@ -143,8 +143,8 @@ export function Sidebar() {
                   className={cn(
                     "flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150 group",
                     isActive
-                      ? "bg-sky-50 text-[#0284c7] font-bold shadow-xs border border-sky-200/60"
-                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                      ? "bg-zinc-900 text-white font-semibold shadow-xs"
+                      : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100"
                   )}
                   title={collapsed ? item.name : undefined}
                 >
