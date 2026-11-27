@@ -835,10 +835,10 @@ export default function LeadDiscoveryPage() {
                     );
                   })
                   .map((lead: any, idx: number) => {
-                  const companyName = lead.companyName || lead.businessName;
+                  const companyName = lead.companyName || lead.businessName || lead.business_name || lead.name || lead.title || "Business";
                   const websiteUrl = lead.websiteUrl || lead.website;
-                  const email = lead.publicEmail || lead.contact?.email;
-                  const score = lead.initialQualificationScore ?? lead.opportunityScore ?? 80;
+                  const email = lead.publicEmail || lead.contact?.email || lead.contact_email;
+                  const score = lead.initialQualificationScore ?? lead.opportunityScore ?? lead.opportunity_score ?? 80;
                   const provider = (lead.providerName || "Apollo")
                     .replace("Serper Google Places", "Google Places")
                     .replace("Search API (SerpAPI / Bing)", "Search API")
