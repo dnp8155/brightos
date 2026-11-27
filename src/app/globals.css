@@ -82,6 +82,34 @@ tbody tr {
   transition: background-color 0.14s ease;
 }
 
+/* Hand-crafted Linear / Attio Neutral SaaS Overrides (eliminates loud AI-gen cyan/sky tones) */
+.bg-sky-500,
+.bg-sky-600 {
+  background-color: #18181b !important;
+  color: #ffffff !important;
+}
+
+.bg-sky-500:hover,
+.bg-sky-600:hover,
+.hover\:bg-sky-600:hover {
+  background-color: #27272a !important;
+}
+
+.bg-sky-50 {
+  background-color: #f4f4f5 !important;
+}
+
+.border-sky-200,
+.border-sky-200\/60 {
+  border-color: #e4e4e7 !important;
+}
+
+.text-\[\#0284c7\],
+.text-sky-600,
+.text-sky-500 {
+  color: #18181b !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   main,
   button,
