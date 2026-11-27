@@ -25,8 +25,59 @@ const UpdateDealStageSchema = z.object({
   notes: z.string().optional()
 });
 
-// GET /api/crm/deals - Returns all pipeline deals & stage columns
+function getSupabaseAdmin() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return null;
+  return createClient(url, key);
+}
+
+// GET /api/crm/deals - Returns all pipeline deals & stage columns (Supabase-backed)
 export async function GET() {
+  const admin = getSupabaseAdmin();
+  if (admin) {
+    try {
+      const { data: rows, error } = await admin
+        .from("leads")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(100);
+
+      if (!error && rows && rows.length > 0) {
+        const dbDeals: CRMDeal[] = rows.map((r: any) => ({
+          id: `deal_${r.id}`,
+          businessId: String(r.id),
+          businessName: r.business_name || r.company_name || "Lead",
+          domain: r.website ? String(r.website).replace(/https?:\/\//, "").split("/")[0] : "",
+          country: r.country || "India",
+          industry: r.industry || "Business",
+          stage: (PIPELINE_STAGES.includes(r.status) ? r.status : "New Lead") as PipelineStage,
+          dealValue: Number(r.deal_value || 25000),
+          currency: r.currency || "INR",
+          primaryContact: {
+            name: r.contact_name || "Decision Maker",
+            email: r.contact_email || "",
+            role: r.contact_role || "Owner",
+            phone: r.contact_phone || ""
+          },
+          targetService: r.target_service || "Digital Growth & Automation",
+          opportunityScore: Number(r.opportunity_score || 80),
+          lastActivityAt: r.updated_at || r.created_at || new Date().toISOString(),
+          notes: r.notes || "",
+          sentiment: "Neutral"
+        }));
+
+        return NextResponse.json({
+          stages: PIPELINE_STAGES,
+          deals: dbDeals,
+          activities: inMemoryActivities
+        });
+      }
+    } catch {
+      // Fallback to inMemoryDeals if Supabase query fails
+    }
+  }
+
   return NextResponse.json({
     stages: PIPELINE_STAGES,
     deals: inMemoryDeals,
@@ -73,6 +124,31 @@ export async function POST(request: NextRequest) {
     };
 
     inMemoryDeals.unshift(newDeal);
+
+    const admin = getSupabaseAdmin();
+    if (admin) {
+      await admin
+        .from("leads")
+        .upsert({
+          id: businessId,
+          business_name: resolvedName,
+          website,
+          country: newDeal.country,
+          industry: newDeal.industry,
+          status: newDeal.stage,
+          deal_value: newDeal.dealValue,
+          currency: "INR",
+          contact_name: newDeal.primaryContact.name,
+          contact_email: newDeal.primaryContact.email,
+          contact_phone: newDeal.primaryContact.phone,
+          opportunity_score: newDeal.opportunityScore,
+          notes: newDeal.notes,
+          updated_at: new Date().toISOString()
+        })
+        .select()
+        .maybeSingle();
+    }
+
     return NextResponse.json({ deal: newDeal }, { status: 201 });
   } catch (err: any) {
     return NextResponse.json({ error: "Failed to create CRM deal", details: err?.message }, { status: 500 });
@@ -90,10 +166,27 @@ export async function PATCH(request: NextRequest) {
     }
 
     const { dealId, newStage, notes } = parsed.data;
+    const rawId = dealId.replace(/^deal_/, "");
+
+    const admin = getSupabaseAdmin();
+    if (admin) {
+      await admin
+        .from("leads")
+        .update({
+          status: newStage,
+          ...(notes ? { notes } : {}),
+          updated_at: new Date().toISOString()
+        })
+        .eq("id", rawId);
+    }
+
     const deal = inMemoryDeals.find((d) => d.id === dealId);
 
     if (!deal) {
-      return NextResponse.json({ error: "Deal not found" }, { status: 404 });
+      return NextResponse.json({
+        message: `Stage updated to ${newStage}`,
+        deal: { id: dealId, businessId: rawId, stage: newStage, notes }
+      });
     }
 
     const previousStage = deal.stage;
