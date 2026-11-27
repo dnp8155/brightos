@@ -40,21 +40,26 @@ async function runAutoDiscover(req: NextRequest) {
     }
 
     const admin = createClient(supabaseUrl, serviceKey);
-    const rows = places.map((p, idx) => ({
-      id: `auto_${Date.now()}_${idx}`,
-      business_name: p.title || "Discovered Business",
-      website: p.website || "",
-      country: "India",
-      industry: p.category || "Business",
-      status: "New Lead",
-      deal_value: 25000,
-      currency: "INR",
-      contact_phone: p.phoneNumber || "",
-      opportunity_score: 82,
-      notes: `Auto-discovered via Serper (${p.address || "India"})`,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    }));
+    const rows = places.map((p, idx) => {
+      const gbpUrl = p.cid
+        ? `https://www.google.com/maps?cid=${p.cid}`
+        : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${p.title || ""} ${p.address || ""}`.trim())}`;
+      return {
+        id: `auto_${Date.now()}_${idx}`,
+        business_name: p.title || "Discovered Business",
+        website: p.website || "",
+        country: "India",
+        industry: p.category || "Business",
+        status: "New Lead",
+        deal_value: 25000,
+        currency: "INR",
+        contact_phone: p.phoneNumber || "",
+        opportunity_score: 82,
+        notes: `Auto-discovered via Serper (${p.address || "India"}) | GBP: ${gbpUrl}`,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+    });
 
     const { error } = await admin.from("leads").insert(rows);
     if (error) {

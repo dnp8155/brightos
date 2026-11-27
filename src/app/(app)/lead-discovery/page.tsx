@@ -918,6 +918,19 @@ export default function LeadDiscoveryPage() {
                       </td>
                       <td className="py-3 px-3 text-right">
                         <div className="inline-flex items-center gap-1.5 whitespace-nowrap">
+                          <a
+                            href={
+                              lead.googleMapsUrl ||
+                              (lead.cid
+                                ? `https://www.google.com/maps?cid=${lead.cid}`
+                                : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${lead.businessName || ""} ${lead.city || lead.country || ""}`.trim())}`)
+                            }
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-2.5 py-1 rounded bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-[11px] font-medium transition-colors whitespace-nowrap"
+                          >
+                            Google Business
+                          </a>
                           {(lead.websiteUrl || lead.website) && (
                             <Link
                               href={`/audits?url=${encodeURIComponent(lead.websiteUrl || lead.website)}`}
