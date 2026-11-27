@@ -54,8 +54,16 @@ export default function EmailStudioPage() {
     const lead = leads.find((l) => (l.id || l.businessName) === leadId);
     if (lead) {
       setSelectedLead(lead);
-      const name = lead.businessName || lead.name;
+      const name = lead.businessName || lead.name || "your team";
+      const contactName =
+        lead.contact?.name ||
+        lead.contactName ||
+        (lead.contacts?.[0]?.first_name ? `${lead.contacts[0].first_name}` : "Team");
+      const site = lead.website || lead.website_url || "your website";
       setSubject(`Modernization opportunities for ${name}`);
+      setBody(
+        `Hi ${contactName}, hope your week at ${name} is going well.\n\nWhile reviewing ${site}, our system analyzed page load metrics and interface structures.\n\nAddressing these bottlenecks creates a seamless customer journey and eliminates friction in your client conversion pipeline.\n\nAt BrightLoop Technology, we specialize in high-performance frontend engineering and decoupled Next.js modernization.\n\nWould you be open to a 10-minute discovery call this Thursday to review our technical audit findings?\n\nBest regards,\nBrightLoop Client Solutions`
+      );
     }
   };
 
