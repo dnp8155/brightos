@@ -54,6 +54,37 @@ export default function LeadDiscoveryPage() {
   const [activeViewTab, setActiveViewTab] = useState<"current" | "history">("current");
   const [tableSearch, setTableSearch] = useState("");
   const [tableFilter, setTableFilter] = useState<"all" | "has_website" | "no_website">("all");
+  const [verifyingEmails, setVerifyingEmails] = useState(false);
+  const [verifySummary, setVerifySummary] = useState<string | null>(null);
+
+  const handleVerifyEmails = async () => {
+    const emails = discoveredLeads
+      .map((l) => l.contact?.email || l.contactEmail || l.email)
+      .filter(Boolean);
+    if (emails.length === 0) {
+      setVerifySummary("No emails found in current leads.");
+      return;
+    }
+    setVerifyingEmails(true);
+    setVerifySummary(null);
+    try {
+      const res = await fetch("/api/leads/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ emails })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setVerifySummary(`Verified ${data.validCount}/${data.count} emails (DNS MX)`);
+      } else {
+        setVerifySummary(data.error || "Verification failed");
+      }
+    } catch {
+      setVerifySummary("Network error verifying emails");
+    } finally {
+      setVerifyingEmails(false);
+    }
+  };
 
   // Load persisted leads & history from localStorage on mount
   useEffect(() => {
@@ -734,6 +765,18 @@ export default function LeadDiscoveryPage() {
                   {tab.label}
                 </button>
               ))}
+              <button
+                onClick={handleVerifyEmails}
+                disabled={verifyingEmails}
+                className="px-2.5 py-1.5 rounded-lg text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 disabled:opacity-50 transition-colors"
+              >
+                {verifyingEmails ? "Verifying..." : "Verify Emails (MX)"}
+              </button>
+              {verifySummary && (
+                <span className="text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded border border-emerald-200">
+                  {verifySummary}
+                </span>
+              )}
             </div>
           </div>
 

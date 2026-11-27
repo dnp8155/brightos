@@ -46,14 +46,25 @@ export async function POST(req: NextRequest) {
         created_at: new Date().toISOString()
       });
 
-      // If inbound reply, also record in inbox_messages
+      // If inbound reply, also record in inbox_messages with auto-categorized sentiment
       if (eventType === "replied" && data?.from) {
+        const replyText = String(data.text || data.html || "").toLowerCase();
+        let sentimentTag = "Question";
+        if (/not interested|unsubscribe|stop|remove me|no thanks/.test(replyText)) {
+          sentimentTag = "Not Interested";
+        } else if (/call|meeting|schedule|calendar|zoom|meet|tomorrow|next week/.test(replyText)) {
+          sentimentTag = "Meeting Requested";
+        } else if (/interested|yes|sure|send|pricing|quote|details|tell me more/.test(replyText)) {
+          sentimentTag = "Interested";
+        }
+
         await admin.from("inbox_messages").insert({
           sender_email: data.from,
           subject: data.subject || "Re: Outreach",
           body: data.text || data.html || "",
           direction: "inbound",
           status: "unread",
+          sentiment_tag: sentimentTag,
           created_at: new Date().toISOString()
         });
       }
