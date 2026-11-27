@@ -1,4 +1,5 @@
 import { ComplianceValidator } from "../compliance/compliance-validator";
+import { EmailVerifier } from "../compliance/email-verifier";
 import { GmailProvider, SendEmailPayload, SendResult } from "../providers/gmail-provider";
 import { ResendProvider } from "../providers/resend-provider";
 import { createClient } from "@supabase/supabase-js";
@@ -81,6 +82,20 @@ export class CampaignExecutionWorker {
         provider: "compliance_validator",
         timestamp: new Date().toISOString(),
         error: `Suppressed: ${compliance.suppressionReason}`
+      };
+    }
+
+    // 2b. Real-time email syntax, disposable & DNS MX verification
+    const verification = await EmailVerifier.verifyEmail(item.contactEmail);
+    if (!verification.valid) {
+      return {
+        messageId: `suppressed_mx_${Date.now()}`,
+        campaignId: item.campaignId,
+        recipientEmail: item.contactEmail,
+        status: "suppressed",
+        provider: "email_verifier",
+        timestamp: new Date().toISOString(),
+        error: `Suppressed: ${verification.reason}`
       };
     }
 
