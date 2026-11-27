@@ -447,7 +447,7 @@ export default function CRMPage() {
                             </span>
                           </div>
                           <span className="text-[10px] font-semibold text-slate-400">
-                            ${(stageValue / 1000).toFixed(0)}k
+                            ₹{(stageValue / 1000).toFixed(0)}k
                           </span>
                         </div>
 
@@ -482,7 +482,7 @@ export default function CRMPage() {
 
                                   <div className="flex items-center justify-between pt-1 border-t border-slate-200 text-[10px]">
                                     <span className="text-emerald-400 font-semibold">
-                                      ${deal.dealValue.toLocaleString()}
+                                      ₹{deal.dealValue.toLocaleString()}
                                     </span>
                                     <span className="text-slate-500 truncate max-w-[110px]">
                                       {deal.country}
@@ -539,7 +539,7 @@ export default function CRMPage() {
                       </span>
                     </td>
                     <td className="py-3 px-3 font-semibold text-emerald-400">
-                      ${deal.dealValue.toLocaleString()}
+                      ₹{deal.dealValue.toLocaleString()}
                     </td>
                     <td className="py-3 px-3 text-slate-700 max-w-xs truncate">
                       {deal.targetService}
@@ -601,7 +601,7 @@ export default function CRMPage() {
                 <div>
                   <div className="text-[11px] text-slate-400">Estimated Deal Value</div>
                   <div className="text-lg font-bold text-emerald-400 mt-0.5">
-                    ${selectedDeal.dealValue.toLocaleString()} {selectedDeal.currency}
+                    ₹{selectedDeal.dealValue.toLocaleString()} {selectedDeal.currency}
                   </div>
                 </div>
                 <div className="text-right">
