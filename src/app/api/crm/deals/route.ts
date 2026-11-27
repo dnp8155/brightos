@@ -1,79 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { CRMDeal, CRMActivity, PIPELINE_STAGES, PipelineStage } from "@/packages/crm/types/crm";
-import { DEMO_LEADS } from "@/lib/demoData";
+import { createClient } from "@supabase/supabase-js";
 
-// In-memory CRM deal store with live state updates and stage history tracking
-export const inMemoryDeals: CRMDeal[] = DEMO_LEADS.map((l, i) => {
-  const stages: PipelineStage[] = [
-    "New Lead",
-    "Analyzed",
-    "Qualified",
-    "Contacted",
-    "Interested",
-    "Meeting Scheduled",
-    "Proposal Sent",
-    "Negotiation",
-    "Won"
-  ];
+// Live CRM deal store (no demo/fake leads)
+export const inMemoryDeals: CRMDeal[] = [];
 
-  const assignedStage = stages[i % stages.length];
-  const dealValue = 15000 + i * 5000;
-
-  return {
-    id: `deal_${l.id}`,
-    businessId: l.id,
-    businessName: l.businessName,
-    domain: l.website.replace(/https?:\/\//, "").split("/")[0],
-    country: l.country,
-    industry: l.industry,
-    stage: assignedStage,
-    dealValue,
-    currency: "USD",
-    primaryContact: {
-      name: l.contact.name,
-      email: l.contact.email,
-      role: l.contact.role,
-      phone: l.contact.phone
-    },
-    targetService: l.targetService,
-    opportunityScore: l.opportunityScore,
-    lastActivityAt: new Date(Date.now() - i * 86400000).toISOString(),
-    notes: l.notes,
-    proposal: assignedStage === "Proposal Sent" || assignedStage === "Negotiation" || assignedStage === "Won"
-      ? {
-          id: `prop_${l.id}`,
-          amount: dealValue,
-          currency: "USD",
-          service: l.targetService,
-          status: assignedStage === "Won" ? "Accepted" : "Sent",
-          sentAt: new Date(Date.now() - 259200000).toISOString()
-        }
-      : undefined,
-    sentiment: assignedStage === "Interested" || assignedStage === "Meeting Scheduled" ? "Interested" : "Neutral"
-  };
-});
-
-export const inMemoryActivities: CRMActivity[] = [
-  {
-    id: "act-1",
-    dealId: "deal_lead-2",
-    businessId: "lead-2",
-    actorName: "Dr. Eleanor Finch",
-    activityType: "reply_received",
-    description: "Prospect replied requesting technical meeting for Q1 redesign.",
-    timestamp: "2026-11-25T10:42:00Z"
-  },
-  {
-    id: "act-2",
-    dealId: "deal_lead-2",
-    businessId: "lead-2",
-    actorName: "BrightLoop Admin",
-    activityType: "stage_change",
-    description: "Moved stage from 'Contacted' to 'Meeting Scheduled'.",
-    timestamp: "2026-11-25T11:00:00Z"
-  }
-];
+export const inMemoryActivities: CRMActivity[] = [];
 
 const UpdateDealStageSchema = z.object({
   dealId: z.string(),

@@ -60,9 +60,6 @@ export default function CRMPage() {
       const data = await res.json();
       if (data.deals) {
         setDeals(data.deals);
-        if (!selectedDeal && data.deals.length > 0) {
-          setSelectedDeal(data.deals[0]);
-        }
       }
     } catch {
       //
