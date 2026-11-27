@@ -133,6 +133,33 @@ export default function CRMPage() {
     setNotification(`Proposal for ${proposalCurrency} ${proposalAmount.toLocaleString()} recorded.`);
   };
 
+  const handleGeneratePaymentLink = async () => {
+    if (!selectedDeal) return;
+    try {
+      const res = await fetch("/api/crm/payment-link", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          dealId: selectedDeal.id,
+          businessName: selectedDeal.businessName,
+          contactName: (selectedDeal as any).contact?.name || selectedDeal.businessName,
+          contactEmail: (selectedDeal as any).contact?.email || "",
+          amountInr: proposalAmount || selectedDeal.dealValue || 25000,
+          description: `${proposalService} - ${selectedDeal.businessName}`
+        })
+      });
+      const data = await res.json();
+      if (data.paymentUrl) {
+        await navigator.clipboard?.writeText(data.paymentUrl).catch(() => {});
+        setNotification(`INR Payment Link (${data.provider.toUpperCase()}) copied: ${data.paymentUrl}`);
+      } else {
+        setNotification(data.error || "Failed to generate payment link");
+      }
+    } catch {
+      setNotification("Network error generating payment link");
+    }
+  };
+
   const handleAddNote = () => {
     if (!selectedDeal || !noteDraft.trim()) return;
     const newNotes = selectedDeal.notes
@@ -637,6 +664,7 @@ export default function CRMPage() {
                           onChange={(e) => setProposalCurrency(e.target.value)}
                           className="w-full px-2.5 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs text-slate-900"
                         >
+                          <option value="INR">INR (₹)</option>
                           <option value="USD">USD ($)</option>
                           <option value="EUR">EUR (€)</option>
                           <option value="GBP">GBP (£)</option>
@@ -649,6 +677,12 @@ export default function CRMPage() {
                       className="w-full py-1.5 rounded bg-sky-500 hover:bg-sky-600 text-slate-900 text-xs font-semibold"
                     >
                       Record Formal Proposal
+                    </button>
+                    <button
+                      onClick={handleGeneratePaymentLink}
+                      className="w-full py-1.5 rounded bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold"
+                    >
+                      Generate & Copy INR Payment Link
                     </button>
                   </div>
                 )}
