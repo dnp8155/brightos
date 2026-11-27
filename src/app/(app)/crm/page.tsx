@@ -690,6 +690,18 @@ export default function CRMPage() {
                     >
                       Generate & Copy INR Payment Link
                     </button>
+                    {selectedDeal.primaryContact?.phone && (
+                      <a
+                        href={`https://wa.me/${selectedDeal.primaryContact.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
+                          `Hi ${selectedDeal.primaryContact.name || "there"}, I noticed ${selectedDeal.businessName} and prepared a quick growth & automation plan for your team. Open to a quick 5-min chat?`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full py-1.5 rounded bg-green-600 hover:bg-green-700 text-white text-xs font-semibold flex items-center justify-center"
+                      >
+                        WhatsApp Pitch (1-Click)
+                      </a>
+                    )}
                   </div>
                 )}
               </div>

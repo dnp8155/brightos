@@ -1,6 +1,10 @@
 {
   "crons": [
     {
+      "path": "/api/cron/auto-discover",
+      "schedule": "0 4 * * *"
+    },
+    {
       "path": "/api/cron/follow-ups",
       "schedule": "0 9 * * *"
     }
