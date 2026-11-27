@@ -22,7 +22,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Shield,
-  ExternalLink
+  ExternalLink,
+  BookOpen
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -71,7 +72,8 @@ const NAV_SECTIONS: NavSection[] = [
       { name: "Integrations Hub", href: "/integrations", icon: Puzzle },
       { name: "Compliance & Safety", href: "/compliance", icon: ShieldCheck },
       { name: "Users & Roles", href: "/settings", icon: Users },
-      { name: "Settings & Keys", href: "/settings", icon: Settings }
+      { name: "Settings & Keys", href: "/settings", icon: Settings },
+      { name: "Documentation", href: "/documentation", icon: BookOpen }
     ]
   }
 ];
