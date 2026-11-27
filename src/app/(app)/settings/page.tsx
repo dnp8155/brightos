@@ -79,13 +79,22 @@ export default function SettingsPage() {
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[11px] font-medium text-slate-500">Profile Picture URL</label>
+                  <label className="text-[11px] font-medium text-slate-500">Select Profile Image</label>
                   <input
-                    type="url"
-                    placeholder="https://example.com/avatar.jpg"
-                    value={avatarUrl}
-                    onChange={(e) => setAvatarUrl(e.target.value)}
-                    className="w-full px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none focus:border-[#0284c7]"
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      const reader = new FileReader();
+                      reader.onload = () => {
+                        if (typeof reader.result === "string") {
+                          setAvatarUrl(reader.result);
+                        }
+                      };
+                      reader.readAsDataURL(file);
+                    }}
+                    className="w-full px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-800 file:mr-3 file:py-1 file:px-2.5 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-zinc-900 file:text-white hover:file:bg-zinc-800 cursor-pointer"
                   />
                 </div>
               </div>
