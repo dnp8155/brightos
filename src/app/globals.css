@@ -110,6 +110,11 @@ tbody tr {
   color: #18181b !important;
 }
 
+/* Crisp, lightweight little icons across the app */
+svg.lucide {
+  stroke-width: 1.75;
+}
+
 @media (prefers-reduced-motion: reduce) {
   main,
   button,
