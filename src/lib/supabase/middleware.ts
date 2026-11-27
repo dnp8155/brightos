@@ -71,7 +71,10 @@ export async function updateSession(request: NextRequest) {
 
   const isPublicMarketing = PUBLIC_MARKETING_ROUTES.includes(pathname);
   const isAuthRoute = AUTH_ROUTES.some((r) => pathname.startsWith(r));
-  const isPublicApi = pathname.startsWith("/api/public") || pathname.startsWith("/api/webhooks");
+  const isPublicApi =
+    pathname.startsWith("/api/public") ||
+    pathname.startsWith("/api/webhooks") ||
+    pathname.startsWith("/api/cron/");
   const isPrivateApi = pathname.startsWith("/api/") && !isPublicApi;
 
   // 1. Protect private APIs
