@@ -17,7 +17,7 @@ export interface SendEmailPayload {
 export interface SendResult {
   success: boolean;
   messageId?: string;
-  provider: "gmail" | "smtp" | "mock";
+  provider: "gmail" | "smtp" | "resend" | "mock";
   acceptedAt: string;
   error?: string;
 }
