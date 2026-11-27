@@ -311,7 +311,7 @@ export default function LeadDiscoveryPage() {
           targetService,
           requirePublicEmail,
           providers: selectedProviders,
-          limit: 15
+          limit: resultLimit
         })
       });
 
@@ -572,6 +572,20 @@ export default function LeadDiscoveryPage() {
                     <option value="has_website">Live Website Required</option>
                     <option value="missing_website">Missing Website Only</option>
                     <option value="any">Any Condition</option>
+                  </select>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-slate-400">Leads Limit:</span>
+                  <select
+                    value={resultLimit}
+                    onChange={(e) => setResultLimit(Number(e.target.value))}
+                    className="px-2 py-1 rounded bg-slate-50 border border-slate-200 text-xs text-slate-800 focus:outline-none"
+                  >
+                    <option value={5}>5 Leads</option>
+                    <option value={10}>10 Leads</option>
+                    <option value={15}>15 Leads</option>
+                    <option value={25}>25 Leads</option>
+                    <option value={50}>50 Leads</option>
                   </select>
                 </div>
               </div>
