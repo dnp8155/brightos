@@ -51,7 +51,27 @@ export async function POST(req: NextRequest) {
     };
 
     const execution = await WorkflowEngine.executeWorkflow(defaultWf, context || {});
-    return NextResponse.json({ success: true, execution });
+
+    // Trigger real autopilot pipelines (Auto-Discovery + Follow-Ups)
+    const origin = req.nextUrl.origin;
+    const headers: Record<string, string> = {};
+    if (process.env.CRON_SECRET) {
+      headers["authorization"] = `Bearer ${process.env.CRON_SECRET}`;
+    }
+
+    const [discoverRes, followUpRes] = await Promise.all([
+      fetch(`${origin}/api/cron/auto-discover`, { method: "POST", headers }).then((r) => r.json()).catch(() => null),
+      fetch(`${origin}/api/cron/follow-ups`, { method: "POST", headers }).then((r) => r.json()).catch(() => null)
+    ]);
+
+    return NextResponse.json({
+      success: true,
+      execution,
+      realAutopilot: {
+        autoDiscover: discoverRes,
+        followUps: followUpRes
+      }
+    });
   } catch (err: any) {
     return NextResponse.json(
       { success: false, error: err.message || "Workflow execution failed" },
