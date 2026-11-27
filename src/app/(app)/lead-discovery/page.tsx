@@ -835,8 +835,9 @@ export default function LeadDiscoveryPage() {
                     );
                   })
                   .map((lead: any, idx: number) => {
-                  const companyName = lead.companyName || lead.businessName || lead.business_name || lead.name || lead.title || lead.domain || "Business";
                   const websiteUrl = lead.websiteUrl || lead.website_url || lead.website;
+                  const cleanDomain = websiteUrl ? String(websiteUrl).replace(/^https?:\/\/(www\.)?/, "").split("/")[0] : "";
+                  const companyName = lead.companyName || lead.businessName || lead.business_name || lead.name || lead.title || lead.domain || cleanDomain || "Business";
                   const email = lead.publicEmail || lead.contact?.email || lead.contact_email || lead.contacts?.[0]?.email;
                   const score = lead.initialQualificationScore ?? lead.opportunityScore ?? lead.opportunity_score ?? lead.lead_scores?.[0]?.opportunity_score ?? 80;
                   const provider = (lead.providerName || "Apollo")
