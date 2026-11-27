@@ -60,6 +60,15 @@ export default function CRMPage() {
       const data = await res.json();
       if (data.deals) {
         setDeals(data.deals);
+        const leadId = typeof window !== "undefined"
+          ? new URLSearchParams(window.location.search).get("leadId")
+          : null;
+        if (leadId) {
+          const matched = data.deals.find(
+            (d: CRMDeal) => d.businessId === leadId || d.id === leadId || d.id === `deal_${leadId}`
+          );
+          if (matched) setSelectedDeal(matched);
+        }
       }
     } catch {
       //

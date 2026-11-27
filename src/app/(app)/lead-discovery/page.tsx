@@ -885,6 +885,14 @@ export default function LeadDiscoveryPage() {
                           )}
                           <Link
                             href={`/crm?leadId=${lead.id || "lead-1"}`}
+                            onClick={() => {
+                              fetch("/api/crm/deals", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(lead),
+                                keepalive: true
+                              }).catch(() => {});
+                            }}
                             className="px-2.5 py-1 rounded bg-sky-50 hover:bg-sky-100 text-[#0284c7] border border-sky-200 text-[11px] font-medium transition-colors whitespace-nowrap"
                           >
                             View in CRM
