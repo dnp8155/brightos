@@ -63,6 +63,32 @@ main {
   }
 }
 
+button:not(:disabled),
+a {
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
 button:not(:disabled):active {
-  transform: scale(0.985);
+  transform: scale(0.975);
+}
+
+/* Smooth card & table row micro-interactions across CRM, Discovery, Dashboard */
+.rounded-xl,
+.rounded-2xl {
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+tbody tr {
+  transition: background-color 0.14s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main,
+  button,
+  a,
+  .rounded-xl,
+  .rounded-2xl {
+    animation: none !important;
+    transition: none !important;
+  }
 }
