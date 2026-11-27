@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TopHeader } from "@/components/top-header";
-import { DEMO_CAMPAIGNS } from "@/lib/demoData";
 import { Campaign } from "@/types";
 import {
   Send,
@@ -22,7 +21,23 @@ import {
 import { cn } from "@/lib/utils";
 
 export default function CampaignsPage() {
-  const [campaigns, setCampaigns] = useState<Campaign[]>(DEMO_CAMPAIGNS);
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("brightloop_campaigns");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) setCampaigns(parsed);
+      }
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("brightloop_campaigns", JSON.stringify(campaigns));
+    } catch {}
+  }, [campaigns]);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showApprovalModal, setShowApprovalModal] = useState<Campaign | null>(null);
   const [notification, setNotification] = useState<string | null>(null);
