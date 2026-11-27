@@ -923,7 +923,15 @@ export default function LeadDiscoveryPage() {
                               lead.googleMapsUrl ||
                               (lead.cid
                                 ? `https://www.google.com/maps?cid=${lead.cid}`
-                                : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${lead.businessName || ""} ${lead.city || lead.country || ""}`.trim())}`)
+                                : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                                    [
+                                      lead.businessName || lead.companyName || lead.title || lead.name || "",
+                                      lead.address || lead.city || lead.country || ""
+                                    ]
+                                      .filter(Boolean)
+                                      .join(" ")
+                                      .trim()
+                                  )}`)
                             }
                             target="_blank"
                             rel="noopener noreferrer"
